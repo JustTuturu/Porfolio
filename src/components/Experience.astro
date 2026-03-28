@@ -1,0 +1,59 @@
+---
+import { EXPERIENCES } from '../data/index';
+---
+
+<section id="experience" class="relative bg-bg-surface py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
+      Experience
+    </h2>
+
+    <div class="space-y-6">
+      {EXPERIENCES.map((exp, idx) => (
+        <div class={`glass p-8 hover:border-accent-pink transition-all duration-300 animate-on-scroll delay-${(idx % 4) + 1} ${exp.seeking ? 'border-accent-orange glow-orange' : ''}`}>
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-2xl font-bold text-text-primary">{exp.company}</h3>
+              <p class="text-lg text-accent-pink font-semibold mt-1">{exp.role}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-mono text-text-muted">{exp.period}</p>
+              <p class="text-xs text-accent-blue font-mono mt-1 uppercase">{exp.type}</p>
+            </div>
+          </div>
+
+          {exp.achievements && exp.achievements.length > 0 && (
+            <div class="mt-4">
+              <h4 class="text-sm font-mono text-text-primary mb-2">Key Achievements</h4>
+              <ul class="space-y-1">
+                {exp.achievements.map((achievement) => (
+                  <li class="text-sm text-text-muted flex items-start gap-2">
+                    <span class="text-accent-blue mt-1">▸</span>
+                    <span>{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {exp.tech && exp.tech.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-glass-border">
+              {exp.tech.map((t) => (
+                <span class="text-xs bg-bg-glass text-text-primary px-2 py-1 rounded border border-glass-border">
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import { PROJECTS } from '../data/index';
+
+const featured = PROJECTS.find((p) => p.featured);
+const others = PROJECTS.filter((p) => !p.featured);
+---
+
+<section id="projects" class="relative bg-bg-surface py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Section heading -->
+    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
+      Featured Projects
+    </h2>
+
+    <!-- Featured project (large) -->
+    {
+      featured && (
+        <div class="mb-16 animate-on-scroll delay-1">
+          <div class="glass p-8 hover:border-accent-pink transition-all duration-300 group cursor-pointer">
+            <!-- Top row: category + label -->
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-opacity-10" style={`background-color: ${featured.categoryColor}; color: ${featured.categoryColor}`}>
+                {featured.category}
+              </span>
+              <span class="text-xs font-mono text-text-muted bg-bg-glass px-3 py-1 rounded-full">{featured.label}</span>
+            </div>
+
+            <!-- Title + Description -->
+            <h3 class="text-3xl font-bold text-text-primary mb-4 group-hover:text-accent-pink transition-colors">{featured.title}</h3>
+            <p class="text-text-muted text-lg leading-relaxed mb-6">{featured.description}</p>
+
+            <!-- Metrics -->
+            <div class="flex flex-wrap gap-4 mb-6">
+              {featured.metrics.map((metric) => (
+                <div class="text-sm font-mono text-accent-orange bg-bg-glass px-3 py-1 rounded-lg">{metric}</div>
+              ))}
+            </div>
+
+            <!-- Tech stack -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              {featured.tech.map((t) => (
+                <span class="text-xs bg-bg-glass text-text-primary px-3 py-1 rounded-lg">{t}</span>
+              ))}
+            </div>
+
+            <!-- Links -->
+            <div class="flex gap-4">
+              {featured.github && (
+                <a href={featured.github} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors text-sm font-mono">
+                  View Code →
+                </a>
+              )}
+              {featured.demo && (
+                <a href={featured.demo} target="_blank" class="text-accent-pink hover:text-accent-blue transition-colors text-sm font-mono">
+                  Live Demo →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Other projects (grid) -->
+    {
+      others.length > 0 && (
+        <>
+          <h3 class="text-xl font-bold text-text-primary mb-6 animate-on-scroll delay-2">Other Projects</h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            {others.map((project, idx) => (
+              <div class={`glass p-6 hover:border-accent-pink transition-all duration-300 group cursor-pointer animate-on-scroll delay-${(idx % 4) + 1}`}>
+                <!-- Category badge -->
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-xs font-mono font-semibold px-2 py-1 rounded-full bg-opacity-10" style={`background-color: ${project.categoryColor}; color: ${project.categoryColor}`}>
+                    {project.category}
+                  </span>
+                  <span class="text-xs font-mono text-text-muted">{project.label}</span>
+                </div>
+
+                <!-- Title + Desc -->
+                <h4 class="text-lg font-bold text-text-primary mb-2 group-hover:text-accent-pink transition-colors">{project.title}</h4>
+                <p class="text-sm text-text-muted mb-4">{project.description}</p>
+
+                <!-- Metrics -->
+                {project.metrics.length > 0 && (
+                  <div class="text-xs text-accent-orange mb-3 font-mono">{project.metrics.join(' • ')}</div>
+                )}
+
+                <!-- Tech -->
+                <div class="flex flex-wrap gap-1 mb-4">
+                  {project.tech.map((t) => (
+                    <span class="text-xs bg-bg-glass text-text-primary px-2 py-1 rounded">{t}</span>
+                  ))}
+                </div>
+
+                <!-- Link -->
+                {project.github && (
+                  <a href={project.github} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors text-xs font-mono">
+                    View Code →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+</style>

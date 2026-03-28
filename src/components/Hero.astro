@@ -1,0 +1,125 @@
+---
+import { META, ROLES } from '../data/index';
+---
+
+<section
+  id="hero"
+  class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-cover bg-center"
+  style={{
+    backgroundImage: "url('/images/hero.jpg')",
+    backgroundAttachment: 'fixed',
+  }}
+>
+  <!-- Vignette overlay -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-bg-base via-transparent to-bg-base opacity-90"
+    style="box-shadow: inset 80px 0 120px #050508, inset -80px 0 120px #050508"
+  ></div>
+
+  <!-- Content container -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 text-center flex flex-col items-center justify-center gap-8">
+    <!-- Japanese decorative text (left side) -->
+    <div
+      class="absolute left-4 md:left-12 top-1/2 transform -translate-y-1/2 text-xs md:text-sm text-text-muted opacity-55 font-jp font-light"
+      style="writing-mode: vertical-rl; transform: translateY(-50%) scaleY(-1)"
+    >
+      <span>深夜コーディング</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="space-y-6">
+      <!-- Large Japanese characters -->
+      <h1 class="text-6xl md:text-8xl font-bold text-white font-jp font-bold tracking-tight">
+        AI/ML
+      </h1>
+
+      <!-- Name -->
+      <h2 class="text-3xl md:text-5xl font-bold text-text-primary font-heading">
+        {META.name}
+      </h2>
+
+      <!-- Typewriter effect -->
+      <div class="h-8 md:h-10 flex items-center justify-center">
+        <p class="text-lg md:text-2xl text-accent-pink font-medium font-mono">
+          <span id="typewriter">AI/ML Engineer</span><span class="cursor">_</span>
+        </p>
+      </div>
+
+      <!-- Description -->
+      <p class="text-text-muted max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+        Crafting intelligent systems with deep learning, LLMs, and modern AI. Currently seeking internships for summer {new Date().getFullYear() + 1}.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex gap-4 justify-center pt-4">
+        <a
+          href="#projects"
+          class="px-6 py-3 bg-accent-pink text-white rounded-lg hover:bg-accent-coral transition-colors font-medium"
+        >
+          View my work
+        </a>
+        <a
+          href={`mailto:${META.email}`}
+          class="px-6 py-3 border border-accent-blue text-accent-blue rounded-lg hover:bg-accent-blue hover:text-bg-base transition-colors font-medium"
+        >
+          Get in touch
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 animate-bounce">
+      <svg class="w-6 h-6 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Typewriter effect
+  const roles = [
+    'AI/ML Engineer',
+    'LLM Fine-Tuning Enthusiast',
+    'Deep Learning Explorer',
+    'Open Source Contributor',
+  ];
+
+  let i = 0;
+  let j = 0;
+  let deleting = false;
+
+  const el = document.getElementById('typewriter');
+
+  function type() {
+    const word = roles[i];
+    el.textContent = deleting ? word.slice(0, --j) : word.slice(0, ++j);
+
+    if (!deleting && j === word.length) {
+      deleting = true;
+      setTimeout(type, 1500);
+      return;
+    }
+
+    if (deleting && j === 0) {
+      deleting = false;
+      i = (i + 1) % roles.length;
+    }
+
+    setTimeout(type, deleting ? 60 : 100);
+  }
+
+  type();
+</script>
+
+<style>
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  #typewriter {
+    color: var(--accent-pink);
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import { META } from '../data/index';
+---
+
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300 backdrop-blur-0"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <!-- Left: Name in small caps -->
+    <div class="text-sm font-mono font-semibold tracking-widest text-text-primary">
+      {META.name.split(' ').join(' ')}
+    </div>
+
+    <!-- Right: Links + CTA -->
+    <div class="flex items-center gap-6">
+      <a href="#about" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
+        about
+      </a>
+      <a href="#skills" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
+        skills
+      </a>
+      <a href="#projects" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
+        projects
+      </a>
+      <a href="#contact" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
+        contact
+      </a>
+
+      <!-- CTA Button -->
+      <a
+        href={`mailto:${META.email}`}
+        class="ml-2 px-4 py-2 bg-accent-pink text-white text-sm rounded-lg hover:bg-accent-coral transition-all duration-200 font-medium"
+      >
+        Get in touch
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('navbar');
+
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    const triggerPoint = window.innerHeight * 0.9;
+
+    if (scrollPosition > triggerPoint) {
+      nav?.classList.add('scrolled');
+      nav?.style.setProperty('background', 'rgba(26, 26, 46, 0.85)');
+      nav?.style.setProperty('backdrop-filter', 'blur(12px)');
+    } else {
+      nav?.classList.remove('scrolled');
+      nav?.style.setProperty('background', 'transparent');
+      nav?.style.setProperty('backdrop-filter', 'blur(0px)');
+    }
+  });
+</script>
+
+<style>
+  nav {
+    border-bottom: 1px solid transparent;
+  }
+
+  nav.scrolled {
+    border-bottom-color: var(--glass-border);
+  }
+</style>

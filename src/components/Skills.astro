@@ -1,0 +1,66 @@
+---
+import { SKILLS } from '../data/index';
+
+const categories = {
+  lang: { title: 'Languages', color: '#FF9999' },
+  ml: { title: 'ML/DL', color: '#6BB6FF' },
+  llm: { title: 'LLMs', color: '#FFA500' },
+  tool: { title: 'Tools', color: '#B895C0' },
+};
+---
+
+<section id="skills" class="relative bg-bg-base py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Section heading -->
+    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
+      Skills & Expertise
+    </h2>
+
+    <!-- Skills grid -->
+    <div class="space-y-12">
+      {
+        Object.entries(categories).map(([key, category], idx) => {
+          const categorySkills = SKILLS.filter((s) => s.category === key);
+          return (
+            <div class={`animate-on-scroll delay-${(idx % 4) + 1}`}>
+              <h3 class="text-lg font-mono text-text-primary mb-4" style={`color: ${category.color}`}>
+                {category.title}
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {categorySkills.map((skill) => (
+                  <div class="glass p-4 group cursor-pointer hover:border-accent-pink transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-start justify-between mb-3">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">{skill.icon}</span>
+                        <div>
+                          <h4 class="font-semibold text-text-primary text-sm">{skill.name}</h4>
+                          <p class="text-xs text-text-muted">{skill.desc}</p>
+                        </div>
+                      </div>
+                      {skill.exploring && <span class="text-xs bg-accent-orange bg-opacity-20 text-accent-orange px-2 py-1 rounded">exploring</span>}
+                    </div>
+
+                    <!-- Proficiency bar -->
+                    <div class="w-full bg-bg-glass rounded-full h-2 overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-accent-pink to-accent-blue" style={`width: ${(skill.proficiency / 5) * 100}%`}></div>
+                    </div>
+
+                    <p class="text-xs text-text-muted mt-2">Proficiency: {skill.proficiency}/5</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+</style>

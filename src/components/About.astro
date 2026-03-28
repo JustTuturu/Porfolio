@@ -1,0 +1,63 @@
+---
+import { META, EDUCATION } from '../data/index';
+---
+
+<section id="about" class="relative bg-bg-surface py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Section heading -->
+    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
+      About Me
+    </h2>
+
+    <!-- Content grid -->
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Left: Bio -->
+      <div class="space-y-6 animate-on-scroll delay-1">
+        <p class="text-text-muted leading-relaxed">
+          I'm a passionate AI/ML engineer and computer science student deeply interested in building intelligent systems. With a strong foundation in deep learning, NLP, and computer vision, I'm driven to solve real-world problems using cutting-edge AI technologies.
+        </p>
+        <p class="text-text-muted leading-relaxed">
+          Whether it's fine-tuning large language models, building RAG pipelines, or optimizing neural networks, I love the challenge of pushing the boundaries of what's possible with AI. I'm currently seeking internship opportunities to apply and expand my skills.
+        </p>
+        <p class="text-text-muted leading-relaxed">
+          Outside of coding, you'll find me exploring new ML research papers, contributing to open-source projects, or working on side projects that combine my interests in AI and software engineering.
+        </p>
+      </div>
+
+      <!-- Right: Stats cards -->
+      <div class="space-y-4">
+        <!-- Education card -->
+        <div class="glass p-6 animate-on-scroll delay-2">
+          <h3 class="text-sm font-mono text-accent-blue mb-3">EDUCATION</h3>
+          <p class="text-lg font-semibold text-text-primary">{EDUCATION.university}</p>
+          <p class="text-sm text-text-muted mt-2">{EDUCATION.degree} in {EDUCATION.major}</p>
+          <p class="text-sm text-text-muted">Graduation: {EDUCATION.graduation}</p>
+          <p class="text-sm text-accent-orange mt-3">GPA: {EDUCATION.cgpa}</p>
+        </div>
+
+        <!-- Location card -->
+        <div class="glass p-6 animate-on-scroll delay-3">
+          <h3 class="text-sm font-mono text-accent-blue mb-3">LOCATION</h3>
+          <p class="text-text-primary">{META.location}</p>
+          <p class="text-sm text-text-muted mt-2">{META.availableFrom}</p>
+        </div>
+
+        <!-- Status card -->
+        <div class="glass p-6 animate-on-scroll delay-4 glow-pink">
+          <h3 class="text-sm font-mono text-accent-pink mb-3">STATUS</h3>
+          <p class="text-lg font-semibold text-text-primary">
+            {META.available ? 'Available' : 'Not available'}
+          </p>
+          <p class="text-sm text-text-muted mt-2">Open to internships and collaborations</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+</style>

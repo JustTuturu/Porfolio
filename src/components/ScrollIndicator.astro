@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <div
@@ -15,12 +16,6 @@
     data-target="about"
     class="scroll-dot w-2 h-2 md:w-3 md:h-3 rounded-full bg-text-muted hover:bg-accent-violet transition-all duration-300"
     title="About"
-  ></button>
-
-  <button
-    data-target="skills"
-    class="scroll-dot w-2 h-2 md:w-3 md:h-3 rounded-full bg-text-muted hover:bg-accent-violet transition-all duration-300"
-    title="Skills"
   ></button>
 
   <button
@@ -50,22 +45,19 @@
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          dots.forEach((dot) => {
-            dot.classList.remove('active');
-            dot.style.background = 'var(--text-muted)';
-            dot.style.boxShadow = 'none';
-          });
+          const currentActive = document.querySelector('.dot.active');
+          if (currentActive) {
+            currentActive.classList.remove('active');
+          }
 
-          const activeDot = document.querySelector(`[data-target="${entry.target.id}"]`);
-          if (activeDot) {
-            activeDot.classList.add('active');
-            activeDot.style.background = 'var(--accent-pink)';
-            activeDot.style.boxShadow = '0 0 8px var(--accent-pink)';
+          const targetDot = document.querySelector(`[data-target="${entry.target.id}"]`);
+          if (targetDot) {
+            targetDot.classList.add('active');
           }
         }
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.6 }
   );
 
   sections.forEach((section) => observer.observe(section));

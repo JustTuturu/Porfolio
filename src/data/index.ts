@@ -100,3 +100,19 @@ export const CERTIFICATIONS = [
   { platform: 'Coursera', name: 'Machine Learning by Andrew Ng', date: 'Aug 2023', featured: false, url: '#' },
   { platform: 'Google', name: 'TensorFlow Developer Certificate', date: 'Mar 2024', featured: false, url: '#' },
 ];
+
+export const EXPERIENCES = [
+  {
+    company: 'Looking for Opportunities',
+    role: 'AI/ML Engineer Intern',
+    period: '2025',
+    type: 'Internship',
+    seeking: true,
+    achievements: [
+      'Actively seeking internship opportunities in AI/ML',
+      'Open to remote and on-site positions',
+      'Available from July 2025',
+    ],
+    tech: ['Python', 'PyTorch', 'LLMs', 'MLOps'],
+  },
+];

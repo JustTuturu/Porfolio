@@ -1,35 +1,49 @@
 ---
 import { SKILLS } from '../data/index.ts';
-const { isFirstPage = false } = Astro.props;
 ---
 
+<section id="skills" class="section-padding overflow-hidden">
+  <div class="content-container">
+    <!-- Section label -->
+    <span class="section-label animate-on-scroll">// SKILLS</span>
+    
+    <!-- Section heading -->
+    <h2 class="section-heading animate-on-scroll">
+      Tech Stack
+    </h2>
+
+    <!-- Skills marquee container -->
+    <div class="relative animate-on-scroll delay-1">
+      <!-- Fade edges -->
+      <div class="fade-edge fade-left"></div>
+      <div class="fade-edge fade-right"></div>
+
+      <!-- Scrolling track: duplicated group for seamless loop -->
+      <div class="skills-track">
+        <div class="skills-group">
+          {SKILLS.map(({ name, icon }) => (
+            <div class="tech-item">
+              <img src={icon} alt={name} />
+              <span>{name}</span>
+            </div>
+          ))}
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="skills-group" aria-hidden="true">
+          {SKILLS.map(({ name, icon }) => (
+            <div class="tech-item">
+              <img src={icon} alt={name} />
+              <span>{name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <style>
-  :root {
-    --bg-base: #0b0b0c;
-    --text-muted: #ffffff;
-    --text-primary: #ffffff;
-  }
-
-  .skills-section {
-    position: relative;
-    overflow: hidden;
-    padding: 1.5rem 0;
-    background: ${isFirstPage ? 'transparent' : 'var(--bg-base)'};
-  }
-
-  .skills-label {
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8em;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 1.25rem;
-    opacity: 0.65;
-  }
-
-  /* Fade left/right edges */
-  .fade {
+  .fade-edge {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -37,8 +51,16 @@ const { isFirstPage = false } = Astro.props;
     z-index: 2;
     pointer-events: none;
   }
-  .fade-left  { left: 0;  background: linear-gradient(to right, var(--bg-base), transparent); }
-  .fade-right { right: 0; background: linear-gradient(to left,  var(--bg-base), transparent); }
+  
+  .fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-surface), transparent);
+  }
+  
+  .fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-surface), transparent);
+  }
 
   /* Scrolling row */
   .skills-track {
@@ -56,7 +78,7 @@ const { isFirstPage = false } = Astro.props;
     display: flex;
     align-items: center;
     gap: 3rem;
-    padding-right: 3rem; /* gap between the two groups */
+    padding-right: 3rem;
   }
 
   .tech-item {
@@ -64,7 +86,7 @@ const { isFirstPage = false } = Astro.props;
     align-items: center;
     gap: 0.5rem;
     white-space: nowrap;
-    opacity: 0.4;
+    opacity: 0.6;
     transition: opacity 0.3s ease;
     cursor: default;
     user-select: none;
@@ -106,35 +128,18 @@ const { isFirstPage = false } = Astro.props;
       gap: 1.5rem;
     }
     .skills-group:last-child { display: none; }
-    .fade { display: none; }
+    .fade-edge { display: none; }
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 767px) {
+    .skills-group {
+      gap: 2rem;
+      padding-right: 2rem;
+    }
+    
+    .fade-edge {
+      width: 50px;
+    }
   }
 </style>
-
-<div id="skills" class="skills-section">
-  <p class="skills-label">Tech Stack</p>
-
-  <!-- Fade edges -->
-  <div class="fade fade-left"></div>
-  <div class="fade fade-right"></div>
-
-  <!-- Scrolling track: duplicated group for seamless loop -->
-  <div class="skills-track">
-    <div class="skills-group">
-      {SKILLS.map(({ name, icon }) => (
-        <div class="tech-item">
-          <img src={icon} alt={name} />
-          <span>{name}</span>
-        </div>
-      ))}
-    </div>
-    <!-- Duplicate for seamless loop -->
-    <div class="skills-group" aria-hidden="true">
-      {SKILLS.map(({ name, icon }) => (
-        <div class="tech-item">
-          <img src={icon} alt={name} />
-          <span>{name}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>

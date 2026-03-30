@@ -5,53 +5,56 @@ const featured = PROJECTS.find((p) => p.featured);
 const others = PROJECTS.filter((p) => !p.featured);
 ---
 
-<section id="projects" class="relative bg-bg-base py-20 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-5xl mx-auto">
+<section id="projects" class="section-padding">
+  <div class="content-container">
+    <!-- Section label -->
+    <span class="section-label animate-on-scroll">// PROJECTS</span>
+    
     <!-- Section heading -->
-    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
+    <h2 class="section-heading animate-on-scroll">
       Featured Projects
     </h2>
 
     <!-- Featured project (large) -->
     {
       featured && (
-        <div class="mb-16 animate-on-scroll delay-1">
-          <div class="glass p-8 hover:border-accent-pink transition-all duration-300 group cursor-pointer">
+        <div class="mb-12 animate-on-scroll delay-1">
+          <div class="card group cursor-pointer">
             <!-- Top row: category + label -->
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-opacity-10" style={`background-color: ${featured.categoryColor}; color: ${featured.categoryColor}`}>
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <span class="badge" style={`background-color: ${featured.categoryColor}20; color: ${featured.categoryColor}; border-color: ${featured.categoryColor}40;`}>
                 {featured.category}
               </span>
-              <span class="text-xs font-mono text-text-muted bg-bg-glass px-3 py-1 rounded-full">{featured.label}</span>
+              <span class="mono-label">{featured.label}</span>
             </div>
 
             <!-- Title + Description -->
-            <h3 class="text-3xl font-bold text-text-primary mb-4 group-hover:text-accent-pink transition-colors">{featured.title}</h3>
-            <p class="text-text-muted text-lg leading-relaxed mb-6">{featured.description}</p>
+            <h3 class="card-title text-2xl mb-4 group-hover:text-accent-pink transition-colors">{featured.title}</h3>
+            <p class="body-text mb-6">{featured.description}</p>
 
             <!-- Metrics -->
-            <div class="flex flex-wrap gap-4 mb-6">
+            <div class="flex flex-wrap gap-3 mb-6">
               {featured.metrics.map((metric) => (
-                <div class="text-sm font-mono text-accent-orange bg-bg-glass px-3 py-1 rounded-lg">{metric}</div>
+                <span class="mono-label bg-bg-glass px-3 py-1 rounded-lg">{metric}</span>
               ))}
             </div>
 
             <!-- Tech stack -->
             <div class="flex flex-wrap gap-2 mb-6">
               {featured.tech.map((t) => (
-                <span class="text-xs bg-bg-glass text-text-primary px-3 py-1 rounded-lg">{t}</span>
+                <span class="badge">{t}</span>
               ))}
             </div>
 
             <!-- Links -->
             <div class="flex gap-4">
               {featured.github && (
-                <a href={featured.github} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors text-sm font-mono">
+                <a href={featured.github} target="_blank" class="mono-label hover:text-accent-pink transition-colors">
                   View Code →
                 </a>
               )}
               {featured.demo && (
-                <a href={featured.demo} target="_blank" class="text-accent-pink hover:text-accent-blue transition-colors text-sm font-mono">
+                <a href={featured.demo} target="_blank" class="mono-label hover:text-accent-blue transition-colors">
                   Live Demo →
                 </a>
               )}
@@ -65,37 +68,37 @@ const others = PROJECTS.filter((p) => !p.featured);
     {
       others.length > 0 && (
         <>
-          <h3 class="text-xl font-bold text-text-primary mb-6 animate-on-scroll delay-2">Other Projects</h3>
+          <h3 class="section-label animate-on-scroll delay-2">OTHER PROJECTS</h3>
           <div class="grid md:grid-cols-2 gap-6">
             {others.map((project, idx) => (
-              <div class={`glass p-6 hover:border-accent-pink transition-all duration-300 group cursor-pointer animate-on-scroll delay-${(idx % 4) + 1}`}>
+              <div class={`card group cursor-pointer animate-on-scroll delay-${Math.min((idx % 4) + 1, 4)}`}>
                 <!-- Category badge -->
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-xs font-mono font-semibold px-2 py-1 rounded-full bg-opacity-10" style={`background-color: ${project.categoryColor}; color: ${project.categoryColor}`}>
+                <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                  <span class="badge" style={`background-color: ${project.categoryColor}20; color: ${project.categoryColor}; border-color: ${project.categoryColor}40;`}>
                     {project.category}
                   </span>
-                  <span class="text-xs font-mono text-text-muted">{project.label}</span>
+                  <span class="mono-label">{project.label}</span>
                 </div>
 
                 <!-- Title + Desc -->
-                <h4 class="text-lg font-bold text-text-primary mb-2 group-hover:text-accent-pink transition-colors">{project.title}</h4>
-                <p class="text-sm text-text-muted mb-4">{project.description}</p>
+                <h4 class="card-title mb-2 group-hover:text-accent-pink transition-colors">{project.title}</h4>
+                <p class="body-text text-sm mb-4">{project.description}</p>
 
                 <!-- Metrics -->
                 {project.metrics.length > 0 && (
-                  <div class="text-xs text-accent-orange mb-3 font-mono">{project.metrics.join(' • ')}</div>
+                  <div class="mono-label text-xs mb-3">{project.metrics.join(' • ')}</div>
                 )}
 
                 <!-- Tech -->
                 <div class="flex flex-wrap gap-1 mb-4">
                   {project.tech.map((t) => (
-                    <span class="text-xs bg-bg-glass text-text-primary px-2 py-1 rounded">{t}</span>
+                    <span class="badge text-xs">{t}</span>
                   ))}
                 </div>
 
                 <!-- Link -->
                 {project.github && (
-                  <a href={project.github} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors text-xs font-mono">
+                  <a href={project.github} target="_blank" class="mono-label hover:text-accent-pink transition-colors text-xs">
                     View Code →
                   </a>
                 )}
@@ -107,10 +110,3 @@ const others = PROJECTS.filter((p) => !p.featured);
     }
   </div>
 </section>
-
-<style>
-  section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-</style>

@@ -7,36 +7,38 @@
   padding: 0;
 }
 
-/* CSS Variables - Anime Sunset Color Palette (Light Mode) */
+/* CSS Variables - Unified Dark Theme */
 :root {
-  --bg-base: #ffffff;
-  --bg-surface: #f8f9fa;
-  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-base: #050508;
+  --bg-surface: #0F0F1A;
+  --bg-glass: rgba(15, 15, 26, 0.6);
   --accent-pink: #FF9999;
   --accent-purple: #B895C0;
   --accent-blue: #6BB6FF;
   --accent-orange: #FFA500;
   --accent-coral: #FFB3BA;
-  --text-primary: #111111;
-  --text-muted: rgba(0, 0, 0, 0.6);
-  --glass-border: rgba(0, 0, 0, 0.1);
+  --accent-cyan: #22D3EE;
+  --accent-violet: #8B5CF6;
+  --accent-amber: #F59E0B;
+  --text-primary: #F1F5F9;
+  --text-muted: rgba(241, 245, 249, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.07);
 }
 
-/* Dark mode overrides */
+/* Dark mode (default) */
 .dark {
-  --bg-base: #000000;
-  --bg-surface: #16213e;
-  --bg-glass: rgba(71, 103, 190, 0.7);
-  --text-primary: #F5F5F5;
-  --text-muted: rgba(245, 245, 245, 0.6);
-  --glass-border: rgba(255, 182, 186, 0.1);
-  /* Keep the same accent colors */
+  --bg-base: #050508;
+  --bg-surface: #0F0F1A;
+  --bg-glass: rgba(15, 15, 26, 0.6);
+  --text-primary: #F1F5F9;
+  --text-muted: rgba(241, 245, 249, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.07);
 }
 
-/* Scroll snap root */
+/* Scroll behavior */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   overflow-y: scroll;
   height: 100%;
   font-family: 'Inter', sans-serif;
@@ -50,14 +52,119 @@ body {
   line-height: 1.6;
 }
 
-/* Each section snaps */
+/* Section base styles */
 section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  min-height: 100vh;
+  scroll-margin-top: 80px;
+  position: relative;
 }
 
-/* Glass morphism */
+/* Sections that are taller than viewport should not snap */
+section.content-heavy {
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+}
+
+/* Section backgrounds - alternating for visual separation (excluding Hero and Skills) */
+section:not(#hero):not(#skills):nth-child(odd) {
+  background: var(--bg-base);
+}
+
+section:not(#hero):not(#skills):nth-child(even) {
+  background: var(--bg-surface);
+}
+
+/* Section separator (excluding Hero and Skills) */
+section:not(#hero):not(#skills)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Consistent section padding */
+.section-padding {
+  padding: 5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 2rem;
+  }
+}
+
+/* Consistent content container */
+.content-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Section label (above heading) */
+.section-label {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Section heading */
+.section-heading {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2.5rem;
+  line-height: 1.2;
+}
+
+/* Card title */
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* Body text */
+.body-text {
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* Metric / code label */
+.mono-label {
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-cyan);
+}
+
+/* Unified card style */
+.card {
+  background: rgba(15, 15, 26, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-4px);
+}
+
+/* Glass morphism (legacy support) */
 .glass {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
@@ -67,19 +174,19 @@ section {
 
 /* Glow utilities */
 .glow-pink {
-  box-shadow: 0 0 20px rgba(202, 44, 44, 0.4);
+  box-shadow: 0 0 20px rgba(255, 153, 153, 0.4);
 }
 
 .glow-purple {
-  box-shadow: 0 0 20px rgba(183, 84, 206, 0.4);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
 }
 
 .glow-blue {
-  box-shadow: 0 0 20px rgba(36, 119, 202, 0.4);
+  box-shadow: 0 0 20px rgba(107, 182, 255, 0.4);
 }
 
 .glow-orange {
-  box-shadow: 0 0 20px rgba(199, 141, 33, 0.4);
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
 }
 
 /* Fade-in-up animation */
@@ -94,7 +201,7 @@ section {
   transform: translateY(0);
 }
 
-/* Stagger delays */
+/* Stagger delays - max 0.4s */
 .delay-1 {
   transition-delay: 0.1s;
 }
@@ -179,4 +286,88 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-blue);
+}
+
+/* Mobile fixes */
+@media (max-width: 767px) {
+  /* Single column grids */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Prevent text overflow */
+  p, h1, h2, h3, h4, h5, h6, span, a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Minimum touch target size */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Navbar scrolled state */
+nav.scrolled {
+  background: rgba(5, 5, 8, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom-color: var(--glass-border) !important;
+}
+
+/* Footer - no scroll snap */
+footer {
+  scroll-snap-type: none;
+  scroll-snap-align: none;
+}
+
+/* Hero specific - exact 100vh */
+#hero {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  scroll-margin-top: 0;
+}
+
+/* Skills section - no snap since it's a marquee */
+#skills {
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+}
+
+/* Content sections with lots of content */
+#projects,
+#education,
+#experience {
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+  min-height: 100vh;
+  height: auto;
+}
+
+/* Ensure proper text contrast */
+.text-muted {
+  color: rgba(241, 245, 249, 0.7) !important;
+}
+
+/* Badge/pill styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+/* Active link style */
+nav a.active {
+  color: var(--accent-pink) !important;
 }

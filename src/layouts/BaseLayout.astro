@@ -2,7 +2,8 @@
 interface Props {
   title?: string;
 }
-
+import '../styles/global.css'
+import { ThemeProvider } from '../../components/theme-provider';
 const { title = 'Your Name — AI/ML Engineer' } = Astro.props;
 ---
 
@@ -21,23 +22,25 @@ const { title = 'Your Name — AI/ML Engineer' } = Astro.props;
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
-    <slot />
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <slot />
 
-    <!-- Global scroll animation observer -->
-    <script>
-      const els = document.querySelectorAll('.animate-on-scroll');
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
-      els.forEach((el) => observer.observe(el));
-    </script>
+      <!-- Global scroll animation observer -->
+      <script>
+        const els = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+        els.forEach((el) => observer.observe(el));
+      </script>
+    </ThemeProvider>
   </body>
 </html>
 

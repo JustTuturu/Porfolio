@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -5,19 +7,30 @@
   padding: 0;
 }
 
-/* CSS Variables - Anime Sunset Color Palette */
+/* CSS Variables - Anime Sunset Color Palette (Light Mode) */
 :root {
-  --bg-base: #1a1a2e;
-  --bg-surface: #16213e;
-  --bg-glass: rgba(22, 33, 62, 0.7);
+  --bg-base: #ffffff;
+  --bg-surface: #f8f9fa;
+  --bg-glass: rgba(255, 255, 255, 0.7);
   --accent-pink: #FF9999;
   --accent-purple: #B895C0;
   --accent-blue: #6BB6FF;
   --accent-orange: #FFA500;
   --accent-coral: #FFB3BA;
+  --text-primary: #111111;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode overrides */
+.dark {
+  --bg-base: #000000;
+  --bg-surface: #16213e;
+  --bg-glass: rgba(71, 103, 190, 0.7);
   --text-primary: #F5F5F5;
   --text-muted: rgba(245, 245, 245, 0.6);
   --glass-border: rgba(255, 182, 186, 0.1);
+  /* Keep the same accent colors */
 }
 
 /* Scroll snap root */
@@ -54,19 +67,19 @@ section {
 
 /* Glow utilities */
 .glow-pink {
-  box-shadow: 0 0 20px rgba(255, 153, 153, 0.4);
+  box-shadow: 0 0 20px rgba(202, 44, 44, 0.4);
 }
 
 .glow-purple {
-  box-shadow: 0 0 20px rgba(184, 149, 192, 0.4);
+  box-shadow: 0 0 20px rgba(183, 84, 206, 0.4);
 }
 
 .glow-blue {
-  box-shadow: 0 0 20px rgba(107, 182, 255, 0.4);
+  box-shadow: 0 0 20px rgba(36, 119, 202, 0.4);
 }
 
 .glow-orange {
-  box-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
+  box-shadow: 0 0 20px rgba(199, 141, 33, 0.4);
 }
 
 /* Fade-in-up animation */

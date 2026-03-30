@@ -1,38 +1,60 @@
 ---
 import { META } from '../data/index';
 ---
+<!-- Skip link -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <nav
   id="navbar"
-  class="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300 backdrop-blur-0"
+  class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-300"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
     <!-- Left: Name in small caps -->
-    <div class="text-sm font-mono font-semibold tracking-widest text-text-primary">
+    <a href="/" class="text-sm font-mono font-semibold tracking-widest text-text-primary hover:text-accent-pink transition-colors focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
       {META.name.split(' ').join(' ')}
-    </div>
+    </a>
 
     <!-- Right: Links + CTA -->
     <div class="flex items-center gap-6">
-      <a href="#about" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
-        about
+      <!-- Mobile hamburger button -->
+      <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg hover:bg-accent-pink/20 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2" aria-label="Open menu">
+        <svg class="h-6 w-6 text-text-muted" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#about" class="text-sm text-text-muted hover:text-accent-pink transition-colors focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+          about
+        </a>
+        <a href="#projects" class="text-sm text-text-muted hover:text-accent-pink transition-colors focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+          projects
+        </a>
+        <a href="#contact" class="text-sm text-text-muted hover:text-accent-pink transition-colors focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+          contact
+        </a>
+        <!-- Theme toggle button -->
+        <button class="theme-toggle p-2 rounded-lg hover:bg-accent-pink/20 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2 text-text-muted hover:text-accent-pink transition-colors" aria-label="Toggle theme">
+          <svg id="theme-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <!-- Icon will be set by script -->
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu (hidden by default) -->
+  <div id="mobile-menu" class="md:hidden">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:text-accent-pink hover:bg-accent-pink/10 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+        About
       </a>
-      <a href="#skills" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
-        skills
+      <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium hover:text-accent-pink hover:bg-accent-pink/10 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+        Projects
       </a>
-      <a href="#projects" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
-        projects
-      </a>
-      <a href="#contact" class="text-sm text-text-muted hover:text-accent-pink transition-colors">
-        contact
-      </a>
-
-      <!-- CTA Button -->
-      <a
-        href={`mailto:${META.email}`}
-        class="ml-2 px-4 py-2 bg-accent-pink text-white text-sm rounded-lg hover:bg-accent-coral transition-all duration-200 font-medium"
-      >
-        Get in touch
+      <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:text-accent-pink hover:bg-accent-pink/10 focus:outline-none focus:ring-2 focus:ring-accent-pink focus:ring-offset-2">
+        Contact
       </a>
     </div>
   </div>
@@ -40,29 +62,124 @@ import { META } from '../data/index';
 
 <script>
   const nav = document.getElementById('navbar');
+  if (!nav) {
+    console.error('Navbar element not found');
+  } else {
+    const navLinks = new Map([
+      ['about', nav.querySelector('a[href="#about"]')],
+      ['projects', nav.querySelector('a[href="#projects"]')],
+      ['contact', nav.querySelector('a[href="#contact"]')]
+    ]);
 
-  window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY;
-    const triggerPoint = window.innerHeight * 0.9;
-
-    if (scrollPosition > triggerPoint) {
-      nav?.classList.add('scrolled');
-      nav?.style.setProperty('background', 'rgba(26, 26, 46, 0.85)');
-      nav?.style.setProperty('backdrop-filter', 'blur(12px)');
-    } else {
-      nav?.classList.remove('scrolled');
-      nav?.style.setProperty('background', 'transparent');
-      nav?.style.setProperty('backdrop-filter', 'blur(0px)');
+    function setActiveByHash() {
+      const hash = window.location.hash.substring(1);
+      navLinks.forEach((link) => {
+        if (link) link.classList.remove('active');
+      });
+      const link = navLinks.get(hash);
+      if (link) {
+        link.classList.add('active');
+      }
     }
-  });
+
+    // Set active link on load (in case of hash in URL)
+    setActiveByHash();
+
+    // Observe sections to set active link on scroll
+    const sections = new Map([
+      ['about', document.getElementById('about')],
+      ['skills', document.getElementById('skills')],
+      ['projects', document.getElementById('projects')],
+      ['contact', document.getElementById('contact')]
+    ]);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => {
+              if (link) link.classList.remove('active');
+            });
+            const link = sections.get(id);
+            if (link) {
+              // We need to get the corresponding nav link by id
+              const navLink = navLinks.get(id);
+              if (navLink) {
+                navLink.classList.add('active');
+              }
+            }
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    sections.forEach((section, id) => {
+      if (section) {
+        observer.observe(section);
+      }
+    });
+
+    // Existing scrolled class functionality (keep it)
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      const triggerPoint = window.innerHeight * 0.9;
+
+      if (scrollPosition > triggerPoint) {
+        nav?.classList.add('scrolled');
+      } else {
+        nav?.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Theme toggle functionality
+    const themeToggleBtn = document.querySelector('.theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeToggleBtn && themeIcon) {
+      // Set initial icon based on current theme
+      const updateThemeIcon = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        themeIcon.innerHTML = isDark
+          ? '<path stroke-linecap="round" stroke-linejoin="round" d="M20.35 15.32A22.92 22.92 0 0112.9 2.07a2.92 2.92 0 10-4.13 5.3A22.9 22.9 0 017.5 12.9c0 1.26.16 2.5.44 3.69a2.92 2.92 0 104.13-5.3z"/>'
+          : '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>';
+      };
+
+      // Update icon on load
+      updateThemeIcon();
+
+      // Toggle theme on click
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        updateThemeIcon();
+      });
+    }
+  }
 </script>
 
 <style>
   nav {
     border-bottom: 1px solid transparent;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
   }
 
   nav.scrolled {
     border-bottom-color: var(--glass-border);
+    background-color: rgba(26, 26, 46, 0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Active link style */
+  nav a.active {
+    color: var(--accent-pink);
   }
 </style>

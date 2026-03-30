@@ -1,66 +1,140 @@
 ---
-import { SKILLS } from '../data/index';
-
-const categories = {
-  lang: { title: 'Languages', color: '#FF9999' },
-  ml: { title: 'ML/DL', color: '#6BB6FF' },
-  llm: { title: 'LLMs', color: '#FFA500' },
-  tool: { title: 'Tools', color: '#B895C0' },
-};
+import { SKILLS } from '../data/index.ts';
+const { isFirstPage = false } = Astro.props;
 ---
 
-<section id="skills" class="relative bg-bg-base py-20 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-5xl mx-auto">
-    <!-- Section heading -->
-    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-12 font-heading animate-on-scroll">
-      Skills & Expertise
-    </h2>
-
-    <!-- Skills grid -->
-    <div class="space-y-12">
-      {
-        Object.entries(categories).map(([key, category], idx) => {
-          const categorySkills = SKILLS.filter((s) => s.category === key);
-          return (
-            <div class={`animate-on-scroll delay-${(idx % 4) + 1}`}>
-              <h3 class="text-lg font-mono text-text-primary mb-4" style={`color: ${category.color}`}>
-                {category.title}
-              </h3>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categorySkills.map((skill) => (
-                  <div class="glass p-4 group cursor-pointer hover:border-accent-pink transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-start justify-between mb-3">
-                      <div class="flex items-center gap-3">
-                        <span class="text-2xl">{skill.icon}</span>
-                        <div>
-                          <h4 class="font-semibold text-text-primary text-sm">{skill.name}</h4>
-                          <p class="text-xs text-text-muted">{skill.desc}</p>
-                        </div>
-                      </div>
-                      {skill.exploring && <span class="text-xs bg-accent-orange bg-opacity-20 text-accent-orange px-2 py-1 rounded">exploring</span>}
-                    </div>
-
-                    <!-- Proficiency bar -->
-                    <div class="w-full bg-bg-glass rounded-full h-2 overflow-hidden">
-                      <div class="h-full bg-gradient-to-r from-accent-pink to-accent-blue" style={`width: ${(skill.proficiency / 5) * 100}%`}></div>
-                    </div>
-
-                    <p class="text-xs text-text-muted mt-2">Proficiency: {skill.proficiency}/5</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })
-      }
-    </div>
-  </div>
-</section>
-
 <style>
-  section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+  :root {
+    --bg-base: #0b0b0c;
+    --text-muted: #ffffff;
+    --text-primary: #ffffff;
+  }
+
+  .skills-section {
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem 0;
+    background: ${isFirstPage ? 'transparent' : 'var(--bg-base)'};
+  }
+
+  .skills-label {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    opacity: 0.65;
+  }
+
+  /* Fade left/right edges */
+  .fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .fade-left  { left: 0;  background: linear-gradient(to right, var(--bg-base), transparent); }
+  .fade-right { right: 0; background: linear-gradient(to left,  var(--bg-base), transparent); }
+
+  /* Scrolling row */
+  .skills-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 30s linear infinite;
+  }
+
+  /* Pause on hover */
+  .skills-track:hover {
+    animation-play-state: paused;
+  }
+
+  .skills-group {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding-right: 3rem; /* gap between the two groups */
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+    cursor: default;
+    user-select: none;
+  }
+
+  .tech-item:hover {
+    opacity: 1;
+  }
+
+  .tech-item img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.4);
+  }
+
+  .tech-item span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+  }
+
+  /* The core animation: slides exactly 50% (one full copy) */
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .skills-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      padding: 0 2rem;
+      gap: 1.5rem;
+    }
+    .skills-group:last-child { display: none; }
+    .fade { display: none; }
   }
 </style>
+
+<div id="skills" class="skills-section">
+  <p class="skills-label">Tech Stack</p>
+
+  <!-- Fade edges -->
+  <div class="fade fade-left"></div>
+  <div class="fade fade-right"></div>
+
+  <!-- Scrolling track: duplicated group for seamless loop -->
+  <div class="skills-track">
+    <div class="skills-group">
+      {SKILLS.map(({ name, icon }) => (
+        <div class="tech-item">
+          <img src={icon} alt={name} />
+          <span>{name}</span>
+        </div>
+      ))}
+    </div>
+    <!-- Duplicate for seamless loop -->
+    <div class="skills-group" aria-hidden="true">
+      {SKILLS.map(({ name, icon }) => (
+        <div class="tech-item">
+          <img src={icon} alt={name} />
+          <span>{name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

@@ -2,104 +2,25 @@
 import { META } from '../data/index';
 ---
 
-<section id="contact" class="relative bg-bg-surface py-20 px-4 sm:px-6 lg:px-8">
+<section id="contact" class="relative bg-bg-base min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
   <div class="max-w-2xl mx-auto">
-    <h2 class="text-4xl md:text-5xl font-bold text-text-primary mb-4 font-heading animate-on-scroll">
-      Let's Talk
-    </h2>
-
-    <p class="text-text-muted text-lg mb-12 animate-on-scroll delay-1">
-      Have a project in mind or want to collaborate? I'd love to hear from you. Drop me a message and let's create something amazing together.
-    </p>
-
-    <!-- Contact form -->
-    <form
-      action="https://formspree.io/f/xyzqwerty"
-      method="POST"
-      class="space-y-6 animate-on-scroll delay-2"
-    >
-      <!-- Name input -->
-      <div>
-        <label for="name" class="block text-sm font-mono text-accent-blue mb-2">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          class="w-full glass px-4 py-3 text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-blue transition-colors"
-          placeholder="Your name"
-        />
-      </div>
-
-      <!-- Email input -->
-      <div>
-        <label for="email" class="block text-sm font-mono text-accent-blue mb-2">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          class="w-full glass px-4 py-3 text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-blue transition-colors"
-          placeholder="your.email@example.com"
-        />
-      </div>
-
-      <!-- Message textarea -->
-      <div>
-        <label for="message" class="block text-sm font-mono text-accent-blue mb-2">Message</label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows="5"
-          class="w-full glass px-4 py-3 text-text-primary placeholder-text-muted font-mono text-sm focus:outline-none focus:border-accent-cyan transition-colors resize-none"
-          placeholder="> drop a message here_"
-        ></textarea>
-        <p class="text-xs text-text-muted mt-2">
-          <span id="char-count">0</span>/500 characters
-        </p>
-      </div>
-
-      <!-- Submit button -->
-      <button
-        type="submit"
-        class="w-full bg-gradient-to-r from-accent-pink to-accent-blue text-white font-semibold py-3 rounded-lg hover:shadow-lg hover:shadow-accent-pink/50 transition-all duration-300"
-      >
-        Send Message
-      </button>
-    </form>
-
-    <!-- Direct contact info -->
+    <!-- Contact info -->
     <div class="mt-12 pt-8 border-t border-glass-border animate-on-scroll delay-3">
       <p class="text-text-muted text-sm mb-4">Or reach out directly:</p>
       <div class="flex flex-col gap-3">
-        <a href={`mailto:${META.email}`} class="text-accent-blue hover:text-accent-pink transition-colors font-mono text-sm">
+        <a href={`mailto:${META.email}`} class="text-accent-black hover:text-accent-pink transition-colors font-mono text-sm">
           Email: {META.email}
         </a>
-        <a href={META.github} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors font-mono text-sm">
+        <a href={META.github} target="_blank" class="text-accent-black hover:text-accent-pink transition-colors font-mono text-sm">
           GitHub: {META.github}
         </a>
-        <a href={META.linkedin} target="_blank" class="text-accent-blue hover:text-accent-pink transition-colors font-mono text-sm">
+        <a href={META.linkedin} target="_blank" class="text-accent-black hover:text-accent-pink transition-colors font-mono text-sm">
           LinkedIn: {META.linkedin}
         </a>
       </div>
     </div>
   </div>
 </section>
-
-<script>
-  const textarea = document.getElementById('message') as HTMLTextAreaElement;
-  const charCount = document.getElementById('char-count');
-
-  if (textarea && charCount) {
-    textarea.addEventListener('input', () => {
-      charCount.textContent = textarea.value.length;
-      if (textarea.value.length > 500) {
-        textarea.value = textarea.value.substring(0, 500);
-      }
-    });
-  }
-</script>
 
 <style>
   section {
@@ -116,7 +37,7 @@ import { META } from '../data/index';
 
   input.glass:focus,
   textarea.glass:focus {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 20px rgba(107, 182, 255, 0.2);
+    border-color: var(--accent-black);
+    box-shadow: 0 0 20px rgba(238, 234, 234, 0.932);
   }
 </style>

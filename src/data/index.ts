@@ -5,11 +5,7 @@ export const META = {
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/justtuturu',
   available: true,
-  availableFrom: 'July 2025',
   location: 'Ho Chi Minh City, Vietnam',
-  university: 'HCMUS University of Science',
-  graduationYear: '2025',
-  cgpa: '2.9 / 4.0',
 };
 
 export const ROLES = [
@@ -80,7 +76,7 @@ export const PROJECTS = [
     title: 'Project Four',
     description: 'Brief description of your fourth project.',
     metrics: ['10K Users'],
-    tech: ['FastAPI', 'React'],
+    tech: ['FastAPI'],
     github: 'https://github.com/yourusername/project4',
     demo: '',
     label: 'Internship',
@@ -91,7 +87,7 @@ export const EDUCATION = {
   university: 'HCMUS University of Science',
   degree: 'Bachelor of Science',
   major: 'Information Technology',
-  cgpa: '2.9/ 4.0',
+  cgpa: '3.0/ 4.0',
   graduation: 'October 2025',
   courses: ['Machine Learning', 'NLP', 'Data Structures & Algorithms', 'Computer Vision'],
 };
@@ -111,7 +107,7 @@ export const EXPERIENCES = [
     achievements: [
       'Actively seeking internship opportunities in AI/ML',
       'Open to remote and on-site positions',
-      'Available from July 2025',
+      'Available from October 2025',
     ],
     tech: ['Python', 'PyTorch', 'LLMs', 'MLOps'],
   },

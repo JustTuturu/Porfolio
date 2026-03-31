@@ -2,66 +2,128 @@
 import { META, EDUCATION } from '../data/index';
 ---
 
-<section id="about" class="section-padding">
+<section id="about" style="padding: 5rem 1.5rem;">
   <div class="content-container">
-    <!-- Section label -->
-    <span class="section-label animate-on-scroll">// ABOUT</span>
-    
-    <!-- Section heading -->
-    <h2 class="section-heading animate-on-scroll">
-      About Me
-    </h2>
 
-    <!-- Content grid -->
-    <div class="grid md:grid-cols-2 gap-8">
+    <span class="section-label animate-on-scroll">// about</span>
+    <h2 class="section-heading animate-on-scroll">About Me</h2>
+
+    <div class="about-grid animate-on-scroll delay-1">
+
       <!-- Left: Bio -->
-      <div class="space-y-6 animate-on-scroll delay-1">
-        <p class="body-text">
-          I'm a passionate AI/ML engineer and computer science student 
-          deeply interested in building intelligent systems. With a strong 
-          foundation in deep learning, NLP, and computer vision, 
-          I'm driven to solve real-world problems using cutting-edge AI technologies.
+      <div class="bio">
+        <p class="bio-text">
+          I'm a passionate AI/ML engineer and computer science student
+          deeply interested in building intelligent systems. With a strong
+          foundation in deep learning, NLP, and computer vision,
+          I'm driven to solve real-world problems using cutting-edge AI.
         </p>
-        <p class="body-text">
-          Whether it's fine-tuning large language models, building RAG pipelines, 
-          or optimizing neural networks, I love the challenge of pushing the 
-          boundaries of what's possible with AI. I'm currently seeking internship 
-          opportunities to apply and expand my skills.
-        </p>
-        <p class="body-text">
-          Outside of coding, you'll find me exploring new ML research papers, 
-          contributing to open-source projects, or working on side projects that 
-          combine my interests in AI and software engineering.
+        <p class="bio-text">
+          Whether it's fine-tuning large language models, building RAG pipelines,
+          or optimizing neural networks, I love pushing the boundaries of what's
+          possible with AI. Currently seeking internship opportunities.
         </p>
       </div>
 
-      <!-- Right: Stats cards -->
-      <div class="space-y-4">
-        <!-- Education card -->
-        <div class="card animate-on-scroll delay-2">
-          <h3 class="mono-label mb-3">EDUCATION</h3>
-          <p class="card-title">{EDUCATION.university}</p>
-          <p class="body-text mt-2">{EDUCATION.degree} in {EDUCATION.major}</p>
-          <p class="body-text">Graduation: {EDUCATION.graduation}</p>
-          <p class="mono-label mt-3">GPA: {EDUCATION.cgpa}</p>
+      <!-- Right: Info -->
+      <div class="info-col">
+        <div class="info-divider"></div>
+
+        <div class="info-block">
+          <span class="info-key">Location</span>
+          <span class="info-val">{META.location}</span>
         </div>
 
-        <!-- Location card -->
-        <div class="card animate-on-scroll delay-3">
-          <h3 class="mono-label mb-3">LOCATION</h3>
-          <p class="card-title">{META.location}</p>
-          <p class="body-text mt-2">{META.availableFrom}</p>
+        <div class="info-divider"></div>
+
+        <div class="info-block">
+          <span class="info-key">Status</span>
+          <span class="info-val status">
+            <span class="status-dot"></span>
+            {META.available ? 'Available for internships' : 'Not available'}
+          </span>
         </div>
 
-        <!-- Status card -->
-        <div class="card animate-on-scroll delay-4 glow-pink">
-          <h3 class="mono-label mb-3" style="color: var(--accent-pink);">STATUS</h3>
-          <p class="card-title">
-            {META.available ? 'Available' : 'Not available'}
-          </p>
-          <p class="body-text mt-2">Open to internships and collaborations</p>
-        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* Bio */
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .bio-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: rgba(241,245,249,0.55);
+  }
+
+  /* Info column */
+  .info-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0.9rem 0;
+  }
+
+  .info-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(241,245,249,0.3);
+  }
+
+  .info-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .info-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(241,245,249,0.35);
+  }
+
+  .info-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Status dot */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-pink);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-pink);
+    animation: pulse-ring 2s infinite;
+    flex-shrink: 0;
+  }
+</style>

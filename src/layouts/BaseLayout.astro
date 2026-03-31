@@ -3,8 +3,7 @@ interface Props {
   title?: string;
 }
 import '../styles/global.css'
-import { ThemeProvider } from '../../components/theme-provider';
-const { title = 'Your Name — AI/ML Engineer' } = Astro.props;
+const { title = 'Tut — AI/ML Engineer' } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,33 +18,20 @@ const { title = 'Your Name — AI/ML Engineer' } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <slot />
-
-      <!-- Global scroll animation observer -->
-      <script>
-        const els = document.querySelectorAll('.animate-on-scroll');
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add('visible');
-              }
-            });
-          },
-          { threshold: 0.15 }
-        );
-        els.forEach((el) => observer.observe(el));
-      </script>
-    </ThemeProvider>
+    <slot />
+    <script>
+      const els = document.querySelectorAll('.animate-on-scroll');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.15 }
+      );
+      els.forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>
-
-<style>
-  :global(html) {
-    scroll-behavior: smooth;
-  }
-</style>

@@ -1,75 +1,73 @@
 ---
-import { SKILLS } from '../data/index.ts';
 ---
 
-<section id="skills" class="section-padding overflow-hidden">
-  <div class="content-container">
-    <!-- Section label -->
-    <span class="section-label animate-on-scroll">// SKILLS</span>
-    
-    <!-- Section heading -->
-    <h2 class="section-heading animate-on-scroll">
-      Tech Stack
-    </h2>
+<section id="skills" class="overflow-hidden" style="padding: 1.5rem 0; background: var(--bg-base);">
 
-    <!-- Skills marquee container -->
-    <div class="relative animate-on-scroll delay-1">
-      <!-- Fade edges -->
-      <div class="fade-edge fade-left"></div>
-      <div class="fade-edge fade-right"></div>
+  <div class="relative">
+    <div class="fade-edge fade-left"></div>
+    <div class="fade-edge fade-right"></div>
 
-      <!-- Scrolling track: duplicated group for seamless loop -->
-      <div class="skills-track">
-        <div class="skills-group">
-          {SKILLS.map(({ name, icon }) => (
-            <div class="tech-item">
-              <img src={icon} alt={name} />
-              <span>{name}</span>
-            </div>
-          ))}
-        </div>
-        <!-- Duplicate for seamless loop -->
-        <div class="skills-group" aria-hidden="true">
-          {SKILLS.map(({ name, icon }) => (
-            <div class="tech-item">
-              <img src={icon} alt={name} />
-              <span>{name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div class="skills-track">
+      <div class="skills-group" id="group1"></div>
+      <div class="skills-group" id="group2" aria-hidden="true"></div>
     </div>
   </div>
+
 </section>
+
+<script>
+const techs = [
+  { name: 'Docker',      icon: '/icons/docker.svg'      },
+  { name: 'FastAPI',     icon: '/icons/fastapi.svg'     },
+  { name: 'Git',         icon: '/icons/git.svg'         },
+  { name: 'HuggingFace', icon: '/icons/huggingface.svg' },
+  { name: 'Keras',       icon: '/icons/keras.svg'       },
+  { name: 'LangChain',   icon: '/icons/langchain.svg'   },
+  { name: 'Linux',       icon: '/icons/linux.svg'       },
+  { name: 'Milvus',      icon: '/icons/milvus.svg'      },
+  { name: 'Pandas',      icon: '/icons/pandas.svg'      },
+  { name: 'Polars',      icon: '/icons/polars.svg'      },
+  { name: 'PostgreSQL',  icon: '/icons/postgresql.svg'  },
+  { name: 'Python',      icon: '/icons/python.svg'      },
+  { name: 'PyTorch',     icon: '/icons/pytorch.svg'     },
+  { name: 'TensorFlow',  icon: '/icons/tensorflow.svg'  },
+  { name: 'vLLM',        icon: '/icons/vllm.svg'        },
+];
+
+function buildGroup(el) {
+  techs.forEach(t => {
+    const item = document.createElement('div');
+    item.className = 'tech-item';
+    item.innerHTML = `
+      <img src="${t.icon}" alt="${t.name}" width="24" height="24" />
+      <span class="tech-name">${t.name}</span>
+    `;
+    el.appendChild(item);
+  });
+}
+
+buildGroup(document.getElementById('group1'));
+buildGroup(document.getElementById('group2'));
+</script>
 
 <style>
   .fade-edge {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
+    top: 0; bottom: 0;
+    width: 50px;
     z-index: 2;
     pointer-events: none;
   }
-  
-  .fade-left {
-    left: 0;
-    background: linear-gradient(to right, var(--bg-surface), transparent);
-  }
-  
-  .fade-right {
-    right: 0;
-    background: linear-gradient(to left, var(--bg-surface), transparent);
-  }
 
-  /* Scrolling row */
+  .fade-left  { left: 0;  background: linear-gradient(to right, var(--bg-base), transparent); }
+  .fade-right { right: 0; background: linear-gradient(to left,  var(--bg-base), transparent); }
+
   .skills-track {
     display: flex;
     width: max-content;
     animation: scroll-left 30s linear infinite;
   }
 
-  /* Pause on hover */
   .skills-track:hover {
     animation-play-state: paused;
   }
@@ -77,69 +75,60 @@ import { SKILLS } from '../data/index.ts';
   .skills-group {
     display: flex;
     align-items: center;
-    gap: 3rem;
-    padding-right: 3rem;
+    gap: 5rem;
+    padding-right: 5rem;
   }
 
   .tech-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 10px;
     white-space: nowrap;
-    opacity: 0.6;
+    opacity: 0.45;
     transition: opacity 0.3s ease;
     cursor: default;
     user-select: none;
   }
 
-  .tech-item:hover {
-    opacity: 1;
-  }
+  .tech-item:hover { opacity: 1; }
 
   .tech-item img {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
-    filter: grayscale(1) brightness(1.4);
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
   }
 
-  .tech-item span {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+  .tech-item:hover img {
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+  }
+
+  .tech-name {
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-primary);
-    letter-spacing: 0.1em;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1em;
+    opacity: 0.9;
   }
 
-  /* The core animation: slides exactly 50% (one full copy) */
   @keyframes scroll-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
-  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .skills-track {
       animation: none;
       flex-wrap: wrap;
       justify-content: center;
       width: 100%;
-      padding: 0 2rem;
       gap: 1.5rem;
+      padding: 0 2rem;
     }
     .skills-group:last-child { display: none; }
     .fade-edge { display: none; }
-  }
-
-  /* Mobile adjustments */
-  @media (max-width: 767px) {
-    .skills-group {
-      gap: 2rem;
-      padding-right: 2rem;
-    }
-    
-    .fade-edge {
-      width: 50px;
-    }
   }
 </style>

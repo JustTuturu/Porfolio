@@ -1,5 +1,5 @@
 ---
-import { META, ROLES } from '../data/index';
+import { META} from '../data/index';
 ---
 
 <section
@@ -64,36 +64,35 @@ import { META, ROLES } from '../data/index';
 </section>
 
 <script>
-  // Typewriter effect
-  const roles = [
-    'AI/ML Engineer',
-    'LLM Fine-Tuning Enthusiast',
-    'Deep Learning Explorer',
-  ];
+  import { ROLES } from "../data";
 
-  let i = 0;
-  let j = 0;
-  let deleting = false;
-
+  const roles = ROLES;
   const el = document.getElementById('typewriter');
+  
+  if (el) {
+    let i = 0;
+    let j = 0;
+    let deleting = false;
 
-  function type() {
-    const word = roles[i];
-    el.textContent = deleting ? word.slice(0, --j) : word.slice(0, ++j);
+    function type() {
+      if (!el) return; 
+      const word = roles[i];
+      el.textContent = deleting ? word.slice(0, --j) : word.slice(0, ++j);
 
-    if (!deleting && j === word.length) {
-      deleting = true;
-      setTimeout(type, 1500);
-      return;
+      if (!deleting && j === word.length) {
+        deleting = true;
+        setTimeout(type, 1500);
+        return;
+      }
+
+      if (deleting && j === 0) {
+        deleting = false;
+        i = (i + 1) % roles.length;
+      }
+
+      setTimeout(type, deleting ? 60 : 100);
     }
 
-    if (deleting && j === 0) {
-      deleting = false;
-      i = (i + 1) % roles.length;
-    }
-
-    setTimeout(type, deleting ? 60 : 100);
+    type();
   }
-
-  type();
 </script>

@@ -4,6 +4,7 @@ export const META = {
   email: 'justtuturu@gmail.com',
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/justtuturu',
+  discord: 'justtuturu',
   available: true,
   location: 'Ho Chi Minh City, Vietnam',
 };

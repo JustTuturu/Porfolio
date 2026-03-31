@@ -28,7 +28,7 @@
         }
       });
     },
-    { threshold: 0.5 }
+    { rootMargin: '-40% 0px -40% 0px' }
   );
 
   sections.forEach((section) => observer.observe(section));
@@ -50,7 +50,7 @@
     background: rgba(241, 245, 249, 0.3);  
     border: none;
     cursor: pointer;
-    transition: all 0.01s ease;
+    transition: all 0.3s ease;
     padding: 0;
   }
 

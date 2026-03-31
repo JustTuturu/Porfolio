@@ -34,12 +34,12 @@ const techs = [
   { name: 'vLLM',        icon: '/icons/vllm.svg'        },
 ];
 
-function buildGroup(el) {
+function buildGroup(el:any) {
   techs.forEach(t => {
     const item = document.createElement('div');
     item.className = 'tech-item';
     item.innerHTML = `
-      <img src="${t.icon}" alt="${t.name}" width="24" height="24" />
+      <img src="${t.icon}" alt="${t.name}" width="24" height="24" loading="lazy"/>
       <span class="tech-name">${t.name}</span>
     `;
     el.appendChild(item);

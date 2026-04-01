@@ -22,6 +22,17 @@ const { title = 'Tut — AI/ML Engineer' } = Astro.props;
   <body>
     <slot />
     <script>
+      const hero = document.getElementById('hero');
+      window.addEventListener('scroll', () => {
+      if(!hero) return;
+      const scrollY = window.scrollY;
+      const heroHeight = hero.offsetHeight;
+      const progress = Math.min(scrollY / heroHeight, 1);
+
+      // Hero slides up and fades
+      hero.style.transform = `translateY(-${progress * 30}px)`;
+      hero.style.opacity = `${1 - progress * 1.5}`;
+    });
       const els = document.querySelectorAll('.animate-on-scroll');
       const observer = new IntersectionObserver(
         (entries) => {

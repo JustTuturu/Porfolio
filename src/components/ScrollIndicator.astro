@@ -9,30 +9,57 @@
   <button data-target="about"     class="scroll-dot" title="About"></button>
   <button data-target="projects"  class="scroll-dot" title="Projects"></button>
   <button data-target="education" class="scroll-dot" title="Education"></button>
-  <button data-target="contact"   class="scroll-dot" title="Contact"></button>
 </div>
 
 <script>
   const sections = document.querySelectorAll('section[id]');
   const dots = document.querySelectorAll('.scroll-dot');
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const currentActive = document.querySelector('.scroll-dot.active');
-          if (currentActive) currentActive.classList.remove('active');
+  function updateActiveSection() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    // Trigger point: 30% from top of viewport for earlier detection
+    const triggerPoint = scrollY + viewportHeight * 0.3;
 
-          const targetDot = document.querySelector(`[data-target="${entry.target.id}"]`);
-          if (targetDot) targetDot.classList.add('active');
-        }
+    let currentSection = 'hero';
+
+    sections.forEach((section) => {
+      const sectionTop = (section as HTMLElement).offsetTop;
+      const sectionHeight = (section as HTMLElement).offsetHeight;
+      const sectionBottom = sectionTop + sectionHeight;
+
+      if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
+        currentSection = section.id;
+      }
+    });
+
+    // Update active dot
+    dots.forEach((dot) => {
+      const target = (dot as HTMLElement).getAttribute('data-target');
+      if (target === currentSection) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  // Listen to scroll events with throttling
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveSection();
+        ticking = false;
       });
-    },
-    { rootMargin: '-40% 0px -40% 0px' }
-  );
+      ticking = true;
+    }
+  });
 
-  sections.forEach((section) => observer.observe(section));
+  // Initial call
+  updateActiveSection();
 
+  // Click handlers for dots
   dots.forEach((dot) => {
     dot.addEventListener('click', () => {
       const target = (dot as HTMLElement).getAttribute('data-target');

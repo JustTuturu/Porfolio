@@ -1,0 +1,243 @@
+---
+---
+
+<!-- Music widget — hidden by default -->
+<div id="music-widget" class="music-widget hidden">
+  <div class="music-inner">
+    <div class="music-body">
+      <img id="music-art" src="" alt="album art" class="music-art" style="display: none;"/>
+      <div class="music-info">
+        <p id="music-song" class="music-song">Nyan~</p>
+        <p id="music-artist" class="music-artist"></p>
+      </div>
+      
+    </div>
+
+    <div class="music-controls">
+      <a id="music-link" href="#" target="_blank" class="music-open">
+        Open in Spotify ↗
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Arrow key hint -->
+<div id="music-hint" class="music-hint">
+  <span>↑ now playing</span>
+</div>
+
+<script>
+  const DISCORD_USER_ID = '328694743057825792'; 
+
+  const widget = document.getElementById('music-widget');
+  const hint = document.getElementById('music-hint');
+  const songEl = document.getElementById('music-song');
+  const artistEl = document.getElementById('music-artist');
+  const artEl = document.getElementById('music-art') as HTMLImageElement;
+  const linkEl = document.getElementById('music-link') as HTMLAnchorElement;
+
+  let isOpen = false;
+  let spotify: any = null;
+  // Click navbar music button to open widget
+    const navMusicBtn = document.getElementById('music-btn');
+    navMusicBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    isOpen ? closeWidget() : openWidget();
+    });
+  // Fetch Lanyard data
+  async function fetchSpotify() {
+    try {
+      const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+      const data = await res.json();
+      spotify = data.data?.spotify ?? null;
+      updateWidget();
+    } catch (e) {
+      spotify = null;
+    }
+  }
+
+  function updateWidget() {
+    if (!spotify) {
+      if (songEl) songEl.textContent = 'Nyan~';
+      if (artistEl) artistEl.textContent = '';
+      if (artEl) {
+        artEl.src = '';
+        artEl.style.display = 'none';
+      }
+      if (linkEl) {
+      linkEl.href   = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
+      linkEl.target = '_blank'; // New tab
+    }
+    return;
+    }
+    if (songEl) songEl.textContent = spotify.song;
+    if (artistEl) artistEl.textContent = spotify.artist;
+    if (artEl) {
+      artEl.src = spotify.album_art_url;
+      artEl.style.display = 'block';
+    }
+      if (linkEl) {
+    linkEl.href = spotify?.track_id
+    ? `https://open.spotify.com/track/${spotify.track_id.split(':')}`
+    : `https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ?si=2e3f86f5af504b0c`;
+}
+  }
+  
+  function openWidget() {
+    isOpen = true;
+    widget?.classList.remove('hidden');
+    widget?.classList.add('visible');
+    hint?.classList.add('hidden');
+    fetchSpotify();
+  }
+
+  function closeWidget() {
+    isOpen = false;
+    widget?.classList.remove('visible');
+    widget?.classList.add('hidden');
+    hint?.classList.remove('hidden');
+  }
+
+  // Arrow UP key → open, Escape → close
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp' && !isOpen) {
+      e.preventDefault();
+      openWidget();
+    }
+    if (e.key === 'Escape' && isOpen) {
+      closeWidget();
+    }
+    if (e.key === 'ArrowDown' && isOpen) {
+      e.preventDefault();
+      closeWidget();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const clickedInsideWidget = widget?.contains(target);
+    const clickedNavBtn = navMusicBtn?.contains(target);
+
+    // close if clicked outside both widget and nav button
+    if (isOpen && !clickedInsideWidget && !clickedNavBtn) {
+        closeWidget();
+    }
+    });
+  // Initial fetch
+  fetchSpotify();
+  setInterval(fetchSpotify, 10000); // refresh every 10s
+</script>
+
+<style>
+  .music-widget {
+    position: fixed;
+    top: 3rem;
+    right: 0%;
+    transform: translateX(-10%) translateY(20px);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .music-widget.visible {
+    opacity: 1;
+    transform: translateX(-10%) translateY(0);
+    pointer-events: auto;
+  }
+
+  .music-widget.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .music-inner {
+    background: rgba(13, 14, 24, 0.92);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .music-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240, 232, 224, 0.3);
+  }
+
+  .music-art {
+    width: 52px;
+    height: 52px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .music-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .music-song {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .music-artist {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(240, 232, 224, 0.45);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .music-controls {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .music-open {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #1DB954;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .music-open:hover { opacity: 1; }
+
+  /* Hint pill at bottom */
+  .music-hint {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(240, 232, 224, 0.2);
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .music-hint.hidden { opacity: 0; }
+</style>

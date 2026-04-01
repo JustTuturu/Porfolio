@@ -1,5 +1,4 @@
 ---
-import { META } from '../data/index';
 ---
 
 <nav
@@ -19,25 +18,39 @@ import { META } from '../data/index';
   <div 
     class="flex items-center gap-6 pointer-events-auto"
     style="padding-right: 40px;">
-    <a href="#about"    class="nav-link">about</a>
-    <a href="#projects" class="nav-link">projects</a>
-    <a href="#contact"  class="nav-link">contact</a>
+    <a data-target="about"    class="nav-link">about</a>
+    <a data-target="projects" class="nav-link">projects</a>
+    <a data-target="contact"  class="nav-link">contact</a>
+    <script>
+      document.querySelectorAll('[data-target]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = link.getAttribute('data-target');
+          if (!id) return;
+          const section = document.getElementById(id);
+          if (!section) return;
+
+          const navHeight = 80; 
+          const top = section.getBoundingClientRect().top + window.scrollY - navHeight;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+    </script>
     
     <!-- Vertical divider -->
     <div class="w-px h-4 bg-white/20"></div>
     
     <!-- Icon -->
     <a 
-      href={META.github} 
-      target="_blank" 
-      rel="noopener noreferrer"
+      id="music-btn"
+      href="#"
       class="text-white opacity-60 hover:opacity-100 transition-opacity flex items-center"
-      aria-label="External link"
+      aria-label="Now playing"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-        <polyline points="15 3 21 3 21 9"></polyline>
-        <line x1="10" y1="14" x2="21" y2="3"></line>
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
       </svg>
     </a>
   </div>

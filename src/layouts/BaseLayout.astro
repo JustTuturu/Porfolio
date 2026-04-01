@@ -10,7 +10,7 @@ const {
   title = 'Tut — AI/ML Engineer', 
   description = 'AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.',
   image = '/images/hero.jpg',
-  url = 'https://yourdomain.com'
+  url = 'https://justtuturu.dev'
 } = Astro.props;
 
 const siteName = 'Tut Portfolio';
@@ -48,6 +48,8 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:site" content="@justuturu" />
+    <meta name="twitter:creator" content="@justuturu" />
     
     <!-- Preconnect for external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

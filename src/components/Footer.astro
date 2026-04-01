@@ -5,36 +5,20 @@ const currentYear = new Date().getFullYear();
 
 <footer style="border-top: 1px solid rgba(255,255,255,0.07); padding: 2rem 2rem;">
   <div class="content-container">
-    <div style="display: flex; align-items: center; justify-content: space-between;">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 text-center sm:text-left">
       
       <!-- Left: Name -->
-      <p style="
-        font-family: 'Inter', sans-serif;
-        font-size: 0.8rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(241,245,249,0.4);
-      ">
+      <p class="font-['Inter'] text-[0.8rem] tracking-[0.2em] uppercase text-[rgba(241,245,249,0.4)]">
         {META.name}
       </p>
 
       <!-- Center: Tagline -->
-      <p style="
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        color: rgba(241,245,249,0.25);
-        letter-spacing: 0.05em;
-      ">
+      <p class="font-['JetBrains_Mono'] text-[0.7rem] text-[rgba(241,245,249,0.25)] tracking-[0.05em]">
         built with curiosity & too much coffee ☕
       </p>
 
       <!-- Right: Copyright -->
-      <p style="
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        color: rgba(241,245,249,0.25);
-        letter-spacing: 0.05em;
-      ">
+      <p class="font-['JetBrains_Mono'] text-[0.7rem] text-[rgba(241,245,249,0.25)] tracking-[0.05em]">
         &copy; {currentYear}
       </p>
 

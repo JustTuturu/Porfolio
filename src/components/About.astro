@@ -1,11 +1,12 @@
 ---
-import {META} from '../data/index';
+import { META } from '../data/index';
 ---
 
-<section id="about" style="padding: 5rem 1.5rem;">
+<section id="about" style="padding: 5rem 1.5rem;" aria-labelledby="about-heading">
+
   <div class="content-container">
 
-    <span class="section-label animate-on-scroll">// about</span>
+    <span class="section-label animate-on-scroll" id="about-heading">// about</span>
     <h2 class="section-heading animate-on-scroll">About Me</h2>
 
     <div class="about-grid animate-on-scroll delay-1">
@@ -24,29 +25,29 @@ import {META} from '../data/index';
         </p>
 
         <!-- Buttons -->
-        <div class="btn-row">
-          <a href="/resume.pdf" target="_blank" class="btn-primary">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        <div class="btn-row" role="list" aria-label="Quick links">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-primary" role="listitem" aria-label="View resume (opens in new tab)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
             Resume
           </a>
-          <a href={META.email} target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <a href={`mailto:${META.email}`} target="_blank" rel="noopener noreferrer" class="btn-ghost" role="listitem" aria-label="Send email (opens in new tab)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
             Mail
           </a>
-          <a href={META.linkedin} target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <a href={META.linkedin} target="_blank" rel="noopener noreferrer" class="btn-ghost" role="listitem" aria-label="Visit LinkedIn profile (opens in new tab)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             LinkedIn
           </a>
-          <a href={META.twitter} target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <a href={META.twitter} target="_blank" rel="noopener noreferrer" class="btn-ghost" role="listitem" aria-label="Visit X profile (opens in new tab)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
             X
           </a>
-          <a href={META.github} target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <a href={META.github} target="_blank" rel="noopener noreferrer" class="btn-ghost" role="listitem" aria-label="Visit GitHub profile (opens in new tab)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
             GitHub
           </a>
 
@@ -54,37 +55,37 @@ import {META} from '../data/index';
       </div>
 
       <div class="info-col">
-        <div class="discord-card">
+        <div class="discord-card" aria-label="Discord status">
           <div class="discord-top">
             <span class="discord-label">// Discord</span>
             <span class="discord-status">
-              <span class="discord-dot"></span>
+              <span class="discord-dot" aria-hidden="true"></span>
               <span id="discord-status-text">Offline</span>
             </span>
 
           </div>
-          <p class="discord-user">{META.discord}</p>
+          <p class="discord-user">suzu</p>
           <div class="discord-avatar-wrapper">
-            <span class="discord-avatar-dot"></span>
-            <img class="discord-avatar" src="" alt="Discord Avatar" />
+            <span class="discord-avatar-dot" aria-hidden="true"></span>
+            <img class="discord-avatar" src="" alt="Discord avatar for {META.discord}" width="40" height="40" loading="lazy" />
           </div>
-          <p class="discord-activity" id="discord-activity">no current activity</p>
+          <p class="discord-activity" id="discord-activity" aria-live="polite">no current activity</p>
           
         </div>
 
-        <div class="info-divider"></div>
+        <div class="info-divider" role="separator" aria-hidden="true"></div>
 
         <div class="info-block">
           <span class="info-key">Location</span>
           <span class="info-val">{META.location}</span>
         </div>
 
-        <div class="info-divider"></div>
+        <div class="info-divider" role="separator" aria-hidden="true"></div>
 
         <div class="info-block">
           <span class="info-key">Status</span>
           <span class="info-val status">
-            <span class="status-dot"></span>
+            <span class="status-dot" aria-hidden="true"></span>
             {META.available ? 'Available for internships' : 'Not available'}
           </span>
         </div>
@@ -94,49 +95,58 @@ import {META} from '../data/index';
   </div>
 </section>
 
-<script>
-  const DISCORD_USER_ID = '328694743057825792';
+<script is:inline>
+  var DISCORD_USER_ID = '328694743057825792';
 
-  async function fetchDiscordStatus() {
-    try {
-      const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
-      const data = await res.json();
+  function fetchDiscordStatus() {
+    fetch('https://api.lanyard.rest/v1/users/' + DISCORD_USER_ID)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (!data.success) return;
 
-      if (!data.success) return;
+        var discord_status = data.data.discord_status;
+        var activities = data.data.activities;
+        var discord_user = data.data.discord_user;
 
-      const { discord_status, activities, avatar, discord_user } = data.data;
+        var dot = document.querySelector('.discord-dot');
+        var statusText = document.getElementById('discord-status-text');
+        var activityEl = document.getElementById('discord-activity');
+        var avatarEl = document.querySelector('.discord-avatar');
 
-      const dot = document.querySelector('.discord-dot') as HTMLElement;
-      const statusText = document.getElementById('discord-status-text');
-      const activityEl = document.getElementById('discord-activity');
-      const avatarEl = document.querySelector('.discord-avatar') as HTMLImageElement;
+        var colors = {
+          online: '#57F287',
+          idle: '#FEE75C',
+          dnd: '#ED4245',
+          offline: 'rgba(255,255,255,0.2)',
+        };
 
-      const colors: Record<string, string> = {
-        online: '#57F287',
-        idle: '#FEE75C',
-        dnd: '#ED4245',
-        offline: 'rgba(255,255,255,0.2)',
-      };
+        if (dot) dot.style.background = colors[discord_status] || colors.offline;
+        if (statusText) statusText.textContent = discord_status === 'dnd' ? 'do not disturb' : discord_status;
 
-      if (dot) dot.style.background = colors[discord_status] ?? colors.offline;
-      if (statusText) statusText.textContent = discord_status === 'dnd' ? 'do not disturb' : discord_status;
+        var activity = null;
+        if (activities) {
+          for (var i = 0; i < activities.length; i++) {
+            if (activities[i].type === 0) {
+              activity = activities[i];
+              break;
+            }
+          }
+        }
+        if (activityEl) {
+          activityEl.textContent = activity
+            ? 'playing ' + activity.name
+            : (activities && activities[0] ? activities[0].state : 'no current activity');
+        }
 
-      const activity = activities?.find((a: any) => a.type === 0);
-      if (activityEl) {
-        activityEl.textContent = activity
-          ? `playing ${activity.name}`
-          : activities?.[0]?.state ?? 'no current activity';
-      }
-
-      if (avatarEl && discord_user) {
-        const avatarHash = discord_user.avatar;
-        if (avatarHash) {
-          const ext = avatarHash.startsWith('a_') ? 'gif' : 'webp';
-          avatarEl.src = `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.${ext}?size=128`;
-        } else return;
-      }
-
-    } catch (e) {}
+        if (avatarEl && discord_user) {
+          var avatarHash = discord_user.avatar;
+          if (avatarHash) {
+            var ext = avatarHash.indexOf('a_') === 0 ? 'gif' : 'webp';
+            avatarEl.src = 'https://cdn.discordapp.com/avatars/' + DISCORD_USER_ID + '/' + avatarHash + '.' + ext + '?size=128';
+          }
+        }
+      })
+      .catch(function() {});
   }
 
   fetchDiscordStatus();

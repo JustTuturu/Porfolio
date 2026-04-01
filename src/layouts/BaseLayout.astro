@@ -1,9 +1,21 @@
 ---
 interface Props {
   title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
 }
 import '../styles/global.css'
-const { title = 'Tut — AI/ML Engineer' } = Astro.props;
+const { 
+  title = 'Tut — AI/ML Engineer', 
+  description = 'AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.',
+  image = '/images/hero.jpg',
+  url = 'https://yourdomain.com'
+} = Astro.props;
+
+const siteName = 'Tut Portfolio';
+const canonicalUrl = url;
+const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
 ---
 
 <!DOCTYPE html>
@@ -12,37 +24,89 @@ const { title = 'Tut — AI/ML Engineer' } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    
+    <!-- Primary SEO meta tags -->
+    <meta name="description" content={description} />
+    <meta name="author" content="Tut" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    
+    <!-- Preconnect for external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.lanyard.rest" />
+    <link rel="preconnect" href="https://cdn.discordapp.com" />
+    
+    <!-- Google Fonts (deferred loading) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tut",
+      "jobTitle": "AI/ML Engineer",
+      "url": canonicalUrl,
+      "sameAs": [
+        "https://github.com/justtuturu",
+        "https://linkedin.com/in/justtuturu",
+        "https://x.com/justuturu"
+      ]
+    })} />
   </head>
   <body>
     <slot />
-    <script>
+    <script is:inline>
       const hero = document.getElementById('hero');
-      window.addEventListener('scroll', () => {
-      if(!hero) return;
-      const scrollY = window.scrollY;
-      const heroHeight = hero.offsetHeight;
-      const progress = Math.min(scrollY / heroHeight, 1);
+      window.addEventListener('scroll', function() {
+        if(!hero) return;
+        const scrollY = window.scrollY;
+        const heroHeight = hero.offsetHeight;
+        const progress = Math.min(scrollY / heroHeight, 1);
 
-      // Hero slides up and fades
-      hero.style.transform = `translateY(-${progress * 30}px)`;
-      hero.style.opacity = `${1 - progress * 1.5}`;
-    });
+        // Hero slides up and fades
+        hero.style.transform = 'translateY(-' + (progress * 30) + 'px)';
+        hero.style.opacity = String(1 - progress * 1.5);
+      });
       const els = document.querySelectorAll('.animate-on-scroll');
       const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
+        function(entries) {
+          entries.forEach(function(e) {
             if (e.isIntersecting) e.target.classList.add('visible');
           });
         },
         { threshold: 0.15 }
       );
-      els.forEach((el) => observer.observe(el));
+      els.forEach(function(el) { observer.observe(el); });
     </script>
   </body>
 </html>

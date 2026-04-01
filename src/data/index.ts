@@ -2,9 +2,10 @@ export const META = {
   name: 'Tut',
   role: 'AI/ML Engineer Intern',
   email: 'justtuturu@gmail.com',
+  twitter: 'https://x.com/justuturu',
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/justtuturu',
-  discord: 'justtuturu',
+  discord_id: '328694743057825792',
   available: true,
   location: 'Ho Chi Minh City, Vietnam',
 };
@@ -14,23 +15,6 @@ export const ROLES = [
   'LLM Fine-Tuning Enthusiast',
   'Deep Learning Explorer',
   'Tuturu~'
-];
-
-export const SKILLS = [
-  { name: 'Python', icon: '/icons/python.svg'},
-  { name: 'PyTorch', icon: '/icons/pytorch.svg'},
-  { name: 'Transformer', icon: '/icons/huggingface.svg'},
-  { name: 'LangChain', icon: '/icons/langchain.svg' },
-  { name: 'Polars', icon: '/icons/polars.svg'},
-  { name: 'Pandas', icon: '/icons/pandas.svg'},
-  { name: 'Docker', icon: '/icons/docker.svg'},
-  { name: 'Git', icon: '/icons/git.svg'},
-  { name: 'FastAPI', icon: '/icons/fastapi.svg'},
-  { name: 'Postgre', icon: '/icons/postgresql.svg'},
-  { name: 'Milvus', icon: '/icons/milvus.svg' },
-  { name: 'Keras', icon: '/icons/keras.svg'},
-  { name: 'TensorFlow', icon: '/icons/tensorflow.svg'},
-  { name: 'Linux', icon: '/icons/linux.svg'},
 ];
 
 export const PROJECTS = [
@@ -69,18 +53,6 @@ export const PROJECTS = [
     github: 'https://github.com/yourusername/project3',
     demo: '',
     label: 'Academic',
-  },
-  {
-    featured: false,
-    category: 'Web',
-    categoryColor: '#F97316',
-    title: 'Project Four',
-    description: 'Brief description of your fourth project.',
-    metrics: ['10K Users'],
-    tech: ['FastAPI'],
-    github: 'https://github.com/yourusername/project4',
-    demo: '',
-    label: 'Internship',
   },
 ];
 

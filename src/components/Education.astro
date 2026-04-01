@@ -12,26 +12,26 @@ import { EDUCATION, CERTIFICATIONS } from '../data/index';
 
       <!-- Left: Degree -->
       <div>
-        <p class="col-label">Degree</p>
+        <p class="font-['JetBrains_Mono'] text-[0.65rem] tracking-[0.2em] uppercase text-[var(--accent-pink)] mb-4">Degree</p>
 
-        <div class="edu-card">
-          <h3 class="uni-name">{EDUCATION.university}</h3>
-          <p class="degree">{EDUCATION.degree} — {EDUCATION.major}</p>
+        <div class="flex flex-col gap-3">
+          <h3 class="font-['Space_Grotesk'] text-[1rem] font-semibold text-[var(--text-primary)]">{EDUCATION.university}</h3>
+          <p class="font-['Inter'] text-[0.85rem] text-[var(--text-primary)]/50">{EDUCATION.degree} — {EDUCATION.major}</p>
 
-          <div class="meta-row">
-            <span class="meta-item">
-              <span class="meta-key">Graduation</span>
-              <span class="meta-val">{EDUCATION.graduation}</span>
+          <div class="flex gap-8">
+            <span class="flex flex-col gap-[2px]">
+              <span class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.15em] uppercase text-[var(--text-primary)]/30">Graduation</span>
+              <span class="font-['Inter'] text-[0.85rem] text-[var(--text-primary)]">{EDUCATION.graduation}</span>
             </span>
-            <span class="meta-item">
-              <span class="meta-key">GPA</span>
-              <span class="meta-val">{EDUCATION.cgpa}</span>
+            <span class="flex flex-col gap-[2px]">
+              <span class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.15em] uppercase text-[var(--text-primary)]/30">GPA</span>
+              <span class="font-['Inter'] text-[0.85rem] text-[var(--text-primary)]">{EDUCATION.cgpa}</span>
             </span>
           </div>
 
-          <div class="courses">
+          <div class="flex flex-wrap gap-2 mt-1">
             {EDUCATION.courses.map((course) => (
-              <span class="course-tag">{course}</span>
+              <span class="font-['JetBrains_Mono'] text-[0.65rem] text-[var(--text-primary)]/45 border border-white/7 rounded px-2 py-0.5">{course}</span>
             ))}
           </div>
         </div>
@@ -39,16 +39,16 @@ import { EDUCATION, CERTIFICATIONS } from '../data/index';
 
       <!-- Right: Certifications -->
       <div>
-        <p class="col-label">Certifications</p>
+        <p class="font-['JetBrains_Mono'] text-[0.65rem] tracking-[0.2em] uppercase text-[var(--accent-pink)] mb-4">Certifications</p>
 
-        <div class="cert-list">
+        <div class="flex flex-col gap-5">
           {CERTIFICATIONS.map((cert) => (
-            <div class="cert-row">
+            <div class="flex items-start justify-between pb-5 border-b border-white/5 last:border-b-0 last:pb-0">
               <div>
-                <p class="cert-name">{cert.name}</p>
-                <p class="cert-meta">{cert.platform} · {cert.date}</p>
+                <p class="font-['Inter'] text-[0.9rem] font-medium text-[var(--text-primary)] mb-1">{cert.name}</p>
+                <p class="font-['JetBrains_Mono'] text-[0.65rem] text-[var(--text-primary)]/35 tracking-[0.05em]">{cert.platform} · {cert.date}</p>
               </div>
-              {cert.featured && <span class="featured-badge">Featured</span>}
+              {cert.featured && <span class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.1em] uppercase text-[var(--accent-pink)] border border-[var(--accent-pink)] rounded px-1.5 py-0.5 whitespace-nowrap opacity-70">Featured</span>}
             </div>
           ))}
         </div>
@@ -61,124 +61,22 @@ import { EDUCATION, CERTIFICATIONS } from '../data/index';
 <style>
   .edu-grid {
     display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .edu-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+</style>
+
+<style>
+  .edu-grid {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-  }
-
-  .col-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-pink);
-    margin-bottom: 1rem;
-  }
-
-  .edu-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .uni-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .degree {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: rgba(241,245,249,0.5);
-  }
-
-  .meta-row {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .meta-key {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(241,245,249,0.3);
-  }
-
-  .meta-val {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: var(--text-primary);
-  }
-
-  .courses {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .course-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: rgba(241,245,249,0.45);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 4px;
-    padding: 2px 8px;
-  }
-
-  /* Certifications */
-  .cert-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .cert-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .cert-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .cert-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .cert-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: rgba(241,245,249,0.35);
-    letter-spacing: 0.05em;
-  }
-
-  .featured-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent-pink);
-    border: 1px solid var(--accent-pink);
-    border-radius: 4px;
-    padding: 2px 6px;
-    white-space: nowrap;
-    opacity: 0.7;
   }
 </style>

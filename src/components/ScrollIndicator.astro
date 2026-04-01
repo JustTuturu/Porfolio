@@ -3,93 +3,74 @@
 ---
 <div
   id="scroll-indicator"
-  class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4"
+  class="hidden sm:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-4"
   role="navigation"
   aria-label="Section navigation"
 >
-  <button data-target="hero"      class="scroll-dot" title="Go to Hero section" aria-label="Go to Hero section"></button>
-  <button data-target="about"     class="scroll-dot" title="Go to About section" aria-label="Go to About section"></button>
-  <button data-target="projects"  class="scroll-dot" title="Go to Projects section" aria-label="Go to Projects section"></button>
-  <button data-target="education" class="scroll-dot" title="Go to Education section" aria-label="Go to Education section"></button>
+  <button data-target="hero"      class="scroll-dot w-2 h-2 rounded-full bg-[var(--text-primary)]/30 border-none cursor-pointer transition-all duration-300 p-0 hover:bg-[var(--accent-pink)] hover:scale-[1.3]" title="Go to Hero section" aria-label="Go to Hero section"></button>
+  <button data-target="about"     class="scroll-dot w-2 h-2 rounded-full bg-[var(--text-primary)]/30 border-none cursor-pointer transition-all duration-300 p-0 hover:bg-[var(--accent-pink)] hover:scale-[1.3]" title="Go to About section" aria-label="Go to About section"></button>
+  <button data-target="projects"  class="scroll-dot w-2 h-2 rounded-full bg-[var(--text-primary)]/30 border-none cursor-pointer transition-all duration-300 p-0 hover:bg-[var(--accent-pink)] hover:scale-[1.3]" title="Go to Projects section" aria-label="Go to Projects section"></button>
+  <button data-target="education" class="scroll-dot w-2 h-2 rounded-full bg-[var(--text-primary)]/30 border-none cursor-pointer transition-all duration-300 p-0 hover:bg-[var(--accent-pink)] hover:scale-[1.3]" title="Go to Education section" aria-label="Go to Education section"></button>
 </div>
 
 <script is:inline>
-  var sections = document.querySelectorAll('section[id]');
-  var dots = document.querySelectorAll('.scroll-dot');
+  document.addEventListener('DOMContentLoaded', function() {
+    var sections = document.querySelectorAll('section[id]');
+    var dots = document.querySelectorAll('.scroll-dot');
 
-  function updateActiveSection() {
-    var scrollY = window.scrollY;
-    var viewportHeight = window.innerHeight;
-    // Trigger point: 30% from top of viewport for earlier detection
-    var triggerPoint = scrollY + viewportHeight * 0.3;
+    function updateActiveSection() {
+      var scrollY = window.scrollY;
+      var viewportHeight = window.innerHeight;
+      var triggerPoint = scrollY + viewportHeight * 0.3;
 
-    var currentSection = 'hero';
+      var currentSection = 'hero';
 
-    sections.forEach(function(section) {
-      var sectionTop = section.offsetTop;
-      var sectionHeight = section.offsetHeight;
-      var sectionBottom = sectionTop + sectionHeight;
+      sections.forEach(function(section) {
+        var sectionTop = section.offsetTop;
+        var sectionHeight = section.offsetHeight;
+        var sectionBottom = sectionTop + sectionHeight;
 
-      if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
-        currentSection = section.id;
-      }
-    });
-
-    // Update active dot
-    dots.forEach(function(dot) {
-      var target = dot.getAttribute('data-target');
-      if (target === currentSection) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
-  }
-
-  // Listen to scroll events with throttling
-  var ticking = false;
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      window.requestAnimationFrame(function() {
-        updateActiveSection();
-        ticking = false;
+        if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
+          currentSection = section.id;
+        }
       });
-      ticking = true;
+
+      dots.forEach(function(dot) {
+        var target = dot.getAttribute('data-target');
+        if (target === currentSection) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
     }
-  });
 
-  // Initial call
-  updateActiveSection();
-
-  // Click handlers for dots
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      var target = dot.getAttribute('data-target');
-      var section = document.getElementById(target);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
       }
+    });
+
+    updateActiveSection();
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var target = dot.getAttribute('data-target');
+        var section = document.getElementById(target);
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   });
 </script>
 
 <style>
-  .scroll-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(241, 245, 249, 0.3);  
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-  }
-
-  .scroll-dot:hover {
-    background: var(--accent-pink);
-    transform: scale(1.3);
-  }
-
   .scroll-dot.active {
     background: var(--accent-pink);
     box-shadow: 0 0 8px var(--accent-pink);

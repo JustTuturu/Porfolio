@@ -2,10 +2,10 @@
 import { META } from '../data/index';
 ---
 
-<section id="contact" class="section-padding">
+<section id="contact" class="section-padding" aria-labelledby="contact-heading">
   <div class="content-container">
 
-    <span class="section-label animate-on-scroll">// contact</span>
+    <span class="section-label animate-on-scroll" id="contact-heading">// contact</span>
     <h2 class="section-heading animate-on-scroll">Get In Touch</h2>
 
     <p class="body-text animate-on-scroll" style="max-width: 480px; margin-bottom: 2.5rem;">
@@ -13,23 +13,23 @@ import { META } from '../data/index';
     </p>
 
     <!-- Three links in a row -->
-    <div class="animate-on-scroll delay-1" style="display: flex; align-items: center; gap: 2.5rem;">
+    <div class="animate-on-scroll delay-1" style="display: flex; align-items: center; gap: 2.5rem;" role="list" aria-label="Contact links">
       
-      <a href={`mailto:${META.email}`} class="contact-link">
+      <a href={`mailto:${META.email}`} class="contact-link" role="listitem" aria-label="Send email to {META.email}">
         <span class="contact-label">Email</span>
         <span class="contact-value">{META.email}</span>
       </a>
 
-      <div class="contact-divider"></div>
+      <div class="contact-divider" role="separator" aria-hidden="true"></div>
 
-      <a href={META.github} target="_blank" rel="noopener noreferrer" class="contact-link">
+      <a href={META.github} target="_blank" rel="noopener noreferrer" class="contact-link" role="listitem" aria-label="Visit GitHub profile (opens in new tab)">
         <span class="contact-label">GitHub</span>
         <span class="contact-value">@{META.github.split('/').pop()}</span>
       </a>
 
-      <div class="contact-divider"></div>
+      <div class="contact-divider" role="separator" aria-hidden="true"></div>
 
-      <a href={META.linkedin} target="_blank" rel="noopener noreferrer" class="contact-link">
+      <a href={META.linkedin} target="_blank" rel="noopener noreferrer" class="contact-link" role="listitem" aria-label="Visit LinkedIn profile (opens in new tab)">
         <span class="contact-label">LinkedIn</span>
         <span class="contact-value">@{META.linkedin.split('/').pop()}</span>
       </a>

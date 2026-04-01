@@ -5,15 +5,15 @@ const featured = PROJECTS.find((p) => p.featured);
 const others = PROJECTS.filter((p) => !p.featured);
 ---
 
-<section id="projects" style="padding: 5rem 1.5rem;">
+<section id="projects" style="padding: 5rem 1.5rem;" aria-labelledby="projects-heading">
   <div class="content-container">
 
-    <span class="section-label animate-on-scroll">// projects</span>
+    <span class="section-label animate-on-scroll" id="projects-heading">// projects</span>
     <h2 class="section-heading animate-on-scroll">Featured Projects</h2>
 
     <!-- Featured project -->
     {featured && (
-      <div class="featured-card animate-on-scroll delay-1">
+      <article class="featured-card animate-on-scroll delay-1" aria-label="Featured project: {featured.title}">
 
         <div class="featured-top">
           <span class="proj-category" style={`color: ${featured.categoryColor};`}>
@@ -39,28 +39,28 @@ const others = PROJECTS.filter((p) => !p.featured);
 
         <div class="links-row">
           {featured.github && (
-            <a href={featured.github} target="_blank" class="proj-link">
+            <a href={featured.github} target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View source code for {featured.title} (opens in new tab)">
               View Code →
             </a>
           )}
           {featured.demo && (
-            <a href={featured.demo} target="_blank" class="proj-link">
+            <a href={featured.demo} target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View live demo for {featured.title} (opens in new tab)">
               Live Demo →
             </a>
           )}
         </div>
 
-      </div>
+      </article>
     )}
 
     <!-- Other projects -->
     {others.length > 0 && (
       <>
-        <p class="section-label animate-on-scroll" style="margin-bottom: 1.5rem;">Other Projects</p>
+        <p class="section-label animate-on-scroll" style="margin-bottom: 1.5rem;" id="other-projects-label">Other Projects</p>
 
-        <div class="others-grid">
+        <div class="others-grid" role="list" aria-labelledby="other-projects-label">
           {others.map((project, idx) => (
-            <div class={`other-card animate-on-scroll delay-1-${Math.min(idx + 1, 4)}`}>
+            <article class={`other-card animate-on-scroll delay-1-${Math.min(idx + 1, 4)}`} role="listitem" aria-label="Project: {project.title}">
 
               <div class="featured-top">
                 <span class="proj-category" style={`color: ${project.categoryColor};`}>
@@ -83,12 +83,12 @@ const others = PROJECTS.filter((p) => !p.featured);
               </div>
 
               {project.github && (
-                <a href={project.github} target="_blank" class="proj-link" style="font-size: 0.75rem;">
+                <a href={project.github} target="_blank" rel="noopener noreferrer" class="proj-link" style="font-size: 0.75rem;" aria-label="View source code for {project.title} (opens in new tab)">
                   View Code →
                 </a>
               )}
 
-            </div>
+            </article>
           ))}
         </div>
       </>

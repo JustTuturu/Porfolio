@@ -4,29 +4,31 @@
 <div
   id="scroll-indicator"
   class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4"
+  role="navigation"
+  aria-label="Section navigation"
 >
-  <button data-target="hero"      class="scroll-dot" title="Hero"></button>
-  <button data-target="about"     class="scroll-dot" title="About"></button>
-  <button data-target="projects"  class="scroll-dot" title="Projects"></button>
-  <button data-target="education" class="scroll-dot" title="Education"></button>
+  <button data-target="hero"      class="scroll-dot" title="Go to Hero section" aria-label="Go to Hero section"></button>
+  <button data-target="about"     class="scroll-dot" title="Go to About section" aria-label="Go to About section"></button>
+  <button data-target="projects"  class="scroll-dot" title="Go to Projects section" aria-label="Go to Projects section"></button>
+  <button data-target="education" class="scroll-dot" title="Go to Education section" aria-label="Go to Education section"></button>
 </div>
 
-<script>
-  const sections = document.querySelectorAll('section[id]');
-  const dots = document.querySelectorAll('.scroll-dot');
+<script is:inline>
+  var sections = document.querySelectorAll('section[id]');
+  var dots = document.querySelectorAll('.scroll-dot');
 
   function updateActiveSection() {
-    const scrollY = window.scrollY;
-    const viewportHeight = window.innerHeight;
+    var scrollY = window.scrollY;
+    var viewportHeight = window.innerHeight;
     // Trigger point: 30% from top of viewport for earlier detection
-    const triggerPoint = scrollY + viewportHeight * 0.3;
+    var triggerPoint = scrollY + viewportHeight * 0.3;
 
-    let currentSection = 'hero';
+    var currentSection = 'hero';
 
-    sections.forEach((section) => {
-      const sectionTop = (section as HTMLElement).offsetTop;
-      const sectionHeight = (section as HTMLElement).offsetHeight;
-      const sectionBottom = sectionTop + sectionHeight;
+    sections.forEach(function(section) {
+      var sectionTop = section.offsetTop;
+      var sectionHeight = section.offsetHeight;
+      var sectionBottom = sectionTop + sectionHeight;
 
       if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
         currentSection = section.id;
@@ -34,8 +36,8 @@
     });
 
     // Update active dot
-    dots.forEach((dot) => {
-      const target = (dot as HTMLElement).getAttribute('data-target');
+    dots.forEach(function(dot) {
+      var target = dot.getAttribute('data-target');
       if (target === currentSection) {
         dot.classList.add('active');
       } else {
@@ -45,10 +47,10 @@
   }
 
   // Listen to scroll events with throttling
-  let ticking = false;
-  window.addEventListener('scroll', () => {
+  var ticking = false;
+  window.addEventListener('scroll', function() {
     if (!ticking) {
-      window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(function() {
         updateActiveSection();
         ticking = false;
       });
@@ -60,11 +62,13 @@
   updateActiveSection();
 
   // Click handlers for dots
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      const target = (dot as HTMLElement).getAttribute('data-target');
-      const section = document.getElementById(target || '');
-      section?.scrollIntoView({ behavior: 'smooth' });
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      var target = dot.getAttribute('data-target');
+      var section = document.getElementById(target);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 </script>

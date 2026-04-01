@@ -1,5 +1,5 @@
 ---
-import { META} from '../data/index';
+import { META, ROLES } from '../data/index';
 ---
 
 <section
@@ -9,11 +9,13 @@ import { META} from '../data/index';
     backgroundImage: "url('/images/hero.jpg')",
     backgroundAttachment: 'fixed',
   }}
+  aria-label="Hero section"
 >
   <!-- Vignette overlay -->
   <div
     class="absolute inset-0 bg-gradient-to-r from-[#00000080] via-transparent to-[#00000080] opacity-90"
     style="box-shadow: inset 80px 0 120px #050508, inset -80px 0 120px #050508"
+    aria-hidden="true"
   ></div>
 
   <!-- Content container -->
@@ -22,6 +24,7 @@ import { META} from '../data/index';
     <div
       class="absolute left-4 md:left-12 top-1/2 transform -translate-y-1/2 text-xs md:text-sm text-text-muted opacity-55 font-jp font-light hidden sm:block"
       style="writing-mode: vertical-rl; transform: translateY(-50%) scaleY(-1)"
+      aria-hidden="true"
     >
       <span>深夜コーディング</span>
     </div>
@@ -39,9 +42,9 @@ import { META} from '../data/index';
       </h2>
 
       <!-- Typewriter effect -->
-      <div class="h-8 md:h-10 flex items-center justify-center">
+      <div class="h-8 md:h-10 flex items-center justify-center" aria-live="polite" aria-atomic="true">
         <p class="text-base sm:text-lg md:text-2xl text-accent-pink font-medium font-mono">
-          <span id="typewriter">AI/ML Engineer</span><span class="cursor">_</span>
+          <span id="typewriter">AI/ML Engineer</span><span class="cursor" aria-hidden="true">_</span>
         </p>
       </div>
 
@@ -55,6 +58,7 @@ import { META} from '../data/index';
         <a
           href="#projects"
           class="px-6 py-3 bg-accent-pink text-white rounded-lg hover:bg-accent-coral transition-colors font-medium text-center"
+          aria-label="View my projects"
         >
           View my work
         </a>
@@ -63,20 +67,18 @@ import { META} from '../data/index';
   </div>
 </section>
 
-<script>
-  import { ROLES } from "../data";
-
-  const roles = ROLES;
-  const el = document.getElementById('typewriter');
+<script is:inline>
+  var roles = ['AI/ML Engineer', 'LLM Fine-Tuning Enthusiast', 'Deep Learning Explorer', 'Tuturu~'];
+  var el = document.getElementById('typewriter');
   
   if (el) {
-    let i = 0;
-    let j = 0;
-    let deleting = false;
+    var i = 0;
+    var j = 0;
+    var deleting = false;
 
     function type() {
       if (!el) return; 
-      const word = roles[i];
+      var word = roles[i];
       el.textContent = deleting ? word.slice(0, --j) : word.slice(0, ++j);
 
       if (!deleting && j === word.length) {

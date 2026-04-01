@@ -2,19 +2,19 @@
 ---
 
 <!-- Music widget — hidden by default -->
-<div id="music-widget" class="music-widget hidden">
+<div id="music-widget" class="music-widget hidden" role="dialog" aria-label="Now playing widget" aria-hidden="true">
   <div class="music-inner">
     <div class="music-body">
-      <img id="music-art" src="" alt="album art" class="music-art" style="display: none;"/>
+      <img id="music-art" src="" alt="Album artwork" class="music-art" style="display: none;" width="52" height="52" loading="lazy"/>
       <div class="music-info">
-        <p id="music-song" class="music-song">Nyan~</p>
-        <p id="music-artist" class="music-artist"></p>
+        <p id="music-song" class="music-song" aria-live="polite">Nyan~</p>
+        <p id="music-artist" class="music-artist" aria-live="polite"></p>
       </div>
       
     </div>
 
     <div class="music-controls">
-      <a id="music-link" href="#" target="_blank" class="music-open">
+      <a id="music-link" href="#" target="_blank" rel="noopener noreferrer" class="music-open" aria-label="Open in Spotify (opens in new tab)">
         Open in Spotify ↗
       </a>
     </div>
@@ -23,38 +23,43 @@
 </div>
 
 <!-- Arrow key hint -->
-<div id="music-hint" class="music-hint">
+<div id="music-hint" class="music-hint" role="status" aria-live="polite">
   <span>↑ now playing</span>
 </div>
 
-<script>
-  const DISCORD_USER_ID = '328694743057825792'; 
+<script is:inline>
+  var DISCORD_USER_ID = '328694743057825792'; 
 
-  const widget = document.getElementById('music-widget');
-  const hint = document.getElementById('music-hint');
-  const songEl = document.getElementById('music-song');
-  const artistEl = document.getElementById('music-artist');
-  const artEl = document.getElementById('music-art') as HTMLImageElement;
-  const linkEl = document.getElementById('music-link') as HTMLAnchorElement;
+  var widget = document.getElementById('music-widget');
+  var hint = document.getElementById('music-hint');
+  var songEl = document.getElementById('music-song');
+  var artistEl = document.getElementById('music-artist');
+  var artEl = document.getElementById('music-art');
+  var linkEl = document.getElementById('music-link');
 
-  let isOpen = false;
-  let spotify: any = null;
+  var isOpen = false;
+  var spotify = null;
+  
   // Click navbar music button to open widget
-    const navMusicBtn = document.getElementById('music-btn');
-    navMusicBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    isOpen ? closeWidget() : openWidget();
+  var navMusicBtn = document.getElementById('music-btn');
+  if (navMusicBtn) {
+    navMusicBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      isOpen ? closeWidget() : openWidget();
     });
+  }
+  
   // Fetch Lanyard data
-  async function fetchSpotify() {
-    try {
-      const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
-      const data = await res.json();
-      spotify = data.data?.spotify ?? null;
-      updateWidget();
-    } catch (e) {
-      spotify = null;
-    }
+  function fetchSpotify() {
+    fetch('https://api.lanyard.rest/v1/users/' + DISCORD_USER_ID)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        spotify = data.data && data.data.spotify ? data.data.spotify : null;
+        updateWidget();
+      })
+      .catch(function() {
+        spotify = null;
+      });
   }
 
   function updateWidget() {
@@ -66,10 +71,10 @@
         artEl.style.display = 'none';
       }
       if (linkEl) {
-      linkEl.href   = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
-      linkEl.target = '_blank'; // New tab
-    }
-    return;
+        linkEl.href = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
+        linkEl.target = '_blank';
+      }
+      return;
     }
     if (songEl) songEl.textContent = spotify.song;
     if (artistEl) artistEl.textContent = spotify.artist;
@@ -77,30 +82,32 @@
       artEl.src = spotify.album_art_url;
       artEl.style.display = 'block';
     }
-      if (linkEl) {
-    linkEl.href = spotify?.track_id
-    ? `https://open.spotify.com/track/${spotify.track_id.split(':')}`
-    : `https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ?si=2e3f86f5af504b0c`;
-}
+    if (linkEl) {
+      linkEl.href = spotify.track_id
+        ? 'https://open.spotify.com/track/' + spotify.track_id.split(':').pop()
+        : 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ?si=2e3f86f5af504b0c';
+    }
   }
   
   function openWidget() {
     isOpen = true;
-    widget?.classList.remove('hidden');
-    widget?.classList.add('visible');
-    hint?.classList.add('hidden');
+    widget.classList.remove('hidden');
+    widget.classList.add('visible');
+    widget.setAttribute('aria-hidden', 'false');
+    hint.classList.add('hidden');
     fetchSpotify();
   }
 
   function closeWidget() {
     isOpen = false;
-    widget?.classList.remove('visible');
-    widget?.classList.add('hidden');
-    hint?.classList.remove('hidden');
+    widget.classList.remove('visible');
+    widget.classList.add('hidden');
+    widget.setAttribute('aria-hidden', 'true');
+    hint.classList.remove('hidden');
   }
 
   // Arrow UP key → open, Escape → close
-  window.addEventListener('keydown', (e) => {
+  window.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowUp' && !isOpen) {
       e.preventDefault();
       openWidget();
@@ -113,16 +120,18 @@
       closeWidget();
     }
   });
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    const clickedInsideWidget = widget?.contains(target);
-    const clickedNavBtn = navMusicBtn?.contains(target);
+  
+  document.addEventListener('click', function(e) {
+    var target = e.target;
+    var clickedInsideWidget = widget.contains(target);
+    var clickedNavBtn = navMusicBtn && navMusicBtn.contains(target);
 
     // close if clicked outside both widget and nav button
     if (isOpen && !clickedInsideWidget && !clickedNavBtn) {
-        closeWidget();
+      closeWidget();
     }
-    });
+  });
+  
   // Initial fetch
   fetchSpotify();
   setInterval(fetchSpotify, 10000); // refresh every 10s

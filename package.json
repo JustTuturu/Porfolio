@@ -2,6 +2,9 @@
   "name": "portfolio-random-tut-whale",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+  "node": "24.x"
+},
   "scripts": {
     "dev": "CHOKIDAR_USEPOLLING=true astro dev",
     "build": "astro build",
@@ -9,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^10.0.4",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.2",
     "tailwindcss": "^4.2.2"

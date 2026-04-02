@@ -5,6 +5,8 @@ interface Props {
   image?: string;
   url?: string;
 }
+import { Analytics } from '@vercel/analytics/astro';
+import { SpeedInsights } from '@vercel/speed-insights/astro';
 import '../styles/global.css'
 const { 
   title = 'Tut — AI/ML Engineer', 
@@ -87,6 +89,8 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
   </head>
   <body>
     <slot />
+    <Analytics />
+    <SpeedInsights />
     <script is:inline>
       const hero = document.getElementById('hero');
       const navbar = document.getElementById('navbar');

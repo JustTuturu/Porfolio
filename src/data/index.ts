@@ -5,7 +5,7 @@ export const META = {
   twitter: 'https://x.com/justuturu',
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/justtuturu',
-  discord_id: '328694743057825792',
+  discord: '328694743057825792',
   available: true,
   location: 'Ho Chi Minh City, Vietnam',
 };
@@ -40,7 +40,7 @@ export const PROJECTS = [
     tech: ['Python', 'FastAPI'],
     github: 'https://github.com/yourusername/project2',
     demo: '',
-    label: 'Open Source',
+    label: 'Personal Project',
   },
   {
     featured: false,

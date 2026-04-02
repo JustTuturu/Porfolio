@@ -89,16 +89,55 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
     <slot />
     <script is:inline>
       const hero = document.getElementById('hero');
-      window.addEventListener('scroll', function() {
-        if(!hero) return;
-        const scrollY = window.scrollY;
-        const heroHeight = hero.offsetHeight;
-        const progress = Math.min(scrollY / heroHeight, 1);
+      const navbar = document.getElementById('navbar');
+      let lastScrollY = window.scrollY;
+      let navVisibleUntil = 0;
+      const navHoldMs = 1800;
 
-        // Hero slides up and fades
+      function setNavVisible(visible) {
+        if (!navbar) return;
+        navbar.classList.toggle('nav-hidden', !visible);
+        navbar.classList.toggle('nav-peek', visible);
+      }
+
+      function syncHeroAndNav() {
+        if (!hero) return;
+        const scrollY = window.scrollY;
+        const heroHeight = hero.offsetHeight || window.innerHeight;
+        const progress = Math.min(scrollY / heroHeight, 1);
+        const isScrollingUp = scrollY < lastScrollY - 4;
+        const isNearTop = scrollY < 24;
+        const now = Date.now();
+
         hero.style.transform = 'translateY(-' + (progress * 30) + 'px)';
-        hero.style.opacity = String(1 - progress * 1.5);
-      });
+        hero.style.opacity = String(Math.max(0, 1 - progress * 1.5));
+
+        if (!navbar) return;
+
+        if (scrollY < heroHeight * 0.72) {
+          navbar.classList.remove('nav-hidden', 'nav-peek', 'scrolled');
+          navbar.style.opacity = String(Math.max(0, 1 - progress * 1.35));
+          navbar.style.transform = 'translateY(-' + (progress * 18) + 'px)';
+          lastScrollY = scrollY;
+          return;
+        }
+
+        navbar.style.opacity = '';
+        navbar.style.transform = '';
+        navbar.classList.add('scrolled');
+
+        if (isScrollingUp) {
+          navVisibleUntil = now + navHoldMs;
+        }
+
+        setNavVisible(isNearTop || now < navVisibleUntil);
+        lastScrollY = scrollY;
+      }
+
+      window.addEventListener('scroll', syncHeroAndNav, { passive: true });
+      window.addEventListener('resize', syncHeroAndNav);
+
+      syncHeroAndNav();
       const els = document.querySelectorAll('.animate-on-scroll');
       const observer = new IntersectionObserver(
         function(entries) {

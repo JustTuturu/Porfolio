@@ -17,6 +17,12 @@ export const ROLES = [
   'Tuturu~'
 ];
 
+export const SITE = {
+  maintenanceMode: true,
+  maintenanceTitle: 'Temporarily Under Maintenance',
+  maintenanceMessage: 'I am making a few updates behind the scenes. The site will be back shortly.',
+};
+
 export const PROJECTS = [
   {
     featured: true,

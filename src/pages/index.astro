@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/index';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
@@ -9,22 +10,29 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import ScrollIndicator from '../components/ScrollIndicator.astro';
 import MusicWidget from '../components/MusicWidget.astro';
+import MaintenancePage from '../components/MaintenancePage.astro';
 ---
 
 <BaseLayout title="AI/ML Engineer Portfolio">
-  <Navbar />
-  <ScrollIndicator />
+  {SITE.maintenanceMode ? (
+    <MaintenancePage />
+  ) : (
+    <>
+      <Navbar />
+      <ScrollIndicator />
 
-  <main>
-    <Hero />
-    <MusicWidget />
-    <About />
-    <Projects />
-    <Education />
-    <Contact />
-  </main>
+      <main>
+        <Hero />
+        <MusicWidget />
+        <About />
+        <Projects />
+        <Education />
+        <Contact />
+      </main>
 
-  <Footer />
+      <Footer />
+    </>
+  )}
 </BaseLayout>
 
 <style>

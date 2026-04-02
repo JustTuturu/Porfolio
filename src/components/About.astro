@@ -24,9 +24,9 @@ import { META } from '../data/index';
         <!-- Buttons -->
         <div class="flex items-center gap-6 flex-wrap mt-2" aria-label="Quick links">
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" 
-          class="inline-flex items-center gap-1 px-[1rem] py-[0.5rem] whitespace-nowrap bg-[var(--text-primary)] text-[var(--bg-base)] rounded-full font-['Inter'] text-[0.8rem] font-semibold no-underline transition-opacity duration-300 hover:opacity-85" 
+          class="inline-flex min-w-[4.5rem] items-center gap-0.5 px-[1rem] py-[0.5rem] whitespace-nowrap bg-[var(--text-primary)] text-[var(--bg-base)] rounded-full font-['Inter'] text-[0.8rem] font-semibold no-underline transition-opacity duration-300 hover:opacity-85" 
           aria-label="View resume (opens in new tab)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            <svg class="shrink-0 translate-x-[1.5px]" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
             Resume
           </a>
           <a href={`mailto:${META.email}`} target="_blank" rel="noopener noreferrer" 
@@ -62,22 +62,29 @@ import { META } from '../data/index';
       </div>
 
       <div class="flex flex-col">
-        <div class="pt-0 pb-0 pl-0 flex flex-col gap-2" aria-label="Discord status">
-          <div class="flex items-center justify-start gap-2.5 mb-[0.15rem]">
+        <div class="pt-0 pb-0 pl-0 flex flex-col gap-3" aria-label="Discord status">
+          <div class="flex items-center justify-between gap-3">
             <span class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.2em] text-[var(--text-primary)]/30 uppercase">// Discord</span>
-            <span class="flex gap-1 font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.1em] uppercase text-[var(--text-primary)]/40">
-              <span class="w-1.5 h-1.5 rounded-full bg-white/20 flex-shrink-0 transition-[background] duration-300" aria-hidden="true"></span>
+            <span
+              id="discord-status-badge"
+              class="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-2.5 py-1 font-['JetBrains_Mono'] text-[0.58rem] tracking-[0.12em] uppercase text-[var(--text-primary)]/42 transition-[background,border-color,color] duration-300"
+            >
+              <span class="discord-dot w-1.5 h-1.5 rounded-full bg-white/20 flex-shrink-0 transition-[background] duration-300" aria-hidden="true"></span>
               <span id="discord-status-text">Offline</span>
             </span>
+          </div>
 
+          <div class="flex items-center gap-3">
+            <div class="relative w-fit shrink-0">
+              <span class="discord-avatar-dot absolute bottom-0 right-0 w-3 h-3 rounded-full bg-white/20 border-2 border-[#0f0f0f]" aria-hidden="true"></span>
+              <img class="discord-avatar w-12 h-12 rounded-full object-cover bg-white/5 ring-1 ring-white/8" src="" alt={`Discord avatar for ${META.discord}`} width="48" height="48" loading="lazy" />
+            </div>
+
+            <div class="min-w-0 flex flex-col gap-1">
+              <p class="font-['Inter'] text-[0.92rem] font-medium text-[var(--text-primary)]">suzu</p>
+              <p class="font-['JetBrains_Mono'] text-[0.72rem] text-[var(--text-primary)]/30 tracking-[0.03em]" id="discord-activity" aria-live="polite">no current activity</p>
+            </div>
           </div>
-          <p class="font-['Inter'] text-[0.92rem] font-medium text-[var(--text-primary)]">suzu</p>
-          <div class="relative w-fit">
-            <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-white/20 border-2 border-[#0f0f0f]" aria-hidden="true"></span>
-            <img class="w-10 h-10 rounded-full" src="" alt="Discord avatar for {META.discord}" width="40" height="40" loading="lazy" />
-          </div>
-          <p class="font-['JetBrains_Mono'] text-[0.72rem] text-[var(--text-primary)]/30 tracking-[0.03em]" id="discord-activity" aria-live="polite">no current activity</p>
-          
         </div>
 
         <div class="h-px bg-white/5" role="separator" aria-hidden="true"></div>
@@ -117,6 +124,7 @@ import { META } from '../data/index';
 
         var dot = document.querySelector('.discord-dot');
         var avatarDot = document.querySelector('.discord-avatar-dot');
+        var statusBadge = document.getElementById('discord-status-badge');
         var statusText = document.getElementById('discord-status-text');
         var activityEl = document.getElementById('discord-activity');
         var avatarEl = document.querySelector('.discord-avatar');
@@ -132,6 +140,12 @@ import { META } from '../data/index';
         if (dot) dot.style.background = color;
         if (avatarDot) avatarDot.style.background = color;
         if (statusText) statusText.textContent = discord_status === 'dnd' ? 'do not disturb' : discord_status;
+        if (statusBadge) {
+          statusBadge.classList.remove('discord-status-online', 'discord-status-idle', 'discord-status-dnd');
+          if (discord_status === 'online') statusBadge.classList.add('discord-status-online');
+          if (discord_status === 'idle') statusBadge.classList.add('discord-status-idle');
+          if (discord_status === 'dnd') statusBadge.classList.add('discord-status-dnd');
+        }
 
         var activity = null;
         if (activities) {
@@ -183,5 +197,23 @@ import { META } from '../data/index';
     0%   { box-shadow: 0 0 0 0 rgba(232, 160, 168, 0.5); }
     70%  { box-shadow: 0 0 0 8px rgba(232, 160, 168, 0); }
     100% { box-shadow: 0 0 0 0 rgba(232, 160, 168, 0); }
+  }
+
+  .discord-status-online {
+    color: #57F287;
+    border-color: rgba(87, 242, 135, 0.22);
+    background: rgba(87, 242, 135, 0.08);
+  }
+
+  .discord-status-idle {
+    color: #FEE75C;
+    border-color: rgba(254, 231, 92, 0.2);
+    background: rgba(254, 231, 92, 0.07);
+  }
+
+  .discord-status-dnd {
+    color: #ED4245;
+    border-color: rgba(237, 66, 69, 0.2);
+    background: rgba(237, 66, 69, 0.07);
   }
 </style>

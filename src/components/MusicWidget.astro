@@ -1,62 +1,85 @@
 ---
 ---
+<div
+  id="music-widget"
+  class="fixed top-18 right-4 z-[100] hidden opacity-0 pointer-events-none max-sm:top-[4.5rem] max-sm:left-[0.5rem] max-sm:right-[0.5rem]"
+  role="dialog"
+  aria-label="Now playing widget"
+  aria-hidden="true"
+>
+  <div class="music-shell relative w-[min(21.5rem,calc(100vw-1.5rem))] overflow-hidden rounded-[28px] border border-white/8 bg-[rgba(13,14,24,0.88)] shadow-[0_28px_80px_rgba(3,4,10,0.55),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[22px]">
+    <div class="music-orb music-orb--pink" aria-hidden="true"></div>
+    <div class="music-orb music-orb--cyan" aria-hidden="true"></div>
 
-<!-- Music widget — hidden by default -->
-<div id="music-widget" 
-  class="fixed top-12 right-0 z-[100] translate-x-[-10%] translate-y-5 opacity-0 transition-[opacity,transform] duration-300 pointer-events-none hidden" 
-  role="dialog" 
-  aria-label="Now playing widget" 
-  aria-hidden="true">
-  <div class="bg-[rgba(13,14,24,0.92)] backdrop-blur-[20px] border border-white/8 rounded-2xl p-5 w-80 flex flex-col gap-4">
-    <div class="flex gap-3">
-      <img id="music-art" src=""
-       alt="Album artwork" 
-       class="w-[52px] h-[52px] rounded-[6px] object-cover flex-shrink-0 bg-white/5" 
-       style="display: none;" 
-       width="52" 
-       height="52" 
-       loading="lazy"/>
-      <div class="flex flex-col gap-1 overflow-hidden">
-        <p id="music-song" 
-          class="font-['Inter'] text-[0.9rem] font-semibold text-[var(--text-primary)] whitespace-nowrap overflow-hidden text-ellipsis" 
-          aria-live="polite">Nyan~</p>
-        <p id="music-artist" 
-        class="font-['Inter'] text-[0.75rem] text-[var(--text-primary)]/45 whitespace-nowrap overflow-hidden text-ellipsis" 
-        aria-live="polite"></p>
+    <div class="relative flex min-h-0 gap-3 bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01))] p-[1.05rem] pt-[1rem] pb-[1.1rem] sm:p-[1.15rem] sm:pt-[1.05rem] sm:pb-[1.2rem]">
+      <div class="flex min-w-0 items-start gap-2.5">
+        <a
+          id="music-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="music-art-link shrink-0 no-underline"
+          aria-label="Open in Spotify (opens in new tab)"
+        >
+          <div class="music-art-shell relative h-[4.5rem] w-[4.5rem] overflow-hidden rounded-[1.15rem] border border-white/8 bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div class="music-art-fallback" aria-hidden="true">
+              <span class="font-['JetBrains_Mono'] text-[0.58rem] tracking-[0.25em] uppercase text-[var(--text-primary)]/35">
+                idle
+              </span>
+            </div>
+            <img
+              id="music-art"
+              src=""
+              alt="Album artwork"
+              class="music-art-image"
+              style="display: none;"
+              width="72"
+              height="72"
+              loading="lazy"
+            />
+          </div>
+        </a>
+
+        <div class="min-w-0 -ml-[0.1rem] flex-1 flex flex-col gap-1.5 pt-0">
+          <div class="flex flex-col gap-1 overflow-hidden">
+            <p
+              id="music-song"
+              class="font-['Space_Grotesk'] text-[1rem] font-semibold leading-[1.15] text-[var(--text-primary)] whitespace-nowrap overflow-hidden text-ellipsis"
+              aria-live="polite"
+            >
+              Nyan~
+            </p>
+            <p
+              id="music-artist"
+              class="font-['Inter'] text-[0.8rem] text-[var(--text-primary)]/50 whitespace-nowrap overflow-hidden text-ellipsis"
+              aria-live="polite"
+            ></p>
+          </div>
+          <p
+            id="music-meta"
+            class="font-['JetBrains_Mono'] text-[0.6rem] leading-[1.2] tracking-[0.12em] uppercase text-[var(--text-primary)]/28"
+            aria-live="polite"
+          >
+            Arrow up to open, down to dismiss
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="flex justify-end">
-      <a id="music-link" 
-      href="#" target="_blank" 
-      rel="noopener noreferrer" 
-      class="font-['JetBrains_Mono'] text-[0.65rem] text-[#1DB954] no-underline tracking-[0.05em] opacity-70 transition-opacity duration-200 hover:opacity-100" 
-      aria-label="Open in Spotify (opens in new tab)">
-        Open in Spotify ↗
-      </a>
-    </div>
-
   </div>
 </div>
 
-<!-- Arrow key hint -->
-<div id="music-hint" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.15em] text-[var(--text-primary)]/20 uppercase transition-opacity duration-300 pointer-events-none" role="status" aria-live="polite">
-  <span>↑ now playing</span>
-</div>
-
 <script is:inline>
-  var DISCORD_USER_ID = '328694743057825792';
-
   document.addEventListener('DOMContentLoaded', function() {
     var widget = document.getElementById('music-widget');
-    var hint = document.getElementById('music-hint');
     var songEl = document.getElementById('music-song');
     var artistEl = document.getElementById('music-artist');
+    var metaEl = document.getElementById('music-meta');
     var artEl = document.getElementById('music-art');
+    var artShell = widget ? widget.querySelector('.music-art-shell') : null;
     var linkEl = document.getElementById('music-link');
 
     var isOpen = false;
-    var spotify = null;
+    var nowPlaying = null;
 
     var navMusicBtn = document.getElementById('music-btn');
     if (navMusicBtn) {
@@ -66,35 +89,76 @@
       });
     }
 
-    function fetchSpotify() {
-      fetch('https://api.lanyard.rest/v1/users/' + DISCORD_USER_ID)
-        .then(function(res) { return res.json(); })
-        .then(function(data) {
-          spotify = data.data && data.data.spotify ? data.data.spotify : null;
-          updateWidget();
-        })
-        .catch(function() { spotify = null; });
+    function clearArtwork() {
+      if (!artEl) return;
+      artEl.onload = null;
+      artEl.onerror = null;
+      artEl.style.display = 'none';
+      artEl.removeAttribute('src');
+      if (artShell) artShell.classList.remove('has-art');
+    }
+
+    function setArtwork(url) {
+      if (!artEl) return;
+
+      clearArtwork();
+      if (!url) return;
+
+      var nextImage = new Image();
+      nextImage.onload = function() {
+        if (!artEl) return;
+        artEl.src = url;
+        artEl.style.display = 'block';
+        if (artShell) artShell.classList.add('has-art');
+      };
+      nextImage.onerror = function() {
+        clearArtwork();
+      };
+      nextImage.src = url;
+    }
+
+    function setFallbackState() {
+      if (songEl) songEl.textContent = 'Nyan~';
+      if (artistEl) artistEl.textContent = 'curated playlist';
+      if (metaEl) metaEl.textContent = 'Nothing live right now';
+      setArtwork('');
+      if (linkEl) {
+        linkEl.href = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
+        linkEl.target = '_blank';
+      }
     }
 
     function updateWidget() {
-      if (!spotify) {
-        if (songEl) songEl.textContent = 'Nyan~';
-        if (artistEl) artistEl.textContent = '';
-        if (artEl) { artEl.src = ''; artEl.style.display = 'none'; }
-        if (linkEl) {
-          linkEl.href = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
-          linkEl.target = '_blank';
-        }
+      if (!nowPlaying || !nowPlaying.isPlaying) {
+        setFallbackState();
         return;
       }
-      if (songEl) songEl.textContent = spotify.song;
-      if (artistEl) artistEl.textContent = spotify.artist;
-      if (artEl) { artEl.src = spotify.album_art_url; artEl.style.display = 'block'; }
+
+      if (songEl) songEl.textContent = nowPlaying.song || 'Untitled';
+      if (artistEl) artistEl.textContent = nowPlaying.artist || 'Unknown artist';
+      if (metaEl) metaEl.textContent = nowPlaying.album ? 'Album • ' + nowPlaying.album : 'Currently playing';
+      setArtwork(nowPlaying.albumArtUrl || '');
+
       if (linkEl) {
-        linkEl.href = spotify.track_id
-          ? 'https://open.spotify.com/track/' + spotify.track_id.split(':').pop()
-          : 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
+        linkEl.href = nowPlaying.url || (nowPlaying.trackId ? 'https://open.spotify.com/track/' + nowPlaying.trackId : 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ');
+        linkEl.target = '_blank';
       }
+    }
+
+    function fetchSpotify() {
+      fetch('/api/spotify', { headers: { Accept: 'application/json' } })
+        .then(function(res) {
+          if (!res.ok) throw new Error('Spotify request failed');
+          return res.json();
+        })
+        .then(function(data) {
+          nowPlaying = data;
+          updateWidget();
+        })
+        .catch(function() {
+          nowPlaying = null;
+          updateWidget();
+        });
     }
 
     function openWidget() {
@@ -102,7 +166,6 @@
       widget.classList.remove('hidden');
       widget.classList.add('visible');
       widget.setAttribute('aria-hidden', 'false');
-      if (hint) hint.classList.add('hidden');
       fetchSpotify();
     }
 
@@ -111,7 +174,6 @@
       widget.classList.remove('visible');
       widget.classList.add('hidden');
       widget.setAttribute('aria-hidden', 'true');
-      if (hint) hint.classList.remove('hidden');
     }
 
     window.addEventListener('keydown', function(e) {
@@ -121,20 +183,27 @@
     });
 
     document.addEventListener('click', function(e) {
+      if (!widget) return;
       var clickedInsideWidget = widget.contains(e.target);
       var clickedNavBtn = navMusicBtn && navMusicBtn.contains(e.target);
       if (isOpen && !clickedInsideWidget && !clickedNavBtn) closeWidget();
     });
 
+    setFallbackState();
     fetchSpotify();
-    setInterval(fetchSpotify, 10000);
+    setInterval(fetchSpotify, 60000);
   });
 </script>
 
 <style>
+  #music-widget {
+    transform: translate3d(1.75rem, 1rem, 0) scale(0.98);
+    transition: opacity 0.34s ease, transform 0.38s ease;
+  }
+
   #music-widget.visible {
     opacity: 1;
-    transform: translateX(-10%) translateY(0);
+    transform: translate3d(0, 0, 0) scale(1);
     pointer-events: auto;
   }
 
@@ -143,5 +212,88 @@
     pointer-events: none;
   }
 
-  #music-hint.hidden { opacity: 0; }
+  .music-shell {
+    background:
+      linear-gradient(145deg, rgba(232, 160, 168, 0.12), rgba(168, 200, 216, 0.03) 48%, rgba(255, 255, 255, 0.02)),
+      rgba(13, 14, 24, 0.88);
+  }
+
+  .music-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(8px);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .music-orb--pink {
+    top: -1.25rem;
+    right: 2.25rem;
+    width: 6.5rem;
+    height: 6.5rem;
+    background: radial-gradient(circle, rgba(232, 160, 168, 0.2) 0%, rgba(232, 160, 168, 0) 72%);
+  }
+
+  .music-orb--cyan {
+    bottom: -2rem;
+    left: -1.5rem;
+    width: 7rem;
+    height: 7rem;
+    background: radial-gradient(circle, rgba(168, 200, 216, 0.15) 0%, rgba(168, 200, 216, 0) 70%);
+  }
+
+  .music-art-link {
+    display: block;
+    border-radius: 1.15rem;
+    transition: transform 0.2s ease;
+  }
+
+  .music-art-link:hover {
+    transform: translateY(-1px);
+  }
+
+  .music-art-shell.has-art .music-art-fallback {
+    opacity: 0;
+  }
+
+  .music-art-fallback,
+  .music-art-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .music-art-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(135deg, rgba(232, 160, 168, 0.16), rgba(155, 127, 184, 0.12) 45%, rgba(168, 200, 216, 0.12)),
+      rgba(22, 24, 40, 0.95);
+    transition: opacity 0.2s ease;
+  }
+
+  .music-art-image {
+    object-fit: cover;
+  }
+
+  @media (max-width: 640px) {
+    #music-widget {
+      transform: translate3d(0, 1rem, 0) scale(0.98);
+    }
+
+    #music-widget.visible {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #music-widget,
+    .music-art-link,
+    .music-art-fallback {
+      transition: none;
+      animation: none;
+    }
+  }
 </style>

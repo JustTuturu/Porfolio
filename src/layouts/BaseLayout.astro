@@ -93,11 +93,29 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
       let lastScrollY = window.scrollY;
       let navVisibleUntil = 0;
       const navHoldMs = 1800;
+      let navHideTimer = null;
 
       function setNavVisible(visible) {
         if (!navbar) return;
         navbar.classList.toggle('nav-hidden', !visible);
         navbar.classList.toggle('nav-peek', visible);
+      }
+
+      function scheduleNavHide() {
+        window.clearTimeout(navHideTimer);
+
+        if (!hero || !navbar) return;
+        if (window.scrollY < (hero.offsetHeight || window.innerHeight) * 0.72) return;
+
+        const remaining = navVisibleUntil - Date.now();
+        if (remaining <= 0) {
+          setNavVisible(false);
+          return;
+        }
+
+        navHideTimer = window.setTimeout(function() {
+          syncHeroAndNav();
+        }, remaining);
       }
 
       function syncHeroAndNav() {
@@ -115,6 +133,7 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
         if (!navbar) return;
 
         if (scrollY < heroHeight * 0.72) {
+          window.clearTimeout(navHideTimer);
           navbar.classList.remove('nav-hidden', 'nav-peek', 'scrolled');
           navbar.style.opacity = String(Math.max(0, 1 - progress * 1.35));
           navbar.style.transform = 'translateY(-' + (progress * 18) + 'px)';
@@ -131,6 +150,7 @@ const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
         }
 
         setNavVisible(isNearTop || now < navVisibleUntil);
+        scheduleNavHide();
         lastScrollY = scrollY;
       }
 

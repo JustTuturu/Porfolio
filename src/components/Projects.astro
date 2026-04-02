@@ -19,7 +19,7 @@ const others = PROJECTS.filter((p) => !p.featured);
           <span class="font-['JetBrains_Mono'] text-[0.64rem] tracking-[0.18em] uppercase" style={`color: ${featured.categoryColor};`}>
             {featured.category}
           </span>
-          <span class="font-['Inter'] text-[0.78rem] text-[var(--text-primary)]/28 ">
+          <span class="relative -left-[1rem] font-['Inter'] text-[0.78rem] text-[var(--text-primary)]/28">
             {featured.label}
           </span>
         </div>
@@ -78,7 +78,7 @@ const others = PROJECTS.filter((p) => !p.featured);
                 <span class="font-['JetBrains_Mono'] text-[0.64rem] tracking-[0.18em] uppercase" style={`color: ${project.categoryColor};`}>
                   {project.category}
                 </span>
-                <span class="font-['Inter'] text-[0.76rem] text-[var(--text-primary)]/26">
+                <span class="relative -left-[1rem] font-['Inter'] text-[0.78rem] text-[var(--text-primary)]/28">
                   {project.label}
                 </span>
               </div>

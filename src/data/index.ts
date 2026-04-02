@@ -21,7 +21,7 @@ export const PROJECTS = [
   {
     featured: true,
     category: 'LLM App',
-    categoryColor: '#7C3AED',
+    categoryColor: '#E8A0A8',
     title: 'Your Featured Project',
     description: 'A short 2-line description of what you built and why it matters.',
     metrics: ['87.3% Accuracy', '< 200ms Latency'],
@@ -33,7 +33,7 @@ export const PROJECTS = [
   {
     featured: false,
     category: 'ML Tool',
-    categoryColor: '#06B6D4',
+    categoryColor: 'rgba(168, 200, 216, 0.82)',
     title: 'Project Two',
     description: 'Brief description of your second project.',
     metrics: ['95% Precision'],
@@ -45,7 +45,7 @@ export const PROJECTS = [
   {
     featured: false,
     category: 'Data',
-    categoryColor: '#F59E0B',
+    categoryColor: 'rgba(212, 149, 106, 0.78)',
     title: 'Project Three',
     description: 'Brief description of your third project.',
     metrics: ['100K+ Dataset'],

@@ -45,7 +45,23 @@ import { EDUCATION, CERTIFICATIONS } from '../data/index';
           {CERTIFICATIONS.map((cert) => (
             <div class="flex items-start justify-between pb-5 border-b border-white/5 last:border-b-0 last:pb-0">
               <div>
-                <p class="font-['Inter'] text-[0.9rem] font-medium text-[var(--text-primary)] mb-1">{cert.name}</p>
+                <div class="mb-1 flex items-center gap-2">
+                  <p class="font-['Inter'] text-[0.9rem] font-medium text-[var(--text-primary)]">{cert.name}</p>
+                  {cert.url && cert.url !== '#' && (
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cert-link"
+                      aria-label={`Open certificate for ${cert.name} (opens in new tab)`}
+                    >
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M3 9L9 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                        <path d="M4 3H9V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
                 <p class="font-['JetBrains_Mono'] text-[0.65rem] text-[var(--text-primary)]/35 tracking-[0.05em]">{cert.platform} · {cert.date}</p>
               </div>
               {cert.featured && <span class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.1em] uppercase text-[var(--accent-pink)] border border-[var(--accent-pink)] rounded px-1.5 py-0.5 whitespace-nowrap opacity-70">Featured</span>}
@@ -59,6 +75,24 @@ import { EDUCATION, CERTIFICATIONS } from '../data/index';
 </section>
 
 <style>
+  .cert-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .cert-link:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
   .edu-grid {
     display: grid;
     grid-template-columns: 1fr;

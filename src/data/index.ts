@@ -66,8 +66,8 @@ export const EDUCATION = {
 };
 
 export const CERTIFICATIONS = [
-  { platform: 'Coursera', name: 'Machine Learning by Andrew Ng', date: 'Aug 2023', featured: false, url: '#' },
-  { platform: 'Google', name: 'TensorFlow Developer Certificate', date: 'Mar 2024', featured: false, url: '#' },
+  { platform: 'Coursera', name: 'Machine Learning by Andrew Ng', date: 'Aug 2023', featured: false, url: '' },
+  { platform: 'Google', name: 'Goolge AI Essential', date: 'August 2024', featured: false, url: 'https://coursera.org/share/e5b0c59a751923bead528a8a32506b5b' },
 ];
 
 export const EXPERIENCES = [

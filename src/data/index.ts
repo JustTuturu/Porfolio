@@ -18,7 +18,7 @@ export const ROLES = [
 ];
 
 export const SITE = {
-  maintenanceMode: true,
+  maintenanceMode: false,
   maintenanceTitle: 'Temporarily Under Maintenance',
   maintenanceMessage: 'I am making a few updates behind the scenes. The site will be back shortly.',
 };

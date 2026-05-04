@@ -74,72 +74,191 @@ section:not(#hero):not(#skills)::before {
   background: rgba(255, 255, 255, 0.07);
 }
 
-/* Section padding */
+/* Section padding — Material 8dp grid */
 .section-padding {
-  padding: 5rem 1.5rem;
+  padding: 4rem 1rem;        /* 64dp vertical, 16dp horizontal */
 }
 
 @media (min-width: 768px) {
   .section-padding {
-    padding: 6rem 2rem;
+    padding: 5rem 1.5rem;    /* 80dp vertical, 24dp horizontal */
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 1.5rem;    /* 96dp vertical */
   }
 }
 
 /* Content container */
 .content-container {
-  max-width: 1100px;
+  max-width: 52.5rem;        /* 840px — Material reading width */
   margin: 0 auto;
   width: 100%;
+  padding: 0 1rem;           /* 16dp mobile */
 }
 
-/* Typography */
+@media (min-width: 768px) {
+  .content-container {
+    padding: 0 1.5rem;       /* 24dp tablet+ */
+  }
+}
+
+/* ─── Material Design 3 Typography Scale ─── */
+
+/* Display */
+.type-display-large {
+  font-size: 3.5625rem;      /* 57px */
+  line-height: 1.12;
+  letter-spacing: -0.015625rem;
+  font-weight: 400;
+}
+.type-display-medium {
+  font-size: 2.8125rem;      /* 45px */
+  line-height: 1.16;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.type-display-small {
+  font-size: 2.25rem;        /* 36px */
+  line-height: 1.22;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Headline */
+.type-headline-large {
+  font-size: 2rem;           /* 32px */
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.type-headline-medium {
+  font-size: 1.75rem;        /* 28px */
+  line-height: 1.29;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.type-headline-small {
+  font-size: 1.5rem;         /* 24px */
+  line-height: 1.33;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Title */
+.type-title-large {
+  font-size: 1.375rem;       /* 22px */
+  line-height: 1.27;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.type-title-medium {
+  font-size: 1rem;           /* 16px */
+  line-height: 1.5;
+  letter-spacing: 0.009375rem;
+  font-weight: 500;
+}
+.type-title-small {
+  font-size: 0.875rem;       /* 14px */
+  line-height: 1.43;
+  letter-spacing: 0.00625rem;
+  font-weight: 500;
+}
+
+/* Label */
+.type-label-large {
+  font-size: 0.875rem;       /* 14px */
+  line-height: 1.43;
+  letter-spacing: 0.00625rem;
+  font-weight: 500;
+}
+.type-label-medium {
+  font-size: 0.75rem;        /* 12px */
+  line-height: 1.33;
+  letter-spacing: 0.03125rem;
+  font-weight: 500;
+}
+.type-label-small {
+  font-size: 0.6875rem;      /* 11px */
+  line-height: 1.45;
+  letter-spacing: 0.03125rem;
+  font-weight: 500;
+}
+
+/* Body */
+.type-body-large {
+  font-size: 1rem;           /* 16px */
+  line-height: 1.5;
+  letter-spacing: 0.03125rem;
+  font-weight: 400;
+}
+.type-body-medium {
+  font-size: 0.875rem;       /* 14px */
+  line-height: 1.43;
+  letter-spacing: 0.015625rem;
+  font-weight: 400;
+}
+.type-body-small {
+  font-size: 0.75rem;        /* 12px */
+  line-height: 1.33;
+  letter-spacing: 0.025rem;
+  font-weight: 400;
+}
+
+/* ─── Semantic aliases (keep existing class names) ─── */
 .section-label {
-  font-size: 0.7rem;
   font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
   text-transform: uppercase;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
   display: block;
+  /* Material Label Small */
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  letter-spacing: 0.03125rem;
+  font-weight: 500;
 }
 
 .section-heading {
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 2.5rem;
-  line-height: 1.2;
+  /* Material Headline Large */
+  font-size: 2rem;
+  line-height: 1.25;
+  letter-spacing: 0;
 }
 
 .card-title {
-  font-size: 1.1rem;
-  font-weight: 600;
   font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
   color: var(--text-primary);
-  line-height: 1.3;
+  /* Material Title Large */
+  font-size: 1.375rem;
+  line-height: 1.27;
+  letter-spacing: 0;
 }
 
 .body-text {
-  font-size: 0.95rem;
   font-family: 'Inter', sans-serif;
-  line-height: 1.7;
   color: var(--text-muted);
+  /* Material Body Large */
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.03125rem;
+  font-weight: 400;
 }
 
-.mono-label {
-  font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent-cyan);
-}
-
-/* Card */
+/* Card — Material 8dp grid */
 .card {
   background: rgba(22, 24, 40, 0.6);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 0.75rem;    /* 12dp — Material medium component */
+  padding: 1.5rem;           /* 24dp */
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -148,21 +267,23 @@ section:not(#hero):not(#skills)::before {
   transform: translateY(-4px);
 }
 
-/* Glass */
+/* Glass — Material 8dp grid */
 .glass {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 0.75rem;
 }
 
-/* Badge */
+/* Badge — Material 8dp grid */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 0.75rem;  /* 4dp 12dp */
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: 0.75rem;        /* 12dp — Label Medium */
+  line-height: 1.33;
+  letter-spacing: 0.03125rem;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.07);
   color: var(--text-primary);

@@ -8,7 +8,7 @@ import { META } from '../data/index';
     <span class="section-label animate-on-scroll" id="contact-heading">// contact</span>
     <h2 class="section-heading animate-on-scroll">Get In Touch</h2>
 
-    <p class="body-text animate-on-scroll" style="max-width: 480px; margin-bottom: 2.5rem;">
+    <p class="type-body-large animate-on-scroll" style="max-width: 30rem; margin-bottom: 2.5rem;">
       Open to internships and collaborations. Just say hi.
     </p>
 
@@ -16,22 +16,22 @@ import { META } from '../data/index';
     <div class="animate-on-scroll delay-1 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10" aria-label="Contact links">
   
     <a href={`mailto:${META.email}`} class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100" aria-label={`Send email to ${META.email}`}>
-      <span class="font-['JetBrains_Mono'] text-[0.65rem] tracking-[0.2em] uppercase text-[var(--accent-pink)]">Email</span>
-      <span class="font-['Inter'] text-[0.9rem] text-[var(--text-primary)]">{META.email}</span>
+      <span class="type-label-small uppercase text-[var(--accent-pink)]">Email</span>
+      <span class="type-body-medium text-[var(--text-primary)]">{META.email}</span>
     </a>
 
     <div class="hidden sm:block w-px h-8 bg-white/10" role="separator" aria-hidden="true"></div>
 
     <a href={META.github} target="_blank" rel="noopener noreferrer" class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100" aria-label="Visit GitHub profile (opens in new tab)">
-      <span class="font-['JetBrains_Mono'] text-[0.65rem] tracking-[0.2em] uppercase text-[var(--accent-pink)]">GitHub</span>
-      <span class="font-['Inter'] text-[0.9rem] text-[var(--text-primary)]">@{META.github.split('/').pop()}</span>
+      <span class="type-label-small uppercase text-[var(--accent-pink)]">GitHub</span>
+      <span class="type-body-medium text-[var(--text-primary)]">@{META.github.split('/').pop()}</span>
     </a>
 
     <div class="hidden sm:block w-px h-8 bg-white/10" role="separator" aria-hidden="true"></div>
 
     <a href={META.linkedin} target="_blank" rel="noopener noreferrer" class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100" aria-label="Visit LinkedIn profile (opens in new tab)">
-      <span class="font-['JetBrains_Mono'] text-[0.65rem] tracking-[0.2em] uppercase text-[var(--accent-pink)]">LinkedIn</span>
-      <span class="font-['Inter'] text-[0.9rem] text-[var(--text-primary)]">@{META.linkedin.split('/').pop()}</span>
+      <span class="type-label-small uppercase text-[var(--accent-pink)]">LinkedIn</span>
+      <span class="type-body-medium text-[var(--text-primary)]">@{META.linkedin.split('/').pop()}</span>
     </a>
 
   </div>

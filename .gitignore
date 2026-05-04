@@ -16,3 +16,6 @@ node_modules
 .DS_Store
 dist/
 .astro/
+
+# Internal docs for AI agent reference (local only)
+docs/

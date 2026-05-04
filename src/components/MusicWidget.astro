@@ -1,26 +1,21 @@
 ---
+import { PLAYLIST } from '../data/playlist';
 ---
+
 <div
   id="music-widget"
   class="fixed top-16 right-4 z-[100] hidden opacity-0 pointer-events-none max-sm:top-[4rem] max-sm:right-4"
   role="dialog"
-  aria-label="Now playing widget"
+  aria-label="Music player"
   aria-hidden="true"
 >
   <div class="music-shell relative w-[min(21.5rem,calc(100vw-1.5rem))] overflow-hidden rounded-[28px] border border-white/8 bg-[rgba(13,14,24,0.88)] shadow-[0_28px_80px_rgba(3,4,10,0.55),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[22px]">
     <div class="music-orb music-orb--pink" aria-hidden="true"></div>
     <div class="music-orb music-orb--cyan" aria-hidden="true"></div>
 
-    <div class="relative flex min-h-0 gap-3 bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01))] p-[1.05rem] pt-[1rem] pb-[1.1rem] sm:p-[1.15rem] sm:pt-[1.05rem] sm:pb-[1.2rem]">
+    <div class="relative flex flex-col gap-3 bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01))] p-[1.05rem] pt-[1rem] pb-[1.1rem] sm:p-[1.15rem] sm:pt-[1.05rem] sm:pb-[1.2rem]">
       <div class="flex min-w-0 items-start gap-2.5">
-        <a
-          id="music-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="music-art-link shrink-0 no-underline"
-          aria-label="Open in Spotify (opens in new tab)"
-        >
+        <div class="music-art-link shrink-0">
           <div class="music-art-shell relative h-[4.5rem] w-[4.5rem] overflow-hidden rounded-[1.15rem] border border-white/8 bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
             <div class="music-art-fallback" aria-hidden="true">
               <span class="font-['JetBrains_Mono'] text-[0.58rem] tracking-[0.25em] uppercase text-[var(--text-primary)]/35">
@@ -38,9 +33,9 @@
               loading="lazy"
             />
           </div>
-        </a>
+        </div>
 
-        <div class="min-w-0 -ml-[0.1rem] flex-1 flex flex-col gap-1.5 pt-0">
+        <div class="min-w-0 -ml-[0.1rem] flex-1 flex flex-col gap-1 pt-0">
           <div class="flex flex-col gap-1 overflow-hidden">
             <p
               id="music-song"
@@ -64,29 +59,90 @@
           </p>
         </div>
       </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-2 mt-0.5">
+        <button
+          id="music-prev"
+          class="music-control-btn"
+          aria-label="Previous track"
+          title="Previous"
+        >
+          ⏮
+        </button>
+        <button
+          id="music-play"
+          class="music-control-btn music-control-btn--primary"
+          aria-label="Play"
+          title="Play/Pause"
+        >
+          ▶
+        </button>
+        <button
+          id="music-next"
+          class="music-control-btn"
+          aria-label="Next track"
+          title="Next"
+        >
+          ⏭
+        </button>
+      </div>
+
+      <!-- Progress -->
+      <div class="flex items-center gap-2.5">
+        <input
+          id="music-progress"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+          aria-label="Seek"
+          class="music-progress flex-1"
+        />
+        <span
+          id="music-time"
+          class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.06em] text-[var(--text-primary)]/35 whitespace-nowrap tabular-nums"
+        >
+          0:00 / 0:00
+        </span>
+      </div>
     </div>
   </div>
 </div>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
+<audio id="music-audio" preload="metadata"></audio>
+
+<script is:inline define:vars={{ playlist: PLAYLIST }}>
+  (function() {
     var widget = document.getElementById('music-widget');
     var songEl = document.getElementById('music-song');
     var artistEl = document.getElementById('music-artist');
     var metaEl = document.getElementById('music-meta');
     var artEl = document.getElementById('music-art');
     var artShell = widget ? widget.querySelector('.music-art-shell') : null;
-    var linkEl = document.getElementById('music-link');
+    var audio = document.getElementById('music-audio');
+    var playBtn = document.getElementById('music-play');
+    var prevBtn = document.getElementById('music-prev');
+    var nextBtn = document.getElementById('music-next');
+    var progressEl = document.getElementById('music-progress');
+    var timeEl = document.getElementById('music-time');
 
     var isOpen = false;
-    var nowPlaying = null;
+    var currentIndex = 0;
+    var isPlaying = false;
+    var wasPlayingBeforeSeek = false;
 
-    var navMusicBtn = document.getElementById('music-btn');
-    if (navMusicBtn) {
-      navMusicBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        isOpen ? closeWidget() : openWidget();
-      });
+    if (!playlist || !playlist.length) {
+      if (songEl) songEl.textContent = 'No tracks';
+      return;
+    }
+
+    function formatTime(sec) {
+      if (!isFinite(sec)) return '0:00';
+      var m = Math.floor(sec / 60);
+      var s = Math.floor(sec % 60);
+      return m + ':' + (s < 10 ? '0' + s : s);
     }
 
     function clearArtwork() {
@@ -100,65 +156,97 @@
 
     function setArtwork(url) {
       if (!artEl) return;
-
       clearArtwork();
       if (!url) return;
-
-      var nextImage = new Image();
-      nextImage.onload = function() {
+      var img = new Image();
+      img.onload = function() {
         if (!artEl) return;
         artEl.src = url;
         artEl.style.display = 'block';
         if (artShell) artShell.classList.add('has-art');
       };
-      nextImage.onerror = function() {
-        clearArtwork();
-      };
-      nextImage.src = url;
+      img.onerror = function() { clearArtwork(); };
+      img.src = url;
     }
 
-    function setFallbackState() {
-      if (songEl) songEl.textContent = 'Nyan~';
-      if (artistEl) artistEl.textContent = 'curated playlist';
-      if (metaEl) metaEl.textContent = 'Nothing live right now';
-      setArtwork('');
-      if (linkEl) {
-        linkEl.href = 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ';
-        linkEl.target = '_blank';
+    function loadTrack(index) {
+      currentIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+      var track = playlist[currentIndex];
+      if (audio) audio.src = track.src;
+      if (songEl) songEl.textContent = track.title || 'Untitled';
+      if (artistEl) artistEl.textContent = (track.artist || 'Unknown') + (track.album ? ' — ' + track.album : '');
+      if (metaEl) metaEl.textContent = 'Track ' + (currentIndex + 1) + ' / ' + playlist.length;
+      setArtwork(track.cover || '');
+      if (progressEl) { progressEl.value = 0; progressEl.max = 100; }
+      if (timeEl) timeEl.textContent = '0:00 / 0:00';
+      isPlaying = false;
+      updatePlayButton();
+    }
+
+    function updatePlayButton() {
+      if (!playBtn) return;
+      playBtn.textContent = isPlaying ? '⏸' : '▶';
+      playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Play');
+    }
+
+    function togglePlay() {
+      if (!audio) return;
+      if (audio.paused || audio.ended) {
+        audio.play().catch(function(){});
+      } else {
+        audio.pause();
       }
     }
 
-    function updateWidget() {
-      if (!nowPlaying || !nowPlaying.isPlaying) {
-        setFallbackState();
-        return;
+    function updateProgress() {
+      if (!audio || !progressEl || !timeEl) return;
+      var dur = audio.duration || 0;
+      var cur = audio.currentTime || 0;
+      if (dur) {
+        progressEl.value = (cur / dur) * 100;
       }
-
-      if (songEl) songEl.textContent = nowPlaying.song || 'Untitled';
-      if (artistEl) artistEl.textContent = nowPlaying.artist || 'Unknown artist';
-      if (metaEl) metaEl.textContent = nowPlaying.album ? 'Album • ' + nowPlaying.album : 'Currently playing';
-      setArtwork(nowPlaying.albumArtUrl || '');
-
-      if (linkEl) {
-        linkEl.href = nowPlaying.url || (nowPlaying.trackId ? 'https://open.spotify.com/track/' + nowPlaying.trackId : 'https://open.spotify.com/playlist/4cgl6peqciW7mGIi7fPwsZ');
-        linkEl.target = '_blank';
-      }
+      timeEl.textContent = formatTime(cur) + ' / ' + formatTime(dur);
     }
 
-    function fetchSpotify() {
-      fetch('/api/spotify', { headers: { Accept: 'application/json' } })
-        .then(function(res) {
-          if (!res.ok) throw new Error('Spotify request failed');
-          return res.json();
-        })
-        .then(function(data) {
-          nowPlaying = data;
-          updateWidget();
-        })
-        .catch(function() {
-          nowPlaying = null;
-          updateWidget();
-        });
+    function seekFromInput() {
+      if (!audio || !progressEl) return;
+      var dur = audio.duration || 0;
+      if (!dur) return;
+      audio.currentTime = (parseFloat(progressEl.value) / 100) * dur;
+    }
+
+    function prevTrack() { loadTrack(currentIndex - 1); if (isPlaying && audio) audio.play().catch(function(){}); }
+    function nextTrack() { loadTrack(currentIndex + 1); if (isPlaying && audio) audio.play().catch(function(){}); }
+
+    if (audio) {
+      audio.addEventListener('play', function() { isPlaying = true; updatePlayButton(); });
+      audio.addEventListener('pause', function() { isPlaying = false; updatePlayButton(); });
+      audio.addEventListener('ended', function() { nextTrack(); if (audio) audio.play().catch(function(){}); });
+      audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('loadedmetadata', updateProgress);
+    }
+
+    if (playBtn) playBtn.addEventListener('click', togglePlay);
+    if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+    if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+
+    if (progressEl) {
+      progressEl.addEventListener('input', function() {
+        wasPlayingBeforeSeek = isPlaying;
+        if (audio) audio.pause();
+        seekFromInput();
+      });
+      progressEl.addEventListener('change', function() {
+        if (wasPlayingBeforeSeek && audio) audio.play().catch(function(){});
+      });
+    }
+
+    var navMusicBtn = document.getElementById('music-btn');
+    if (navMusicBtn) {
+      navMusicBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        isOpen ? closeWidget() : openWidget();
+      });
     }
 
     function openWidget() {
@@ -166,7 +254,6 @@
       widget.classList.remove('hidden');
       widget.classList.add('visible');
       widget.setAttribute('aria-hidden', 'false');
-      fetchSpotify();
     }
 
     function closeWidget() {
@@ -180,19 +267,18 @@
       if (e.key === 'ArrowUp' && !isOpen) { e.preventDefault(); openWidget(); }
       if (e.key === 'Escape' && isOpen) { closeWidget(); }
       if (e.key === 'ArrowDown' && isOpen) { e.preventDefault(); closeWidget(); }
+      if (e.key === ' ' && isOpen) { e.preventDefault(); togglePlay(); }
     });
 
     document.addEventListener('click', function(e) {
       if (!widget) return;
-      var clickedInsideWidget = widget.contains(e.target);
-      var clickedNavBtn = navMusicBtn && navMusicBtn.contains(e.target);
-      if (isOpen && !clickedInsideWidget && !clickedNavBtn) closeWidget();
+      var inside = widget.contains(e.target);
+      var clickedNav = navMusicBtn && navMusicBtn.contains(e.target);
+      if (isOpen && !inside && !clickedNav) closeWidget();
     });
 
-    setFallbackState();
-    fetchSpotify();
-    setInterval(fetchSpotify, 60000);
-  });
+    loadTrack(0);
+  })();
 </script>
 
 <style>
@@ -278,6 +364,84 @@
     object-fit: cover;
   }
 
+  .music-control-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: rgba(241,245,249,0.55);
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .music-control-btn:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--accent-pink, #e8a0a8);
+    border-color: rgba(232,160,168,0.25);
+  }
+
+  .music-control-btn--primary {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1rem;
+    background: rgba(232,160,168,0.12);
+    border-color: rgba(232,160,168,0.22);
+    color: rgba(241,245,249,0.85);
+  }
+
+  .music-control-btn--primary:hover {
+    background: rgba(232,160,168,0.22);
+    color: #fff;
+  }
+
+  .music-progress {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .music-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-pink, #e8a0a8);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease;
+  }
+
+  .music-progress::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+  }
+
+  .music-progress::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-pink, #e8a0a8);
+    cursor: pointer;
+    border: none;
+  }
+
+  .music-progress::-moz-range-track {
+    height: 3px;
+    background: rgba(255,255,255,0.10);
+    border-radius: 2px;
+  }
+
   @media (max-width: 640px) {
     #music-widget {
       transform: translate3d(0, 1rem, 0) scale(0.98);
@@ -291,7 +455,8 @@
   @media (prefers-reduced-motion: reduce) {
     #music-widget,
     .music-art-link,
-    .music-art-fallback {
+    .music-art-fallback,
+    .music-control-btn {
       transition: none;
       animation: none;
     }

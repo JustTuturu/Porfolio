@@ -5,8 +5,6 @@ interface Props {
     image?: string;
     url?: string;
 }
-import Analytics from "@vercel/analytics/astro";
-import SpeedInsights from "@vercel/speed-insights/astro";
 import "../styles/global.css";
 const {
     title = "Tut — AI/ML Engineer",
@@ -59,7 +57,7 @@ const imageUrl = image.startsWith("http") ? image : `${canonicalUrl}${image}`;
         <link rel="preconnect" href="https://api.lanyard.rest" />
         <link rel="preconnect" href="https://cdn.discordapp.com" />
 
-        <!-- Google Fonts (deferred loading) -->
+        <!-- Google Fonts — non-blocking load -->
         <link
             href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
             rel="stylesheet"
@@ -93,100 +91,108 @@ const imageUrl = image.startsWith("http") ? image : `${canonicalUrl}${image}`;
     <body>
         <slot />
         <script is:inline>
-            const hero = document.getElementById("hero");
-            const navbar = document.getElementById("navbar");
-            let lastScrollY = window.scrollY;
-            let navVisibleUntil = 0;
-            const navHoldMs = 1800;
-            let navHideTimer = null;
+            document.addEventListener("DOMContentLoaded", function () {
+                // ─── Hero + Navbar scroll sync ──────────────────────────────
+                var hero = document.getElementById("hero");
+                var navbar = document.getElementById("navbar");
+                var lastScrollY = window.scrollY;
+                var navVisibleUntil = 0;
+                var navHoldMs = 1800;
+                var navHideTimer = null;
 
-            function setNavVisible(visible) {
-                if (!navbar) return;
-                navbar.classList.toggle("nav-hidden", !visible);
-                navbar.classList.toggle("nav-peek", visible);
-            }
-
-            function scheduleNavHide() {
-                window.clearTimeout(navHideTimer);
-
-                if (!hero || !navbar) return;
-                if (
-                    window.scrollY <
-                    (hero.offsetHeight || window.innerHeight) * 0.72
-                )
-                    return;
-
-                const remaining = navVisibleUntil - Date.now();
-                if (remaining <= 0) {
-                    setNavVisible(false);
-                    return;
+                function setNavVisible(visible) {
+                    if (!navbar) return;
+                    navbar.classList.toggle("nav-hidden", !visible);
+                    navbar.classList.toggle("nav-peek", visible);
                 }
 
-                navHideTimer = window.setTimeout(function () {
-                    syncHeroAndNav();
-                }, remaining);
-            }
-
-            function syncHeroAndNav() {
-                if (!hero) return;
-                const scrollY = window.scrollY;
-                const heroHeight = hero.offsetHeight || window.innerHeight;
-                const progress = Math.min(scrollY / heroHeight, 1);
-                const isScrollingUp = scrollY < lastScrollY - 4;
-                const isNearTop = scrollY < 24;
-                const now = Date.now();
-
-                hero.style.transform = "translateY(-" + progress * 30 + "px)";
-                hero.style.opacity = String(Math.max(0, 1 - progress * 1.5));
-
-                if (!navbar) return;
-
-                if (scrollY < heroHeight * 0.72) {
+                function scheduleNavHide() {
                     window.clearTimeout(navHideTimer);
-                    navbar.classList.remove(
-                        "nav-hidden",
-                        "nav-peek",
-                        "scrolled",
+                    if (!hero || !navbar) return;
+                    if (
+                        window.scrollY <
+                        (hero.offsetHeight || window.innerHeight) * 0.72
+                    )
+                        return;
+
+                    var remaining = navVisibleUntil - Date.now();
+                    if (remaining <= 0) {
+                        setNavVisible(false);
+                        return;
+                    }
+
+                    navHideTimer = window.setTimeout(function () {
+                        syncHeroAndNav();
+                    }, remaining);
+                }
+
+                function syncHeroAndNav() {
+                    if (!hero) return;
+                    var scrollY = window.scrollY;
+                    var heroHeight = hero.offsetHeight || window.innerHeight;
+                    var progress = Math.min(scrollY / heroHeight, 1);
+                    var isScrollingUp = scrollY < lastScrollY - 4;
+                    var isNearTop = scrollY < 24;
+                    var now = Date.now();
+                    hero.style.opacity = String(
+                        Math.max(0, 1 - progress * 1.5),
                     );
-                    navbar.style.opacity = String(
-                        Math.max(0, 1 - progress * 1.35),
-                    );
-                    navbar.style.transform =
-                        "translateY(-" + progress * 18 + "px)";
+
+                    if (!navbar) return;
+
+                    if (scrollY < heroHeight * 0.72) {
+                        window.clearTimeout(navHideTimer);
+                        navbar.classList.remove(
+                            "nav-hidden",
+                            "nav-peek",
+                            "scrolled",
+                        );
+                        navbar.style.opacity = String(
+                            Math.max(0, 1 - progress * 1.35),
+                        );
+                        navbar.style.transform = "";
+
+                        lastScrollY = scrollY;
+                        return;
+                    }
+
+                    navbar.style.opacity = "";
+                    navbar.style.transform = "";
+                    navbar.classList.add("scrolled");
+
+                    if (isScrollingUp) {
+                        navVisibleUntil = now + navHoldMs;
+                    }
+
+                    setNavVisible(isNearTop || now < navVisibleUntil);
+                    scheduleNavHide();
                     lastScrollY = scrollY;
-                    return;
                 }
 
-                navbar.style.opacity = "";
-                navbar.style.transform = "";
-                navbar.classList.add("scrolled");
+                window.addEventListener("scroll", syncHeroAndNav, {
+                    passive: true,
+                });
+                window.addEventListener("resize", syncHeroAndNav, {
+                    passive: true,
+                });
 
-                if (isScrollingUp) {
-                    navVisibleUntil = now + navHoldMs;
-                }
+                syncHeroAndNav();
+                var els = document.querySelectorAll(".animate-on-scroll");
+                var revealObserver = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting) {
+                                e.target.classList.add("visible");
+                                revealObserver.unobserve(e.target);
+                            }
+                        });
+                    },
+                    { threshold: 0.12, rootMargin: "0px 0px -32px 0px" },
+                );
 
-                setNavVisible(isNearTop || now < navVisibleUntil);
-                scheduleNavHide();
-                lastScrollY = scrollY;
-            }
-
-            window.addEventListener("scroll", syncHeroAndNav, {
-                passive: true,
-            });
-            window.addEventListener("resize", syncHeroAndNav);
-
-            syncHeroAndNav();
-            const els = document.querySelectorAll(".animate-on-scroll");
-            const observer = new IntersectionObserver(
-                function (entries) {
-                    entries.forEach(function (e) {
-                        if (e.isIntersecting) e.target.classList.add("visible");
-                    });
-                },
-                { threshold: 0.15 },
-            );
-            els.forEach(function (el) {
-                observer.observe(el);
+                els.forEach(function (el) {
+                    revealObserver.observe(el);
+                });
             });
         </script>
     </body>

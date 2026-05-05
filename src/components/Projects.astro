@@ -16,7 +16,7 @@ const others = PROJECTS.filter((p) => !p.featured);
       <!-- Featured — full width horizontal card -->
       {featured && (
         <article
-          class="project-featured"
+          class="project-card project-featured"
           style={`--card-accent: ${featured.categoryColor};`}
           aria-label={`Featured project: ${featured.title}`}
         >
@@ -37,7 +37,7 @@ const others = PROJECTS.filter((p) => !p.featured);
                 >
                   {featured.category}
                 </span>
-                <span class="w-1 h-1 rounded-full bg-[v(--text-primary)]/15"></span>
+                <span class="w-1 h-1 rounded-full bg-(--text-primary)/15"></span>
                 <span class="text-[0.75rem] text-(--text-primary)/25">
                   {featured.label}
                 </span>

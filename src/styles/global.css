@@ -47,7 +47,7 @@ body {
 /* Sections */
 section {
     position: relative; /* ← required for ::before divider */
-    scroll-margin-top: 80px; /* ← navbar height offset for anchor links */
+    scroll-margin-top: 72px; /* ← navbar h-14 = 56px + 16px buffer */
 }
 
 /* Hero */
@@ -79,37 +79,42 @@ section:not(#hero):not(#skills)::before {
         var(--accent-pink) 50%,
         transparent 100%
     );
-    opacity: 0.35;
+    opacity: 0.18;
 }
 
-/* Section padding — Material 8dp grid */
+/* Section padding — vertical only, horizontal handled by .content-container */
 .section-padding {
-    padding: 4rem 1rem; /* 64dp vertical, 16dp horizontal */
+    padding-top: 4rem; /* 64dp */
+    padding-bottom: 4rem;
 }
 
 @media (min-width: 768px) {
     .section-padding {
-        padding: 5rem 1.5rem; /* 80dp vertical, 24dp horizontal */
+        padding-top: 5rem; /* 80dp */
+        padding-bottom: 5rem;
     }
 }
 
 @media (min-width: 1024px) {
     .section-padding {
-        padding: 6rem 1.5rem; /* 96dp vertical */
+        padding-top: 6rem; /* 96dp */
+        padding-bottom: 6rem;
     }
 }
 
-/* Content container */
+/* Content container — single source of horizontal padding */
 .content-container {
     max-width: 52.5rem; /* 840px — Material reading width */
     margin: 0 auto;
     width: 100%;
-    padding: 0 1rem; /* 16dp mobile */
+    padding-left: 1rem; /* 16dp mobile */
+    padding-right: 1rem;
 }
 
 @media (min-width: 768px) {
     .content-container {
-        padding: 0 1.5rem; /* 24dp tablet+ */
+        padding-left: 1.5rem; /* 24dp tablet+ */
+        padding-right: 1.5rem;
     }
 }
 
@@ -358,7 +363,6 @@ section:not(#hero):not(#skills)::before {
 
 /* Featured card — premium treatment */
 .project-featured {
-    composes: project-card;
     padding: 2rem;
 }
 

@@ -1,177 +1,193 @@
 ---
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  url?: string;
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
 }
-import Analytics from '@vercel/analytics/astro';
-import SpeedInsights from '@vercel/speed-insights/astro';
-import '../styles/global.css'
-const { 
-  title = 'Tut — AI/ML Engineer', 
-  description = 'AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.',
-  image = '/images/hero.jpg',
-  url = 'https://justtuturu.dev'
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import "../styles/global.css";
+const {
+    title = "Tut — AI/ML Engineer",
+    description = "AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.",
+    image = "/images/hero.jpg",
+    url = "https://justtuturu.dev",
 } = Astro.props;
 
-const siteName = 'Tut Portfolio';
+const siteName = "Tut Portfolio";
 const canonicalUrl = url;
-const imageUrl = image.startsWith('http') ? image : `${canonicalUrl}${image}`;
+const imageUrl = image.startsWith("http") ? image : `${canonicalUrl}${image}`;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    
-    <!-- Primary SEO meta tags -->
-    <meta name="description" content={description} />
-    <meta name="author" content="Tut" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={canonicalUrl} />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content={siteName} />
-    <meta property="og:locale" content="en_US" />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalUrl} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
-    <meta name="twitter:site" content="@justuturu" />
-    <meta name="twitter:creator" content="@justuturu" />
-    
-    <!-- Preconnect for external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://api.lanyard.rest" />
-    <link rel="preconnect" href="https://cdn.discordapp.com" />
-    
-    <!-- Google Fonts (deferred loading) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
-    
-    <!-- Structured data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Tut",
-      "jobTitle": "AI/ML Engineer",
-      "url": canonicalUrl,
-      "sameAs": [
-        "https://github.com/justtuturu",
-        "https://linkedin.com/in/justtuturu",
-        "https://x.com/justuturu"
-      ]
-    })} />
-  </head>
-  <body>
-    <slot />
-    <Analytics />
-    <SpeedInsights />
-    <script is:inline>
-      const hero = document.getElementById('hero');
-      const navbar = document.getElementById('navbar');
-      let lastScrollY = window.scrollY;
-      let navVisibleUntil = 0;
-      const navHoldMs = 1800;
-      let navHideTimer = null;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
 
-      function setNavVisible(visible) {
-        if (!navbar) return;
-        navbar.classList.toggle('nav-hidden', !visible);
-        navbar.classList.toggle('nav-peek', visible);
-      }
+        <!-- Primary SEO meta tags -->
+        <meta name="description" content={description} />
+        <meta name="author" content="Tut" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonicalUrl} />
 
-      function scheduleNavHide() {
-        window.clearTimeout(navHideTimer);
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:locale" content="en_US" />
 
-        if (!hero || !navbar) return;
-        if (window.scrollY < (hero.offsetHeight || window.innerHeight) * 0.72) return;
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:site" content="@justuturu" />
+        <meta name="twitter:creator" content="@justuturu" />
 
-        const remaining = navVisibleUntil - Date.now();
-        if (remaining <= 0) {
-          setNavVisible(false);
-          return;
-        }
+        <!-- Preconnect for external resources -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://api.lanyard.rest" />
+        <link rel="preconnect" href="https://cdn.discordapp.com" />
 
-        navHideTimer = window.setTimeout(function() {
-          syncHeroAndNav();
-        }, remaining);
-      }
+        <!-- Google Fonts (deferred loading) -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
+            rel="stylesheet"
+            media="print"
+            onload="this.media='all'"
+        />
+        <noscript>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;700&display=swap"
+                rel="stylesheet"
+            />
+        </noscript>
 
-      function syncHeroAndNav() {
-        if (!hero) return;
-        const scrollY = window.scrollY;
-        const heroHeight = hero.offsetHeight || window.innerHeight;
-        const progress = Math.min(scrollY / heroHeight, 1);
-        const isScrollingUp = scrollY < lastScrollY - 4;
-        const isNearTop = scrollY < 24;
-        const now = Date.now();
+        <!-- Structured data -->
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Tut",
+                jobTitle: "AI/ML Engineer",
+                url: canonicalUrl,
+                sameAs: [
+                    "https://github.com/justtuturu",
+                    "https://linkedin.com/in/justtuturu",
+                    "https://x.com/justuturu",
+                ],
+            })}
+        />
+    </head>
+    <body>
+        <slot />
+        <script is:inline>
+            const hero = document.getElementById("hero");
+            const navbar = document.getElementById("navbar");
+            let lastScrollY = window.scrollY;
+            let navVisibleUntil = 0;
+            const navHoldMs = 1800;
+            let navHideTimer = null;
 
-        hero.style.transform = 'translateY(-' + (progress * 30) + 'px)';
-        hero.style.opacity = String(Math.max(0, 1 - progress * 1.5));
+            function setNavVisible(visible) {
+                if (!navbar) return;
+                navbar.classList.toggle("nav-hidden", !visible);
+                navbar.classList.toggle("nav-peek", visible);
+            }
 
-        if (!navbar) return;
+            function scheduleNavHide() {
+                window.clearTimeout(navHideTimer);
 
-        if (scrollY < heroHeight * 0.72) {
-          window.clearTimeout(navHideTimer);
-          navbar.classList.remove('nav-hidden', 'nav-peek', 'scrolled');
-          navbar.style.opacity = String(Math.max(0, 1 - progress * 1.35));
-          navbar.style.transform = 'translateY(-' + (progress * 18) + 'px)';
-          lastScrollY = scrollY;
-          return;
-        }
+                if (!hero || !navbar) return;
+                if (
+                    window.scrollY <
+                    (hero.offsetHeight || window.innerHeight) * 0.72
+                )
+                    return;
 
-        navbar.style.opacity = '';
-        navbar.style.transform = '';
-        navbar.classList.add('scrolled');
+                const remaining = navVisibleUntil - Date.now();
+                if (remaining <= 0) {
+                    setNavVisible(false);
+                    return;
+                }
 
-        if (isScrollingUp) {
-          navVisibleUntil = now + navHoldMs;
-        }
+                navHideTimer = window.setTimeout(function () {
+                    syncHeroAndNav();
+                }, remaining);
+            }
 
-        setNavVisible(isNearTop || now < navVisibleUntil);
-        scheduleNavHide();
-        lastScrollY = scrollY;
-      }
+            function syncHeroAndNav() {
+                if (!hero) return;
+                const scrollY = window.scrollY;
+                const heroHeight = hero.offsetHeight || window.innerHeight;
+                const progress = Math.min(scrollY / heroHeight, 1);
+                const isScrollingUp = scrollY < lastScrollY - 4;
+                const isNearTop = scrollY < 24;
+                const now = Date.now();
 
-      window.addEventListener('scroll', syncHeroAndNav, { passive: true });
-      window.addEventListener('resize', syncHeroAndNav);
+                hero.style.transform = "translateY(-" + progress * 30 + "px)";
+                hero.style.opacity = String(Math.max(0, 1 - progress * 1.5));
 
-      syncHeroAndNav();
-      const els = document.querySelectorAll('.animate-on-scroll');
-      const observer = new IntersectionObserver(
-        function(entries) {
-          entries.forEach(function(e) {
-            if (e.isIntersecting) e.target.classList.add('visible');
-          });
-        },
-        { threshold: 0.15 }
-      );
-      els.forEach(function(el) { observer.observe(el); });
-    </script>
-  </body>
+                if (!navbar) return;
+
+                if (scrollY < heroHeight * 0.72) {
+                    window.clearTimeout(navHideTimer);
+                    navbar.classList.remove(
+                        "nav-hidden",
+                        "nav-peek",
+                        "scrolled",
+                    );
+                    navbar.style.opacity = String(
+                        Math.max(0, 1 - progress * 1.35),
+                    );
+                    navbar.style.transform =
+                        "translateY(-" + progress * 18 + "px)";
+                    lastScrollY = scrollY;
+                    return;
+                }
+
+                navbar.style.opacity = "";
+                navbar.style.transform = "";
+                navbar.classList.add("scrolled");
+
+                if (isScrollingUp) {
+                    navVisibleUntil = now + navHoldMs;
+                }
+
+                setNavVisible(isNearTop || now < navVisibleUntil);
+                scheduleNavHide();
+                lastScrollY = scrollY;
+            }
+
+            window.addEventListener("scroll", syncHeroAndNav, {
+                passive: true,
+            });
+            window.addEventListener("resize", syncHeroAndNav);
+
+            syncHeroAndNav();
+            const els = document.querySelectorAll(".animate-on-scroll");
+            const observer = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) e.target.classList.add("visible");
+                    });
+                },
+                { threshold: 0.15 },
+            );
+            els.forEach(function (el) {
+                observer.observe(el);
+            });
+        </script>
+    </body>
 </html>

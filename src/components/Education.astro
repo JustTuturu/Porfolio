@@ -1,108 +1,161 @@
 ---
-import { EDUCATION, CERTIFICATIONS } from '../data/index';
+import { EDUCATION, CERTIFICATIONS } from "../data/index";
 ---
 
 <section id="education" class="section-padding">
-  <div class="content-container">
+    <div class="content-container">
+        <span class="section-label animate-on-scroll">// education</span>
+        <h2 class="section-heading animate-on-scroll">
+            Education & Certifications
+        </h2>
 
-    <span class="section-label animate-on-scroll">// education</span>
-    <h2 class="section-heading animate-on-scroll">Education & Certifications</h2>
+        <div class="edu-grid animate-on-scroll delay-1">
+            <!-- Left: Degree -->
+            <div>
+                <p class="type-label-small uppercase text-(--accent-pink) mb-4">
+                    Degree
+                </p>
 
-    <div class="edu-grid animate-on-scroll delay-1">
-
-      <!-- Left: Degree -->
-      <div>
-        <p class="type-label-small uppercase text-[var(--accent-pink)] mb-4">Degree</p>
-
-        <div class="flex flex-col gap-3">
-          <h3 class="font-['Space_Grotesk'] type-title-large font-semibold text-[var(--text-primary)]">{EDUCATION.university}</h3>
-          <p class="type-body-medium text-[var(--text-primary)]/50">{EDUCATION.degree} — {EDUCATION.major}</p>
-
-          <div class="flex gap-8">
-            <span class="flex flex-col gap-1">
-              <span class="type-label-small uppercase text-[var(--text-primary)]/30">Graduation</span>
-              <span class="type-body-medium text-[var(--text-primary)]">{EDUCATION.graduation}</span>
-            </span>
-            <span class="flex flex-col gap-1">
-              <span class="type-label-small uppercase text-[var(--text-primary)]/30">GPA</span>
-              <span class="type-body-medium text-[var(--text-primary)]">{EDUCATION.cgpa}</span>
-            </span>
-          </div>
-
-          <div class="flex flex-wrap gap-2 mt-1">
-            {EDUCATION.courses.map((course) => (
-              <span class="type-label-small text-[var(--text-primary)]/45 border border-white/7 rounded px-2 py-0.5">{course}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Certifications -->
-      <div>
-        <p class="type-label-small uppercase text-[var(--accent-pink)] mb-4">Certifications</p>
-
-        <div class="flex flex-col gap-5">
-          {CERTIFICATIONS.map((cert) => (
-            <div class="flex items-start justify-between pb-5 border-b border-white/5 last:border-b-0 last:pb-0">
-              <div>
-                <div class="mb-1 flex items-center gap-2">
-                  <p class="type-body-medium font-medium text-[var(--text-primary)]">{cert.name}</p>
-                  {cert.url && cert.url !== '#' && (
-                    <a
-                      href={cert.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="cert-link"
-                      aria-label={`Open certificate for ${cert.name} (opens in new tab)`}
+                <div class="flex flex-col gap-3">
+                    <h3
+                        class="font-['Space_Grotesk'] type-title-large font-semibold text-(--text-primary)"
                     >
-                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M3 9L9 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-                        <path d="M4 3H9V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </a>
-                  )}
-                </div>
-                <p class="type-label-small text-[var(--text-primary)]/35">{cert.platform} · {cert.date}</p>
-              </div>
-              {cert.featured && <span class="type-label-small uppercase text-[var(--accent-pink)] border border-[var(--accent-pink)] rounded px-1.5 py-0.5 whitespace-nowrap opacity-70">Featured</span>}
-            </div>
-          ))}
-        </div>
-      </div>
+                        {EDUCATION.university}
+                    </h3>
+                    <p class="type-body-medium text-(--text-primary)/50">
+                        {EDUCATION.degree} — {EDUCATION.major}
+                    </p>
 
+                    <div class="flex gap-8">
+                        <span class="flex flex-col gap-1">
+                            <span
+                                class="type-label-small uppercase text-(--text-primary)/30"
+                                >Graduation</span
+                            >
+                            <span class="type-body-medium text-(--text-primary)"
+                                >{EDUCATION.graduation}</span
+                            >
+                        </span>
+                        <span class="flex flex-col gap-1">
+                            <span
+                                class="type-label-small uppercase text-(--text-primary)/30"
+                                >GPA</span
+                            >
+                            <span class="type-body-medium text-(--text-primary)"
+                                >{EDUCATION.cgpa}</span
+                            >
+                        </span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        {
+                            EDUCATION.courses.map((course) => (
+                                <span class="type-label-small text-(--text-primary)/45 border border-white/7 rounded px-2 py-0.5">
+                                    {course}
+                                </span>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Certifications -->
+            <div>
+                <p class="type-label-small uppercase text-(--accent-pink) mb-4">
+                    Certifications
+                </p>
+
+                <div class="flex flex-col gap-5">
+                    {
+                        CERTIFICATIONS.map((cert) => (
+                            <div class="flex items-start justify-between pb-5 border-b border-white/5 last:border-b-0 last:pb-0">
+                                <div>
+                                    <div class="mb-1 flex items-center gap-2">
+                                        <p class="type-body-medium font-medium text-(--text-primary)">
+                                            {cert.name}
+                                        </p>
+                                        {cert.url && cert.url !== "#" && (
+                                            <a
+                                                href={cert.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="cert-link"
+                                                aria-label={`Open certificate for ${cert.name} (opens in new tab)`}
+                                            >
+                                                <svg
+                                                    width="10"
+                                                    height="10"
+                                                    viewBox="0 0 12 12"
+                                                    fill="none"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M3 9L9 3"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.4"
+                                                        stroke-linecap="round"
+                                                    />
+                                                    <path
+                                                        d="M4 3H9V8"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.4"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                    />
+                                                </svg>
+                                            </a>
+                                        )}
+                                    </div>
+                                    <p class="type-label-small text-(--text-primary)/35">
+                                        {cert.platform} · {cert.date}
+                                    </p>
+                                </div>
+                                {cert.featured && (
+                                    <span class="type-label-small uppercase text-(--accent-pink) border border-(--accent-pink) rounded px-1.5 py-0.5 whitespace-nowrap opacity-70">
+                                        Featured
+                                    </span>
+                                )}
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <style>
-  .cert-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 9999px;
-    color: rgba(255, 255, 255, 0.92);
-    text-decoration: none;
-    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .cert-link:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .edu-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .edu-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+    .cert-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 9999px;
+        color: rgba(255, 255, 255, 0.92);
+        text-decoration: none;
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease,
+            background-color 0.2s ease;
     }
-  }
+
+    .cert-link:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .edu-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .edu-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+    }
 </style>

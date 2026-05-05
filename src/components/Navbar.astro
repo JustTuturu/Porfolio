@@ -1,111 +1,144 @@
 ---
+
 ---
+
 <nav
-  id="navbar"
-  class="fixed top-0 left-6 right-6 z-50 h-[56px] flex items-center justify-between px-4 md:px-20 bg-transparent pointer-events-none"
-  role="navigation"
-  aria-label="Main navigation"
+    id="navbar"
+    class="fixed top-0 left-6 right-6 z-50 h-14 flex items-center justify-between px-4 md:px-20 bg-transparent pointer-events-none"
+    role="navigation"
+    aria-label="Main navigation"
 >
-  <!-- Left: Logo -->
-  <a 
-    href="/" 
-    class="pointer-events-auto text-white opacity-90 hover:opacity-100 transition-opacity pl-[30px] font-['Inter'] text-[0.8rem] font-normal tracking-[0.3em] uppercase"
-    aria-label="Home"
-  >
-    Tut
-  </a>
-
-  <!-- Right: Nav links + Icon -->
-  <div 
-    class="flex items-center gap-6 pointer-events-auto pr-[40px]">
-    <a href="#about"    data-target="about"    class="nav-link" aria-label="Navigate to About section">about</a>
-    <a href="#projects" data-target="projects" class="nav-link" aria-label="Navigate to Projects section">projects</a>
-    <a href="#contact"  data-target="contact"  class="nav-link" aria-label="Navigate to Contact section">contact</a>
-
-    <script is:inline>
-      document.querySelectorAll('[data-target]').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          var id = link.getAttribute('data-target');
-          if (!id) return;
-          var section = document.getElementById(id);
-          if (!section) return;
-
-          var navHeight = 80; 
-          var top = section.getBoundingClientRect().top + window.scrollY - navHeight;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        });
-      });
-    </script>
-    
-    <!-- Vertical divider -->
-    <div class="w-px h-4 bg-white/20" role="separator" aria-hidden="true"></div>
-    
-    <!-- Icon -->
-    <button 
-      id="music-btn"
-      type="button"
-      class="text-white opacity-60 hover:opacity-100 transition-opacity flex items-center"
-      aria-label="Toggle music player"
+    <!-- Left: Logo -->
+    <a
+        href="/"
+        class="pointer-events-auto text-white opacity-90 hover:opacity-100 transition-opacity pl-7.5 font-['Inter'] text-[0.8rem] font-normal tracking-[0.3em] uppercase"
+        aria-label="Home"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M9 18V5l12-2v13"/>
-        <circle cx="6" cy="18" r="3"/>
-        <circle cx="18" cy="16" r="3"/>
-      </svg>
-    </button>
-  </div>
+        Tut
+    </a>
+
+    <!-- Right: Nav links + Icon -->
+    <div class="flex items-center gap-6 pointer-events-auto pr-10">
+        <a
+            href="#about"
+            data-target="about"
+            class="nav-link"
+            aria-label="Navigate to About section">about</a
+        >
+        <a
+            href="#projects"
+            data-target="projects"
+            class="nav-link"
+            aria-label="Navigate to Projects section">projects</a
+        >
+        <a
+            href="#contact"
+            data-target="contact"
+            class="nav-link"
+            aria-label="Navigate to Contact section">contact</a
+        >
+
+        <script is:inline>
+            document.querySelectorAll("[data-target]").forEach(function (link) {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    var id = link.getAttribute("data-target");
+                    if (!id) return;
+                    var section = document.getElementById(id);
+                    if (!section) return;
+
+                    var navHeight = 80;
+                    var top =
+                        section.getBoundingClientRect().top +
+                        window.scrollY -
+                        navHeight;
+                    window.scrollTo({ top: top, behavior: "smooth" });
+                });
+            });
+        </script>
+
+        <!-- Vertical divider -->
+        <div class="w-px h-4 bg-white/20" role="separator" aria-hidden="true">
+        </div>
+
+        <!-- Icon -->
+        <button
+            id="music-btn"
+            type="button"
+            class="text-white opacity-60 hover:opacity-100 transition-opacity flex items-center"
+            aria-label="Toggle music player"
+        >
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+        </button>
+    </div>
 </nav>
 
 <style>
-  #navbar {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.35s ease, transform 0.35s ease, background-color 0.3s ease;
-    will-change: opacity, transform;
-  }
+    #navbar {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+            opacity 0.35s ease,
+            transform 0.35s ease,
+            background-color 0.3s ease;
+        will-change: opacity, transform;
+    }
 
-  #navbar.nav-hidden {
-    opacity: 0;
-    transform: translateY(-0.9rem);
-    pointer-events: none;
-  }
+    #navbar.nav-hidden {
+        opacity: 0;
+        transform: translateY(-0.9rem);
+        pointer-events: none;
+    }
 
-  #navbar.nav-peek {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
+    #navbar.nav-peek {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
 
-  .nav-link {
-    position: relative;
-    color: white;
-    opacity: 0.6;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: opacity 0.3s ease;
-    pointer-events: auto;
-  }
+    .nav-link {
+        position: relative;
+        color: white;
+        opacity: 0.6;
+        font-family: "Inter", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        transition: opacity 0.3s ease;
+        pointer-events: auto;
+    }
 
-  .nav-link:hover {
-    opacity: 1;
-  }
+    .nav-link:hover {
+        opacity: 1;
+    }
 
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: white;
-    transition: width 0.3s ease;
-  }
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: white;
+        transition: width 0.3s ease;
+    }
 
-  .nav-link:hover::after {
-    width: 100%;
-  }
+    .nav-link:hover::after {
+        width: 100%;
+    }
 </style>

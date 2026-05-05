@@ -3,17 +3,6 @@ import { PROJECTS } from '../data/index';
 
 const featured = PROJECTS.find((p) => p.featured);
 const others = PROJECTS.filter((p) => !p.featured);
-
-// Helper: convert hex/rgba to rgb for CSS variables
-function toRgb(hex: string): string {
-  // Handle rgba(r,g,b,a) format
-  const rgba = hex.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-  if (rgba) return `${rgba[1]}, ${rgba[2]}, ${rgba[3]}`;
-  // Handle hex
-  const h = hex.replace('#', '');
-  const bigint = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
-  return `${(bigint >> 16) & 255}, ${(bigint >> 8) & 255}, ${bigint & 255}`;
-}
 ---
 
 <section id="projects" class="section-padding" aria-labelledby="projects-heading">
@@ -22,139 +11,205 @@ function toRgb(hex: string): string {
     <span class="section-label animate-on-scroll" id="projects-heading">// projects</span>
     <h2 class="section-heading animate-on-scroll">Featured Projects</h2>
 
-    <div class="project-grid animate-on-scroll delay-1">
+    <div class="projects-stack">
 
-      <!-- Featured — large card -->
+      <!-- Featured — full width horizontal card -->
       {featured && (
         <article
           class="project-featured"
           style={`--card-accent: ${featured.categoryColor};`}
           aria-label={`Featured project: ${featured.title}`}
         >
-          <div class="flex items-center justify-between mb-5">
-            <span
-              class="font-['JetBrains_Mono'] text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
-              style={`color: ${featured.categoryColor};`}
-            >
-              {featured.category}
-            </span>
-            <span class="text-[0.75rem] text-[var(--text-primary)]/25 truncate max-w-[140px]">
-              {featured.label}
-            </span>
-          </div>
+          <div class="featured-inner">
+            <!-- Left: visual block -->
+            <div class="featured-visual">
+              <div class="featured-icon-shell">
+                <span class="featured-icon">{featured.category.slice(0, 2)}</span>
+              </div>
+            </div>
 
-          <div class="space-y-3 flex-1">
-            <h3 class="font-['Space_Grotesk'] text-[1.5rem] font-semibold leading-[1.25] text-[var(--text-primary)] tracking-[-0.01em]">
-              {featured.title}
-            </h3>
-            <p class="text-[0.9375rem] leading-[1.7] text-[var(--text-primary)]/45">
-              {featured.description}
-            </p>
-          </div>
+            <!-- Right: content -->
+            <div class="featured-body">
+              <div class="flex items-center gap-3 mb-3">
+                <span
+                  class="font-['JetBrains_Mono'] text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+                  style={`color: ${featured.categoryColor};`}
+                >
+                  {featured.category}
+                </span>
+                <span class="w-1 h-1 rounded-full bg-[v(--text-primary)]/15"></span>
+                <span class="text-[0.75rem] text-(--text-primary)/25">
+                  {featured.label}
+                </span>
+              </div>
 
-          <div class="mt-6 flex flex-wrap gap-2">
-            {featured.metrics.map((m) => (
-              <span class="metric-badge">{m}</span>
-            ))}
-          </div>
+              <h3 class="font-['Space_Grotesk'] text-[1.5rem] sm:text-[1.75rem] font-semibold leading-[1.2] text-(--text-primary) tracking-[-0.015em] mb-3">
+                {featured.title}
+              </h3>
 
-          <div class="mt-4 flex flex-wrap gap-2">
-            {featured.tech.map((t) => (
-              <span class="tech-tag">{t}</span>
-            ))}
-          </div>
+              <p class="text-[0.9375rem] leading-[1.65] text-(--text-primary)/45 mb-5 max-w-xl">
+                {featured.description}
+              </p>
 
-          <div class="mt-7 flex flex-wrap gap-6">
-            {featured.github && (
-              <a href={featured.github} target="_blank" rel="noopener noreferrer" class="link-arrow">
-                View Code
-              </a>
-            )}
-            {featured.demo && (
-              <a href={featured.demo} target="_blank" rel="noopener noreferrer" class="link-arrow">
-                Live Demo
-              </a>
-            )}
-          </div>
+              <div class="flex flex-wrap gap-2 mb-5">
+                {featured.metrics.map((m) => (
+                  <span class="metric-badge">{m}</span>
+                ))}
+              </div>
 
+              <div class="flex flex-wrap gap-2 mb-6">
+                {featured.tech.map((t) => (
+                  <span class="tech-tag">{t}</span>
+                ))}
+              </div>
+
+              <div class="flex flex-wrap gap-6">
+                {featured.github && (
+                  <a href={featured.github} target="_blank" rel="noopener noreferrer" class="link-arrow">
+                    View Code
+                  </a>
+                )}
+                {featured.demo && (
+                  <a href={featured.demo} target="_blank" rel="noopener noreferrer" class="link-arrow">
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
         </article>
       )}
 
-      <!-- Other projects — compact cards -->
-      {others.map((project, idx) => (
-        <article
-          class="project-card"
-          style={`--card-accent: ${project.categoryColor};`}
-          aria-label={`Project: ${project.title}`}
-        >
-          <div class="flex items-center justify-between mb-4">
-            <span
-              class="font-['JetBrains_Mono'] text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
-              style={`color: ${project.categoryColor};`}
-            >
-              {project.category}
-            </span>
-            <span class="text-[0.75rem] text-[var(--text-primary)]/22 truncate max-w-[100px]">
-              {project.label}
-            </span>
-          </div>
+      <!-- Other projects — 2 equal columns -->
+      <div class="project-subgrid">
+        {others.map((project) => (
+          <article
+            class="project-card"
+            style={`--card-accent: ${project.categoryColor};`}
+            aria-label={`Project: ${project.title}`}
+          >
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="font-['JetBrains_Mono'] text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+                style={`color: ${project.categoryColor};`}
+              >
+                {project.category}
+              </span>
+              <span class="w-1 h-1 rounded-full bg-(--text-primary)/15"></span>
+              <span class="text-[0.75rem] text-(--text-primary)/22 truncate max-w-25">
+                {project.label}
+              </span>
+            </div>
 
-          <div class="space-y-2 flex-1">
-            <h4 class="font-['Space_Grotesk'] text-[1.125rem] font-semibold leading-[1.3] text-[var(--text-primary)] tracking-[-0.005em]">
+            <h4 class="font-['Space_Grotesk'] text-[1.125rem] font-semibold leading-[1.3] text-(--text-primary) tracking-[-0.005em] mb-2">
               {project.title}
             </h4>
-            <p class="text-[0.875rem] leading-[1.65] text-[var(--text-primary)]/42">
+
+            <p class="text-[0.875rem] leading-[1.6] text-(--text-primary)/42 mb-4">
               {project.description}
             </p>
-          </div>
 
-          {project.metrics.length > 0 && (
-            <p class="mt-4 flex flex-wrap gap-2">
-              {project.metrics.map((m) => (
-                <span class="metric-badge">{m}</span>
+            {project.metrics.length > 0 && (
+              <div class="flex flex-wrap gap-2 mb-4">
+                {project.metrics.map((m) => (
+                  <span class="metric-badge">{m}</span>
+                ))}
+              </div>
+            )}
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              {project.tech.map((t) => (
+                <span class="tech-tag">{t}</span>
               ))}
-            </p>
-          )}
+            </div>
 
-          <div class="mt-4 flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <span class="tech-tag">{t}</span>
-            ))}
-          </div>
-
-          {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" class="mt-5 inline-block link-arrow">
-              View Code
-            </a>
-          )}
-
-        </article>
-      ))}
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" class="link-arrow">
+                View Code
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
 
     </div>
   </div>
 </section>
 
 <style>
-  .project-grid {
+  .projects-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .featured-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .featured-visual {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .featured-icon-shell {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .featured-icon {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--card-accent, var(--accent-pink));
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .featured-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-subgrid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 
-  @media (min-width: 768px) {
-    .project-grid {
-      grid-template-columns: 1.45fr 1fr;
-      gap: 1.25rem;
+  @media (min-width: 640px) {
+    .featured-inner {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 2rem;
     }
 
-    .project-featured {
-      grid-row: span 2;
+    .featured-icon-shell {
+      width: 5rem;
+      height: 5rem;
+    }
+
+    .project-subgrid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
     }
   }
 
   @media (min-width: 1024px) {
-    .project-grid {
+    .projects-stack {
+      gap: 1.5rem;
+    }
+
+    .project-subgrid {
       gap: 1.5rem;
     }
   }

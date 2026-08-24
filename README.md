@@ -6,7 +6,7 @@ Personal portfolio website for an AI/ML Engineer based in Ho Chi Minh City, Viet
 
 - **Framework**: Astro 6.x
 - **Styling**: Tailwind CSS 4.x
-- **Deployment**: Vercel
+- **Deployment**: Cloudflare
 - **Package Manager**: pnpm
 - **Node.js**: 24.x
 

@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  adapter: vercel(),
+  // Static output — deployed to Cloudflare Pages as plain files.
+  // No platform adapter needed: Pages serves the dist/ directory directly.
   vite: {
     plugins: [tailwindcss()],
     build: {

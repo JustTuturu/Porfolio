@@ -330,7 +330,14 @@ import { META } from "../data/index";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        fetchDiscordStatus();
+        // Defer the first fetch so it doesn't contend with LCP / render path.
+        if ("requestIdleCallback" in window) {
+            requestIdleCallback(function () {
+                fetchDiscordStatus();
+            }, { timeout: 2500 });
+        } else {
+            setTimeout(fetchDiscordStatus, 2500);
+        }
         setInterval(fetchDiscordStatus, 30000);
     });
 </script>

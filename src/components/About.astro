@@ -329,15 +329,32 @@ import { META } from "../data/index";
             });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // Defer the first fetch so it doesn't contend with LCP / render path.
-        if ("requestIdleCallback" in window) {
-            requestIdleCallback(function () {
-                fetchDiscordStatus();
-            }, { timeout: 2500 });
+    function scheduleStatusFetch() {
+        var run = function () {
+            fetchDiscordStatus();
+        };
+        // Fire after the whole page has loaded, then on idle, so the first
+        // Lanyard request never contends with LCP / the render path. The
+        // Discord status simply appears a beat later.
+        if (document.readyState === "complete") {
+            idleRun(run);
         } else {
-            setTimeout(fetchDiscordStatus, 2500);
+            window.addEventListener("load", function () {
+                idleRun(run);
+            }, { once: true });
         }
+    }
+
+    function idleRun(fn) {
+        if ("requestIdleCallback" in window) {
+            requestIdleCallback(fn, { timeout: 6000 });
+        } else {
+            setTimeout(fn, 6000);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        scheduleStatusFetch();
         setInterval(fetchDiscordStatus, 30000);
     });
 </script>

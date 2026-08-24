@@ -9,7 +9,7 @@ import "../styles/global.css";
 const {
     title = "Tut — AI/ML Engineer",
     description = "AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.",
-    image = "/images/hero.jpg",
+    image = "/images/og-image.jpg",
     url = "https://justtuturu.dev",
 } = Astro.props;
 
@@ -25,6 +25,10 @@ const imageUrl = image.startsWith("http") ? image : `${canonicalUrl}${image}`;
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title}</title>
         <link rel="icon" type="image/webp" href="/images/favicon.webp" />
+
+        <!-- Preload hero (LCP) image -->
+        <link rel="preload" as="image" href="/images/hero.webp" fetchpriority="high" />
+
 
         <!-- Primary SEO meta tags -->
         <meta name="description" content={description} />

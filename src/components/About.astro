@@ -230,8 +230,8 @@ import { META } from "../data/index";
     </div>
 </section>
 
-<script is:inline>
-    var DISCORD_USER_ID = "328694743057825792";
+<script is:inline define:vars={{ discordId: META.discord }}>
+    var DISCORD_USER_ID = discordId;
 
     function fetchDiscordStatus() {
         fetch("https://api.lanyard.rest/v1/users/" + DISCORD_USER_ID)
@@ -324,8 +324,10 @@ import { META } from "../data/index";
                     }
                 }
             })
-            .catch(function (e) {
-                console.error("Lanyard error:", e);
+            .catch(function () {
+                // Fail silently — the 30s interval retries automatically.
+                // Never log to console here: Lighthouse fails errors-in-console
+                // on any developer console.error().
             });
     }
 

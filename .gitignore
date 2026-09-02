@@ -22,3 +22,6 @@ docs/
 .env
 .env.*
 !.env.example
+
+# Added by ggshield
+.cache_ggshield

@@ -19,3 +19,6 @@ dist/
 
 # Internal docs for AI agent reference (local only)
 docs/
+.env
+.env.*
+!.env.example

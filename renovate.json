@@ -1,0 +1,20 @@
+{
+  "extends": ["config:recommended"],
+  "platformAutomerge": true,
+  "automerge": false,
+  "ignoreTests": false,
+  "prCreation": "immediate",
+  "branchPrefix": "renovate/",
+  "rangeStrategy": "pin",
+  "postUpdateOptions": ["pnpmDedupe"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": false,
+    "labels": ["security"]
+  },
+  "osvVulnerabilityAlerts": true
+}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "24.x"
+    "node": "v24.20.0"
   },
   "scripts": {
     "dev": "CHOKIDAR_USEPOLLING=true astro dev",
@@ -12,11 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.6",
-    "tailwindcss": "^4.3.3"
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.2.6",
+    "tailwindcss": "4.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3"
+    "@tailwindcss/postcss": "4.3.3"
   }
 }

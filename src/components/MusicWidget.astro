@@ -29,7 +29,7 @@ import { PLAYLIST } from "../data/playlist";
                     >
                         <div class="music-art-fallback" aria-hidden="true">
                             <span
-                                class="font-['JetBrains_Mono'] text-[0.5rem] tracking-[0.25em] uppercase text-(--text-primary)/35"
+                                class="font-['Raleway'] text-[0.5rem] tracking-[0.25em] uppercase text-(--text-primary)/35"
                             >
                                 idle
                             </span>
@@ -51,20 +51,20 @@ import { PLAYLIST } from "../data/playlist";
                 <div class="min-w-0 flex-1 flex flex-col gap-[0.125rem]">
                     <p
                         id="music-song"
-                        class="font-['Space_Grotesk'] text-[0.9rem] font-semibold leading-[1.25] text-(--text-primary) whitespace-nowrap overflow-hidden text-ellipsis"
+                        class="font-['Raleway'] text-[0.9rem] font-bold leading-[1.25] text-(--text-primary) whitespace-nowrap overflow-hidden text-ellipsis"
                         aria-live="polite"
                     >
                         Nyan~
                     </p>
                     <p
                         id="music-artist"
-                        class="font-['Inter'] text-[0.75rem] text-(--text-primary)/50 whitespace-nowrap overflow-hidden text-ellipsis"
+                        class="font-['Raleway'] text-[0.75rem] text-(--text-primary)/50 whitespace-nowrap overflow-hidden text-ellipsis"
                         aria-live="polite"
                     >
                     </p>
                     <p
                         id="music-meta"
-                        class="font-['JetBrains_Mono'] text-[0.58rem] leading-[1.2] tracking-[0.1em] uppercase text-(--text-primary)/28 mt-0.5"
+                        class="font-['Raleway'] text-[0.58rem] leading-[1.2] tracking-[0.1em] uppercase text-(--text-primary)/28 mt-0.5"
                         aria-live="polite"
                     >
                         Arrow up to open
@@ -114,10 +114,25 @@ import { PLAYLIST } from "../data/playlist";
                 />
                 <span
                     id="music-time"
-                    class="font-['JetBrains_Mono'] text-[0.6rem] tracking-[0.06em] text-(--text-primary)/35 whitespace-nowrap tabular-nums"
+                    class="font-['Raleway'] text-[0.6rem] tracking-[0.06em] text-(--text-primary)/35 whitespace-nowrap tabular-nums"
                 >
                     0:00 / 0:00
                 </span>
+            </div>
+
+            <!-- Row 3: Volume (desktop) -->
+            <div class="flex items-center gap-2 max-sm:hidden">
+                <span class="text-(--text-primary)/25 text-[0.65rem]">🔈</span>
+                <input
+                    id="music-volume"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="30"
+                    step="1"
+                    aria-label="Volume"
+                    class="music-progress music-volume flex-1"
+                />
             </div>
         </div>
     </div>
@@ -139,6 +154,7 @@ import { PLAYLIST } from "../data/playlist";
         var nextBtn = document.getElementById("music-next");
         var progressEl = document.getElementById("music-progress");
         var timeEl = document.getElementById("music-time");
+        var volumeEl = document.getElementById("music-volume");
 
         var isOpen = false;
         var currentIndex = 0;
@@ -241,13 +257,15 @@ import { PLAYLIST } from "../data/playlist";
         }
 
         function prevTrack() {
+            var wasPlaying = isPlaying;
             loadTrack(currentIndex - 1);
-            if (isPlaying && audio) audio.play().catch(function () {});
+            if (wasPlaying && audio) audio.play().catch(function () {});
         }
 
         function nextTrack() {
+            var wasPlaying = isPlaying;
             loadTrack(currentIndex + 1);
-            if (isPlaying && audio) audio.play().catch(function () {});
+            if (wasPlaying && audio) audio.play().catch(function () {});
         }
 
         if (audio) {
@@ -283,6 +301,12 @@ import { PLAYLIST } from "../data/playlist";
                 seekFromInput();
                 if (wasPlayingBeforeSeek && audio)
                     audio.play().catch(function () {});
+            });
+        }
+
+        if (volumeEl && audio) {
+            volumeEl.addEventListener("input", function () {
+                audio.volume = parseFloat(volumeEl.value) / 100;
             });
         }
 
@@ -534,6 +558,10 @@ import { PLAYLIST } from "../data/playlist";
         height: 3px;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 2px;
+    }
+
+    .music-volume {
+        height: 2px;
     }
 
     @media (max-width: 640px) {

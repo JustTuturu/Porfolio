@@ -5,6 +5,11 @@
   "engines": {
     "node": "v24.20.0"
   },
+  "packageManager": "pnpm@12.3.4",
+  "volta": {
+    "node": "24.x",
+    "pnpm": "11.22.0"
+  },
   "scripts": {
     "dev": "CHOKIDAR_USEPOLLING=true astro dev",
     "build": "astro build",

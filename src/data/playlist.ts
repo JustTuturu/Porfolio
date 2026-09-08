@@ -9,23 +9,30 @@ export interface Track {
 export const PLAYLIST: Track[] = [
   {
     title: 'Lingering Summer Light',
-    artist: 'Gray Kamuix',
+    artist: 'Minase',
     album: 'Wuthering Waves 2.8 OST',
     cover: 'https://i1.sndcdn.com/artworks-XJKG3kwFvvs3lqBo-aunpzQ-t500x500.jpg',
-    src: '/music/lingering-summer-light.mp3',
+    src: '/music/Lingering Summer Light.mp3',
   },
   {
     title: 'Dreams Adrift in Coffee',
-    artist: 'Gray Kamuix',
+    artist: 'Minase',
     album: 'Wuthering Waves 2.8 OST',
     cover: 'https://i1.sndcdn.com/artworks-XJKG3kwFvvs3lqBo-aunpzQ-t500x500.jpg',
     src: '/music/Dreams Adrift in Coffee.mp3',
   },
   {
     title: 'Whispers on a Sleepless Night',
-    artist: 'Gray Kamuix',
+    artist: 'Koimoon',
     album: 'Wuthering Waves 2.8 OST',
     cover: 'https://i1.sndcdn.com/artworks-XJKG3kwFvvs3lqBo-aunpzQ-t500x500.jpg',
     src: '/music/Whispers on a Sleepless Night.mp3',
+  },
+  {
+    title: 'Here Is Your Latte!',
+    artist: 'Minase',
+    album: 'Wuthering Wave 2.8 OST',
+    cover: 'https://i1.sndcdn.com/artworks-XJKG3kwFvvs3lqBo-aunpzQ-t500x500.jpg',
+    src: '/music/Here Is Your Latte!.mp3',
   },
 ];

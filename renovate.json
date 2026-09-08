@@ -4,7 +4,7 @@
   "platformAutomerge": true,
   "automerge": false,
   "ignoreTests": false,
-  "prCreation": "status-success",
+  "prCreation": "immediate",
   "dependencyDashboard": true,
   "branchPrefix": "renovate/",
   "rangeStrategy": "pin",
@@ -26,8 +26,7 @@
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["pin", "digest", "patch", "minor"],
       "groupName": "non-major dependencies",
-      "automerge": true,
-      "automergeType": "pr"
+      "automerge": true
     },
     {
       "description": "Never auto-merge major updates",

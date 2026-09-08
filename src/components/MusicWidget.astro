@@ -128,7 +128,7 @@ import { PLAYLIST } from "../data/playlist";
                     type="range"
                     min="0"
                     max="100"
-                    value="30"
+                    value="10"
                     step="1"
                     aria-label="Volume"
                     class="music-progress music-volume flex-1"
@@ -283,6 +283,8 @@ import { PLAYLIST } from "../data/playlist";
             });
             audio.addEventListener("timeupdate", updateProgress);
             audio.addEventListener("loadedmetadata", updateProgress);
+            audio.addEventListener("durationchange", updateProgress);
+            audio.addEventListener("canplay", updateProgress);
         }
 
         if (playBtn) playBtn.addEventListener("click", togglePlay);
@@ -369,6 +371,9 @@ import { PLAYLIST } from "../data/playlist";
         });
 
         loadTrack(0);
+        if (volumeEl && audio) {
+            audio.volume = parseFloat(volumeEl.value) / 100;
+        }
     })();
 </script>
 

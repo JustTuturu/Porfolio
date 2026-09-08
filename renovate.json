@@ -1,15 +1,18 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "platformAutomerge": true,
   "automerge": false,
   "ignoreTests": false,
-  "prCreation": "immediate",
+  "prCreation": "status-success",
+  "dependencyDashboard": true,
   "branchPrefix": "renovate/",
   "rangeStrategy": "pin",
   "postUpdateOptions": ["pnpmDedupe"],
+  "minimumReleaseAge": "3 days",
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": false
+    "automerge": true
   },
   "vulnerabilityAlerts": {
     "enabled": true,
@@ -19,32 +22,12 @@
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
-      "description": "Auto-merge development dependency pins after CI passes",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["pin"],
+      "description": "Group and auto-merge all non-major updates into one PR",
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchUpdateTypes": ["pin", "digest", "patch", "minor"],
+      "groupName": "non-major dependencies",
       "automerge": true,
       "automergeType": "pr"
-    },
-    {
-      "description": "Auto-merge patch updates for development dependencies after CI passes",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["patch"],
-      "automerge": true,
-      "automergeType": "pr",
-      "minimumReleaseAge": "3 days"
-    },
-    {
-      "description": "Auto-merge minor updates for development dependencies after CI passes",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor"],
-      "automerge": true,
-      "automergeType": "pr",
-      "minimumReleaseAge": "7 days"
-    },
-    {
-      "description": "Never auto-merge production dependencies",
-      "matchDepTypes": ["dependencies"],
-      "automerge": false
     },
     {
       "description": "Never auto-merge major updates",

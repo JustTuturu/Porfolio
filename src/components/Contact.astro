@@ -4,9 +4,9 @@ import { META } from "../data/index";
 
 <section id="contact" class="section-padding" aria-labelledby="contact-heading">
     <div class="content-container">
-        <span class="section-label animate-on-scroll" id="contact-heading"
-            >// contact</span
-        >
+        <span class="section-label animate-on-scroll" id="contact-heading">
+            // contact
+        </span>
         <h2 class="section-heading animate-on-scroll">Get In Touch</h2>
 
         <p
@@ -26,20 +26,19 @@ import { META } from "../data/index";
                 class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
                 aria-label={`Send email to ${META.email}`}
             >
-                <span class="type-label-small uppercase text-(--accent-pink)"
-                    >Email</span
-                >
-                <span class="type-body-medium text-(--text-primary)"
-                    >{META.email}</span
-                >
+                <span class="type-label-small uppercase text-(--accent-pink)">
+                    Email
+                </span>
+                <span class="type-body-medium text-(--text-primary)">
+                    {META.email}
+                </span>
             </a>
 
             <div
                 class="hidden sm:block w-px h-8 bg-white/10"
                 role="separator"
                 aria-hidden="true"
-            >
-            </div>
+            ></div>
 
             <a
                 href={META.github}
@@ -48,20 +47,19 @@ import { META } from "../data/index";
                 class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
                 aria-label="Visit GitHub profile (opens in new tab)"
             >
-                <span class="type-label-small uppercase text-(--accent-pink)"
-                    >GitHub</span
-                >
-                <span class="type-body-medium text-(--text-primary)"
-                    >@{META.github.split("/").pop()}</span
-                >
+                <span class="type-label-small uppercase text-(--accent-pink)">
+                    GitHub
+                </span>
+                <span class="type-body-medium text-(--text-primary)">
+                    @{META.github.split("/").pop()}
+                </span>
             </a>
 
             <div
                 class="hidden sm:block w-px h-8 bg-white/10"
                 role="separator"
                 aria-hidden="true"
-            >
-            </div>
+            ></div>
 
             <a
                 href={META.linkedin}
@@ -70,12 +68,12 @@ import { META } from "../data/index";
                 class="flex flex-col gap-1 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
                 aria-label="Visit LinkedIn profile (opens in new tab)"
             >
-                <span class="type-label-small uppercase text-(--accent-pink)"
-                    >LinkedIn</span
-                >
-                <span class="type-body-medium text-(--text-primary)"
-                    >@{META.linkedin.split("/").pop()}</span
-                >
+                <span class="type-label-small uppercase text-(--accent-pink)">
+                    LinkedIn
+                </span>
+                <span class="type-body-medium text-(--text-primary)">
+                    @{META.linkedin.split("/").pop()}
+                </span>
             </a>
         </div>
     </div>

@@ -3,22 +3,22 @@ import { META } from '../data/index';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer style="border-top: 1px solid rgba(255,255,255,0.07); padding-top: 2rem; padding-bottom: 2rem;">
+<footer style="border-top: 1px solid var(--glass-border); padding-top: 1.5rem; padding-bottom: 1.5rem;">
   <div class="content-container">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 text-center sm:text-left">
+    <div class="flex flex-col items-center gap-2 text-center">
       
       <!-- Left: Name -->
-      <p class="font-['Raleway'] text-[0.8rem] tracking-[0.2em] uppercase text-[rgba(241,245,249,0.5)]">
+      <p class="font-['Raleway'] text-[0.9rem] tracking-[0.2em] uppercase text-(--text-muted)">
         {META.name}
       </p>
 
       <!-- Center: Tagline -->
-      <p class="font-['Raleway'] text-[0.7rem] text-[rgba(241,245,249,0.5)] tracking-[0.05em]">
+      <p class="font-['Raleway'] text-[0.8rem] text-(--text-muted) tracking-wider">
         built with curiosity & too much coffee ☕
       </p>
 
       <!-- Right: Copyright -->
-      <p class="font-['Raleway'] text-[0.7rem] text-[rgba(241,245,249,0.5)] tracking-[0.05em]">
+      <p class="font-['Raleway'] text-[0.8rem] text-(--text-muted) tracking-wider">
         &copy; {currentYear}
       </p>
 

@@ -1,42 +1,78 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../data/index';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Projects from '../components/Projects.astro';
-import Education from '../components/Education.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
-import ScrollIndicator from '../components/ScrollIndicator.astro';
-import MusicWidget from '../components/MusicWidget.astro';
-import MaintenancePage from '../components/MaintenancePage.astro';
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { META } from "../data/index";
 ---
 
-<BaseLayout title="AI/ML Engineer Portfolio">
-  {SITE.maintenanceMode ? (
-    <MaintenancePage />
-  ) : (
-    <>
-      <Navbar />
-      <ScrollIndicator />
-
-      <main>
-        <Hero />
-        <MusicWidget />
-        <About />
-        <Projects />
-        <Education />
-        <Contact />
-      </main>
-
-      <Footer />
-    </>
-  )}
-</BaseLayout>
+<SiteLayout title="Tut — AI/ML Engineer">
+    <section class="section-padding home-profile" aria-labelledby="home-title">
+        <div class="content-container">
+            <span class="section-label">// profile</span>
+            <div class="home-intro">
+                <h1 id="home-title" class="type-display-small font-['Fredoka'] font-semibold text-(--text-primary)">
+                    {META.name}
+                </h1>
+                <p class="type-title-large text-(--accent-pink) mb-5">
+                    {META.role}
+                </p>
+                <p class="type-body-large text-(--text-primary)/65 mb-6">
+                    I'm a computer science graduate who enjoys building AI
+                    systems, from fine-tuning language models to computer vision
+                    projects. I'm currently looking for an internship where I
+                    can contribute and grow.
+                </p>
+                <div class="home-links">
+                    <a class="home-link home-link-primary" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                        Download résumé
+                    </a>
+                    <a class="home-link" href={META.github} target="_blank" rel="noopener noreferrer">
+                        GitHub <span aria-hidden="true">↗</span>
+                    </a>
+                    <a class="home-link" href="/about">About</a>
+                    <a class="home-link" href="/projects">Projects</a>
+                    <a class="home-link" href="/experience">Experience</a>
+                    <a class="home-link" href="/contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</SiteLayout>
 
 <style>
-  main {
-    position: relative;
-  }
+    .home-profile {
+        padding-top: 2.5rem;
+    }
+
+    .home-intro {
+        max-width: 42rem;
+    }
+
+    .home-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1.25rem;
+    }
+
+    .home-link {
+        color: var(--accent-pink);
+        font-size: 0.875rem;
+        text-decoration: none;
+    }
+
+    .home-link:hover {
+        text-decoration: underline;
+    }
+
+    .home-link-primary {
+        padding: 0.5rem 0.85rem;
+        border-radius: 0.375rem;
+        background: var(--accent-pink);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .home-link-primary:hover {
+        opacity: 0.88;
+        text-decoration: none;
+    }
 </style>

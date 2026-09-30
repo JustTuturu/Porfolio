@@ -37,74 +37,55 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background: var(--bg-base);
     color: var(--text-primary);
     font-family: "Lato", sans-serif;
     overflow-x: hidden;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 /* Sections */
 section {
-    position: relative; /* ← required for ::before divider */
-    scroll-margin-top: 72px; /* ← navbar h-14 = 56px + 16px buffer */
+    position: relative;
+    scroll-margin-top: 1.5rem;
 }
 
-/* Hero */
-#hero {
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-    scroll-margin-top: 0;
+main {
+    display: flex;
+    flex-direction: column;
 }
 
-/* Skills — no extra styles needed, just inherits section */
-
-/* Section backgrounds */
-section:not(#hero):not(#skills) {
-    background: var(--bg-base);
-}
-
-/* Section divider line */
-section:not(#hero):not(#skills)::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        var(--accent-pink) 50%,
-        transparent 100%
-    );
-    opacity: 0.18;
+main > section:only-child {
+    width: 100%;
+    margin-block: auto;
 }
 
 /* Section padding — vertical only, horizontal handled by .content-container */
 .section-padding {
-    padding-top: 4rem; /* 64dp */
-    padding-bottom: 4rem;
+    padding-top: 3rem; /* 48dp */
+    padding-bottom: 3rem;
 }
 
 @media (min-width: 768px) {
     .section-padding {
-        padding-top: 5rem; /* 80dp */
-        padding-bottom: 5rem;
+        padding-top: 3.5rem; /* 56dp */
+        padding-bottom: 3.5rem;
     }
 }
 
 @media (min-width: 1024px) {
     .section-padding {
-        padding-top: 6rem; /* 96dp */
-        padding-bottom: 6rem;
+        padding-top: 4rem; /* 64dp */
+        padding-bottom: 4rem;
     }
 }
 
 /* Content container — single source of horizontal padding */
 .content-container {
-    max-width: 52.5rem; /* 840px — Material reading width */
+    max-width: 36rem;
     margin: 0 auto;
     width: 100%;
     padding-left: 1rem; /* 16dp mobile */
@@ -122,19 +103,19 @@ section:not(#hero):not(#skills)::before {
 
 /* Display */
 .type-display-large {
-    font-size: 3.5625rem; /* 57px */
+    font-size: 4rem; /* 64px */
     line-height: 1.12;
     letter-spacing: -0.015625rem;
     font-weight: 400;
 }
 .type-display-medium {
-    font-size: 2.8125rem; /* 45px */
+    font-size: 3.25rem; /* 52px */
     line-height: 1.16;
     letter-spacing: 0;
     font-weight: 400;
 }
 .type-display-small {
-    font-size: 2.25rem; /* 36px */
+    font-size: 2.5rem; /* 40px */
     line-height: 1.22;
     letter-spacing: 0;
     font-weight: 400;
@@ -142,19 +123,19 @@ section:not(#hero):not(#skills)::before {
 
 /* Headline */
 .type-headline-large {
-    font-size: 2rem; /* 32px */
+    font-size: 2.25rem; /* 36px */
     line-height: 1.25;
     letter-spacing: 0;
     font-weight: 400;
 }
 .type-headline-medium {
-    font-size: 1.75rem; /* 28px */
+    font-size: 2rem; /* 32px */
     line-height: 1.29;
     letter-spacing: 0;
     font-weight: 400;
 }
 .type-headline-small {
-    font-size: 1.5rem; /* 24px */
+    font-size: 1.625rem; /* 26px */
     line-height: 1.33;
     letter-spacing: 0;
     font-weight: 400;
@@ -162,19 +143,19 @@ section:not(#hero):not(#skills)::before {
 
 /* Title */
 .type-title-large {
-    font-size: 1.375rem; /* 22px */
+    font-size: 1.5rem; /* 24px */
     line-height: 1.27;
     letter-spacing: 0;
     font-weight: 400;
 }
 .type-title-medium {
-    font-size: 1rem; /* 16px */
+    font-size: 1.125rem; /* 18px */
     line-height: 1.5;
     letter-spacing: 0.009375rem;
     font-weight: 500;
 }
 .type-title-small {
-    font-size: 0.875rem; /* 14px */
+    font-size: 1rem; /* 16px */
     line-height: 1.43;
     letter-spacing: 0.00625rem;
     font-weight: 500;
@@ -182,19 +163,19 @@ section:not(#hero):not(#skills)::before {
 
 /* Label */
 .type-label-large {
-    font-size: 0.875rem; /* 14px */
+    font-size: 1rem; /* 16px */
     line-height: 1.43;
     letter-spacing: 0.00625rem;
     font-weight: 500;
 }
 .type-label-medium {
-    font-size: 0.75rem; /* 12px */
+    font-size: 0.875rem; /* 14px */
     line-height: 1.33;
     letter-spacing: 0.03125rem;
     font-weight: 500;
 }
 .type-label-small {
-    font-size: 0.6875rem; /* 11px */
+    font-size: 0.75rem; /* 12px */
     line-height: 1.45;
     letter-spacing: 0.03125rem;
     font-weight: 500;
@@ -202,19 +183,19 @@ section:not(#hero):not(#skills)::before {
 
 /* Body */
 .type-body-large {
-    font-size: 1rem; /* 16px */
+    font-size: 1.125rem; /* 18px */
     line-height: 1.5;
     letter-spacing: 0.03125rem;
     font-weight: 400;
 }
 .type-body-medium {
-    font-size: 0.875rem; /* 14px */
+    font-size: 1rem; /* 16px */
     line-height: 1.43;
     letter-spacing: 0.015625rem;
     font-weight: 400;
 }
 .type-body-small {
-    font-size: 0.75rem; /* 12px */
+    font-size: 0.875rem; /* 14px */
     line-height: 1.33;
     letter-spacing: 0.025rem;
     font-weight: 400;
@@ -228,7 +209,7 @@ section:not(#hero):not(#skills)::before {
     margin-bottom: 0.5rem;
     display: block;
     /* Material Label Small */
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.45;
     letter-spacing: 0.03125rem;
     font-weight: 500;
@@ -238,8 +219,8 @@ section:not(#hero):not(#skills)::before {
     font-family: "Fredoka", sans-serif;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 2.5rem;
-    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    margin-bottom: 1.5rem;
+    font-size: clamp(2rem, 5vw, 2.5rem);
     line-height: 1.15;
     letter-spacing: -0.02em;
 }
@@ -249,7 +230,7 @@ section:not(#hero):not(#skills)::before {
     font-weight: 600;
     color: var(--text-primary);
     /* Material Title Large */
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     line-height: 1.27;
     letter-spacing: 0;
 }
@@ -266,8 +247,7 @@ section:not(#hero):not(#skills)::before {
 
 /* Card — Material 8dp grid */
 .card {
-    background: rgba(22, 24, 40, 0.6);
-    backdrop-filter: blur(20px);
+    background: var(--bg-surface);
     border: 1px solid var(--glass-border);
     border-radius: 0.75rem; /* 12dp — Material medium component */
     padding: 1.5rem; /* 24dp */
@@ -284,7 +264,6 @@ section:not(#hero):not(#skills)::before {
 /* Glass — Material 8dp grid */
 .glass {
     background: var(--bg-glass);
-    backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 0.75rem;
 }
@@ -295,109 +274,13 @@ section:not(#hero):not(#skills)::before {
     align-items: center;
     padding: 0.25rem 0.75rem; /* 4dp 12dp */
     border-radius: 9999px;
-    font-size: 0.75rem; /* 12dp — Label Medium */
+    font-size: 0.875rem; /* 14dp — Label Medium */
     line-height: 1.33;
     letter-spacing: 0.03125rem;
     font-weight: 500;
     background: rgba(255, 255, 255, 0.07);
     color: var(--text-primary);
     border: 1px solid var(--glass-border);
-}
-
-/* ─── Project Cards ─── */
-.project-card {
-    position: relative;
-    background:
-        linear-gradient(
-            165deg,
-            rgba(255, 255, 255, 0.04) 0%,
-            rgba(255, 255, 255, 0.01) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
-        rgba(18, 19, 32, 0.7);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 1rem;
-    padding: 1.75rem;
-    transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-    overflow: hidden;
-}
-
-.project-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-        165deg,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0) 40%
-    );
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.6;
-    transition: opacity 0.35s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-6px) scale(1.005);
-    box-shadow:
-        0 20px 40px -12px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.project-card:hover::before {
-    opacity: 1;
-}
-
-/* Featured card — premium treatment */
-.project-featured {
-    padding: 2rem;
-}
-
-.project-featured::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 2rem;
-    right: 2rem;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--card-accent, var(--accent-pink)),
-        transparent
-    );
-    opacity: 0.7;
-    transition:
-        opacity 0.35s ease,
-        left 0.35s ease,
-        right 0.35s ease;
-}
-
-.project-featured:hover::after {
-    opacity: 1;
-    left: 1rem;
-    right: 1rem;
-}
-
-/* Category color glow on featured */
-.project-featured:hover {
-    box-shadow:
-        0 20px 40px -12px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 0 60px -20px var(--card-accent, var(--accent-pink));
 }
 
 /* Tech tags — pill badges */
@@ -407,19 +290,19 @@ section:not(#hero):not(#skills)::before {
     padding: 0.2rem 0.65rem;
     border-radius: 9999px;
     font-family: "Raleway", sans-serif;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.02em;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    color: rgba(240, 232, 224, 0.55);
+    color: rgba(240, 232, 224, 0.65);
     transition: all 0.25s ease;
 }
 
 .tech-tag:hover {
     background: rgba(255, 255, 255, 0.09);
     border-color: rgba(255, 255, 255, 0.14);
-    color: rgba(240, 232, 224, 0.75);
+    color: var(--text-primary);
 }
 
 /* Metrics — highlight badges */
@@ -430,7 +313,7 @@ section:not(#hero):not(#skills)::before {
     padding: 0.25rem 0.6rem;
     border-radius: 0.375rem;
     font-family: "Raleway", sans-serif;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.02em;
     background: rgba(168, 200, 216, 0.08);
@@ -441,10 +324,10 @@ section:not(#hero):not(#skills)::before {
 /* Link style — arrow hover */
 .link-arrow {
     font-family: "Raleway", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.06em;
-    color: rgba(240, 232, 224, 0.4);
+    color: rgba(240, 232, 224, 0.65);
     text-decoration: none;
     transition: color 0.25s ease;
     display: inline-flex;
@@ -467,16 +350,9 @@ section:not(#hero):not(#skills)::before {
 
 /* Scroll animations */
 .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(32px);
-    transition:
-        opacity 0.7s ease,
-        transform 0.7s ease;
-}
-
-.animate-on-scroll.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: none;
 }
 
 /* Stagger delays */
@@ -549,7 +425,6 @@ section:not(#hero):not(#skills)::before {
 /* Navbar scrolled */
 nav.scrolled {
     background: rgba(13, 14, 24, 0.92) !important;
-    backdrop-filter: blur(12px) !important;
 }
 
 /* Active nav link */

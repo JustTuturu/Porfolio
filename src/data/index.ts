@@ -5,23 +5,8 @@ export const META = {
   twitter: 'https://x.com/justuturu',
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/teriyumi',
-  discord: '328694743057825792',
   available: true,
   location: 'Ho Chi Minh City, Vietnam',
-};
-
-export const ROLES = [
-  'AI/ML Engineer',
-  'LLM Fine-Tuning Enthusiast',
-  'Deep Learning Explorer',
-  'Tuturu~',
-];
-
-export const SITE = {
-  maintenanceMode: false,
-  maintenanceTitle: 'Temporarily Under Maintenance',
-  maintenanceMessage:
-    'A few updates are underway. The site will be back shortly.',
 };
 
 export const PROJECTS = [

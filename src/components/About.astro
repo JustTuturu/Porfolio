@@ -2,15 +2,25 @@
 import { META } from "../data/index";
 ---
 
-<section id="about" class="section-padding" aria-labelledby="about-heading">
+<section
+    id="about"
+    class="section-padding about-section"
+    aria-labelledby="about-name"
+>
     <div class="content-container">
-        <span class="section-label animate-on-scroll" id="about-heading">
+        <span class="section-label">
             // about
         </span>
-        <h2 class="section-heading animate-on-scroll">About Me</h2>
-
-        <div class="about-grid animate-on-scroll delay-1">
+        <div class="about-intro animate-on-scroll delay-1">
             <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-1">
+                    <h1 id="about-name" class="type-headline-large font-['Fredoka'] font-semibold text-(--text-primary)">
+                        {META.name}
+                    </h1>
+                    <p class="type-title-medium text-(--accent-pink)">
+                        {META.role}
+                    </p>
+                </div>
                 <p class="type-body-medium text-(--text-primary)/55">
                     I'm a grad CS student who loves building AI systems — from
                     fine-tuning LLMs to RAG pipelines and computer vision
@@ -23,14 +33,14 @@ import { META } from "../data/index";
 
                 <!-- Buttons -->
                 <div
-                    class="flex items-center gap-6 flex-wrap mt-2"
+                    class="flex items-center gap-4 flex-wrap mt-1"
                     aria-label="Quick links"
                 >
                     <a
                         href="/resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex min-w-18 items-center gap-1 px-4 py-2 whitespace-nowrap bg-black text-white rounded-full type-label-large no-underline transition-opacity duration-300 hover:opacity-85"
+                        class="inline-flex min-w-18 items-center gap-1 px-4 py-2 whitespace-nowrap bg-(--accent-pink) text-white rounded-full type-label-large no-underline transition-opacity duration-300 hover:opacity-85"
                         aria-label="View resume (opens in new tab)"
                     >
                         <svg
@@ -54,7 +64,7 @@ import { META } from "../data/index";
                         href={`mailto:${META.email}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-white/12 rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-white/30 hover:opacity-100"
+                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-(--glass-border) rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-(--accent-blue) hover:opacity-100"
                         aria-label="Send email (opens in new tab)"
                     >
                         <svg
@@ -71,7 +81,7 @@ import { META } from "../data/index";
                         href={META.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-white/12 rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-white/30 hover:opacity-100"
+                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-(--glass-border) rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-(--accent-blue) hover:opacity-100"
                         aria-label="Visit LinkedIn profile (opens in new tab)"
                     >
                         <svg
@@ -88,7 +98,7 @@ import { META } from "../data/index";
                         href={META.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-white/12 rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-white/30 hover:opacity-100"
+                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-(--glass-border) rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-(--accent-blue) hover:opacity-100"
                         aria-label="Visit X profile (opens in new tab)"
                     >
                         <svg
@@ -105,7 +115,7 @@ import { META } from "../data/index";
                         href={META.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-white/12 rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-white/30 hover:opacity-100"
+                        class="inline-flex items-center gap-1 px-2 py-2 bg-transparent text-(--text-primary) border border-(--glass-border) rounded-full type-label-large no-underline transition-[border-color,opacity] duration-300 opacity-70 hover:border-(--accent-blue) hover:opacity-100"
                         aria-label="Visit GitHub profile (opens in new tab)"
                     >
                         <svg
@@ -121,286 +131,16 @@ import { META } from "../data/index";
                 </div>
             </div>
 
-            <div class="flex flex-col">
-                <div
-                    class="pt-0 pb-0 pl-0 flex flex-col gap-3"
-                    aria-label="Discord status"
-                >
-                    <div class="about-discord-header flex items-center justify-between gap-3">
-                        <span class="font-['Raleway'] type-label-small uppercase text-(--text-primary)/30">
-                            // Discord
-                        </span>
-                        <span
-                            id="discord-status-badge"
-                            class="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/3 px-2.5 py-1 type-label-small uppercase text-(--text-primary)/42 transition-[background,border-color,color] duration-300"
-                        >
-                            <span
-                                class="discord-dot w-1.5 h-1.5 rounded-full bg-white/20 shrink-0 transition-[background] duration-300"
-                                aria-hidden="true"
-                            ></span>
-                            <span id="discord-status-text">Offline</span>
-                        </span>
-                    </div>
-
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="relative w-fit shrink-0">
-                            <span
-                                class="discord-avatar-dot absolute bottom-0 right-0 w-3 h-3 rounded-full bg-white/20 border-2 border-[#0f0f0f]"
-                                aria-hidden="true"
-                            ></span>
-                            <img
-                                class="discord-avatar w-12 h-12 rounded-full object-cover bg-white/5 ring-1 ring-white/8"
-                                src=""
-                                alt={`Discord avatar for ${META.discord}`}
-                                width="48"
-                                height="48"
-                                loading="lazy"
-                            />
-                        </div>
-
-                        <div class="min-w-0 flex flex-col gap-1">
-                            <p class="type-body-medium font-medium text-(--text-primary)">
-                                suzu
-                            </p>
-                            <p
-                                class="type-body-small text-(--text-primary)/30"
-                                id="discord-activity"
-                                aria-live="polite"
-                            >
-                                no current activity
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    class="h-px bg-white/5"
-                    role="separator"
-                    aria-hidden="true"
-                ></div>
-
-                <div class="flex flex-col gap-1 py-4">
-                    <span class="type-label-small uppercase text-(--text-primary)/30">
-                        // Location
-                    </span>
-                    <span class="type-body-medium font-medium text-(--text-primary)">
-                        {META.location}
-                    </span>
-                </div>
-
-                <div
-                    class="h-px bg-white/5"
-                    role="separator"
-                    aria-hidden="true"
-                ></div>
-
-                <div class="flex flex-col gap-1 py-4">
-                    <span class="type-label-small uppercase text-(--text-primary)/30">
-                        // Status
-                    </span>
-                    <span class="type-body-medium font-medium text-(--accent-pink) flex items-center gap-2">
-                        <span
-                            class="w-1.5 h-1.5 rounded-full bg-(--accent-pink) animate-[pulse-ring_2s_infinite] shrink-0"
-                            aria-hidden="true"
-                        ></span>
-                        {META.available
-                            ? "Available for internships"
-                            : "Not available"}
-                    </span>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
-<script is:inline define:vars={{ discordId: META.discord }}>
-    var DISCORD_USER_ID = discordId;
-
-    function fetchDiscordStatus() {
-        fetch("https://api.lanyard.rest/v1/users/" + DISCORD_USER_ID)
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (data) {
-                if (!data.success) return;
-
-                var discord_status = data.data.discord_status;
-                var activities = data.data.activities;
-                var discord_user = data.data.discord_user;
-
-                var dot = document.querySelector(".discord-dot");
-                var avatarDot = document.querySelector(".discord-avatar-dot");
-                var statusBadge = document.getElementById(
-                    "discord-status-badge",
-                );
-                var statusText = document.getElementById("discord-status-text");
-                var activityEl = document.getElementById("discord-activity");
-                var avatarEl = document.querySelector(".discord-avatar");
-
-                var colors = {
-                    online: "#57F287",
-                    idle: "#FEE75C",
-                    dnd: "#ED4245",
-                    offline: "rgba(255,255,255,0.2)",
-                };
-
-                var color = colors[discord_status] || colors.offline;
-                if (dot) dot.style.background = color;
-                if (avatarDot) avatarDot.style.background = color;
-                if (statusText)
-                    statusText.textContent =
-                        discord_status === "dnd"
-                            ? "do not disturb"
-                            : discord_status;
-                if (statusBadge) {
-                    statusBadge.classList.remove(
-                        "discord-status-online",
-                        "discord-status-idle",
-                        "discord-status-dnd",
-                    );
-                    if (discord_status === "online")
-                        statusBadge.classList.add("discord-status-online");
-                    if (discord_status === "idle")
-                        statusBadge.classList.add("discord-status-idle");
-                    if (discord_status === "dnd")
-                        statusBadge.classList.add("discord-status-dnd");
-                }
-
-                var activity = null;
-                if (activities) {
-                    for (var i = 0; i < activities.length; i++) {
-                        if (activities[i].type === 0) {
-                            activity = activities[i];
-                            break;
-                        }
-                    }
-                }
-
-                if (activityEl) {
-                    activityEl.textContent = activity
-                        ? "playing " + activity.name
-                        : activities && activities[0] && activities[0].state
-                          ? activities[0].state
-                          : "no current activity";
-                }
-
-                if (avatarEl && discord_user) {
-                    var avatarHash = discord_user.avatar;
-                    if (avatarHash) {
-                        var ext =
-                            avatarHash.indexOf("a_") === 0 ? "gif" : "webp";
-                        avatarEl.src =
-                            "https://cdn.discordapp.com/avatars/" +
-                            DISCORD_USER_ID +
-                            "/" +
-                            avatarHash +
-                            "." +
-                            ext +
-                            "?size=64";
-                    } else {
-                        var defaultIndex =
-                            Number(BigInt(DISCORD_USER_ID) >> BigInt(22)) % 6;
-                        avatarEl.src =
-                            "https://cdn.discordapp.com/embed/avatars/" +
-                            defaultIndex +
-                            ".png";
-                    }
-                }
-            })
-            .catch(function () {
-                // Fail silently — the 30s interval retries automatically.
-                // Never log to console here: Lighthouse fails errors-in-console
-                // on any developer console.error().
-            });
-    }
-
-    function scheduleStatusFetch() {
-        var run = function () {
-            fetchDiscordStatus();
-        };
-        // Fire after the whole page has loaded, then on idle, so the first
-        // Lanyard request never contends with LCP / the render path. The
-        // Discord status simply appears a beat later.
-        if (document.readyState === "complete") {
-            idleRun(run);
-        } else {
-            window.addEventListener(
-                "load",
-                function () {
-                    idleRun(run);
-                },
-                { once: true },
-            );
-        }
-    }
-
-    function idleRun(fn) {
-        if ("requestIdleCallback" in window) {
-            requestIdleCallback(fn, { timeout: 6000 });
-        } else {
-            setTimeout(fn, 6000);
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        scheduleStatusFetch();
-        setInterval(fetchDiscordStatus, 30000);
-    });
-</script>
-
 <style>
-    .about-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 4rem;
-        align-items: start;
+    .about-section {
+        padding-top: 2.5rem;
     }
 
-    @media (max-width: 900px) {
-        .about-grid {
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .about-discord-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        #discord-status-badge {
-            align-self: flex-start;
-        }
-    }
-
-    @keyframes pulse-ring {
-        0% {
-            box-shadow: 0 0 0 0 rgba(232, 160, 168, 0.5);
-        }
-        70% {
-            box-shadow: 0 0 0 8px rgba(232, 160, 168, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(232, 160, 168, 0);
-        }
-    }
-
-    .discord-status-online {
-        color: #57f287;
-        border-color: rgba(87, 242, 135, 0.22);
-        background: rgba(87, 242, 135, 0.08);
-    }
-
-    .discord-status-idle {
-        color: #fee75c;
-        border-color: rgba(254, 231, 92, 0.2);
-        background: rgba(254, 231, 92, 0.07);
-    }
-
-    .discord-status-dnd {
-        color: #ed4245;
-        border-color: rgba(237, 66, 69, 0.2);
-        background: rgba(237, 66, 69, 0.07);
+    .about-intro {
+        max-width: 42rem;
     }
 </style>

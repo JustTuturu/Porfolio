@@ -1,0 +1,66 @@
+---
+import { EXPERIENCES } from "../data/index";
+---
+
+<section id="experience" class="section-padding" aria-labelledby="experience-title">
+    <div class="content-container">
+        <span class="section-label">// experience</span>
+        <h1 id="experience-title" class="section-heading">Experience</h1>
+
+        <div class="experience-list">
+            {EXPERIENCES.map((experience) => (
+                <article class="experience-entry">
+                    <div class="flex flex-col gap-1">
+                        <p class="type-label-small uppercase text-(--accent-pink)">
+                            {experience.seeking ? "Current focus" : experience.type}
+                        </p>
+                        <h2 class="font-['Raleway'] type-title-large font-bold text-(--text-primary)">
+                            {experience.role}
+                        </h2>
+                        <p class="type-body-medium text-(--text-primary)/55">
+                            {experience.seeking ? "Seeking opportunities" : experience.company}
+                            {!experience.seeking && ` · ${experience.period}`}
+                        </p>
+                    </div>
+
+                    <ul class="experience-achievements">
+                        {experience.achievements.map((achievement) => (
+                            <li class="type-body-medium text-(--text-primary)/65">
+                                {achievement}
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div class="flex flex-wrap gap-2">
+                        {experience.tech.map((technology) => (
+                            <span class="tech-tag">{technology}</span>
+                        ))}
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .experience-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .experience-entry {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .experience-achievements {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        padding-left: 1.25rem;
+    }
+</style>

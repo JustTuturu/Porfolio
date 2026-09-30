@@ -50,7 +50,7 @@ import { EDUCATION, CERTIFICATIONS } from "../data/index";
                     <div class="flex flex-wrap gap-2 mt-1">
                         {
                             EDUCATION.courses.map((course) => (
-                                <span class="type-label-small text-(--text-primary)/45 border border-white/7 rounded px-2 py-0.5">
+                                <span class="type-label-small text-(--text-primary)/65 border border-(--glass-border) rounded px-2 py-0.5">
                                     {course}
                                 </span>
                             ))
@@ -68,7 +68,7 @@ import { EDUCATION, CERTIFICATIONS } from "../data/index";
                 <div class="flex flex-col gap-5">
                     {
                         CERTIFICATIONS.map((cert) => (
-                            <div class="flex items-start justify-between pb-5 border-b border-white/5 last:border-b-0 last:pb-0">
+                            <div class="flex items-start justify-between pb-5 border-b border-(--glass-border) last:border-b-0 last:pb-0">
                                 <div>
                                     <div class="mb-1 flex items-center gap-2">
                                         <p class="type-body-medium font-medium text-(--text-primary)">
@@ -152,10 +152,4 @@ import { EDUCATION, CERTIFICATIONS } from "../data/index";
         gap: 2.5rem;
     }
 
-    @media (min-width: 768px) {
-        .edu-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-    }
 </style>

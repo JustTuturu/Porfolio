@@ -4,6 +4,7 @@ interface Props {
     description?: string;
     image?: string;
     url?: string;
+    bodyClass?: string;
 }
 import "../styles/global.css";
 const {
@@ -11,6 +12,7 @@ const {
     description = "AI/ML engineer and computer science student passionate about deep learning, NLP, and computer vision. Currently seeking internship opportunities.",
     image = "/images/og-image.jpg",
     url = "https://justtuturu.dev",
+    bodyClass = "",
 } = Astro.props;
 
 const siteName = "Tut Portfolio";
@@ -86,7 +88,7 @@ const imageUrl = image.startsWith("http") ? image : `${canonicalUrl}${image}`;
             })}
         />
     </head>
-    <body>
+    <body class={bodyClass}>
         <slot />
     </body>
 </html>

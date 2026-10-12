@@ -8,17 +8,27 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     role="navigation"
     aria-label="Main navigation"
 >
-    <!-- Left: Logo -->
-    <a href="/" class="site-nav-name" aria-label="Tut">Tut</a>
+    <div class="site-nav-bar">
+        <!-- Logo -->
+        <a href="/" class="site-nav-name" aria-label="Tut">Tut</a>
+
+        <!-- Phones: collapsible sections toggle -->
+        <button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav-links"
+            aria-label="Toggle sections menu"
+        >
+            <span class="nav-toggle-bars" aria-hidden="true">
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+    </div>
 
     <!-- Section links -->
-    <div class="site-nav-links">
-        <a
-            href="/about"
-            class:list={["nav-link", { active: currentPath === "/about" }]}
-            aria-current={currentPath === "/about" ? "page" : undefined}
-            aria-label="Navigate to About section">about</a
-        >
+    <div class="site-nav-links" id="site-nav-links">
         <a
             href="/projects"
             class:list={["nav-link", { active: currentPath === "/projects" }]}
@@ -41,6 +51,19 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     </div>
 </nav>
 
+<script>
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = document.getElementById("site-nav-links");
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener("click", () => {
+            const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+            navToggle.setAttribute("aria-expanded", String(!isOpen));
+            navLinks.classList.toggle("is-open", !isOpen);
+        });
+    }
+</script>
+
 <style>
     #navbar {
         width: min(100% - 2rem, 36rem);
@@ -49,10 +72,16 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         border-bottom: 1px solid var(--glass-border);
     }
 
+    /* Desktop: logo and links sit directly in the flex row */
+    .site-nav-bar {
+        display: contents;
+    }
+
     .site-nav-name {
         font-family: "Raleway", sans-serif;
         font-size: 1rem;
         font-weight: 700;
+        line-height: 1;
         letter-spacing: 0.02em;
         color: var(--text-primary);
         text-decoration: none;
@@ -80,17 +109,82 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
         color: var(--accent-pink);
     }
 
-    @media (max-width: 520px) {
+    /* Sections toggle: hidden on desktop, shown on phones */
+    .nav-toggle {
+        display: none;
+    }
+
+    @media (max-width: 767px) {
+        /* match .content-container's mobile side padding */
         #navbar {
-            min-height: 4rem;
+            width: min(100% - 2.5rem, 36rem);
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            gap: 0.85rem;
+            padding-block: 1rem;
+            min-height: auto;
+        }
+
+        .site-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.4rem 0;
+            background: transparent;
+            border: none;
+            border-radius: 0.5rem;
+        }
+
+        .nav-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .nav-toggle:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-toggle-bars {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-toggle-bars span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:first-child {
+            transform: translateY(3.25px) rotate(45deg);
+        }
+
+        .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:last-child {
+            transform: translateY(-3.25px) rotate(-45deg);
         }
 
         .site-nav-links {
-            gap: 0.8rem;
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.9rem;
         }
 
-        .nav-link {
-            font-size: 0.875rem;
+        .site-nav-links.is-open {
+            display: flex;
         }
     }
 </style>

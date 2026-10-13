@@ -23,7 +23,7 @@ import { META } from '../data/index';
     >
       <a
         href={`mailto:${META.email}`}
-        class="flex flex-col gap-1 py-4 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
+        class="flex flex-col gap-1.5 py-5 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
         aria-label={`Send email to ${META.email}`}
       >
         <span class="type-label-small uppercase text-(--accent-pink)">
@@ -32,17 +32,11 @@ import { META } from '../data/index';
         <span class="type-body-medium text-(--text-primary)">{META.email}</span>
       </a>
 
-      <div
-        class="w-full h-px bg-(--glass-border)"
-        role="separator"
-        aria-hidden="true"
-      ></div>
-
       <a
         href={META.github}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex flex-col gap-1 py-4 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
+        class="flex flex-col gap-1.5 py-5 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
         aria-label="Visit GitHub profile (opens in new tab)"
       >
         <span class="type-label-small uppercase text-(--accent-pink)">
@@ -53,17 +47,11 @@ import { META } from '../data/index';
         </span>
       </a>
 
-      <div
-        class="w-full h-px bg-(--glass-border)"
-        role="separator"
-        aria-hidden="true"
-      ></div>
-
       <a
         href={META.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex flex-col gap-1 py-4 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
+        class="flex flex-col gap-1.5 py-5 no-underline transition-opacity duration-300 opacity-70 hover:opacity-100"
         aria-label="Visit LinkedIn profile (opens in new tab)"
       >
         <span class="type-label-small uppercase text-(--accent-pink)">

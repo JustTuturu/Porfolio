@@ -1,7 +1,7 @@
 export const META = {
   name: 'Tut',
-  role: 'AI/ML Engineer Intern',
-  email: 'justtuturu@gmail.com',
+  role: 'AI/ML Engineer',
+  email: 'justtuturu@proton.me',
   twitter: 'https://x.com/justuturu',
   github: 'https://github.com/justtuturu',
   linkedin: 'https://linkedin.com/in/teriyumi',
@@ -10,6 +10,19 @@ export const META = {
 };
 
 export const PROJECTS = [
+  {
+    featured: false,
+    category: 'LLM Agent',
+    categoryColor: 'rgba(168, 200, 216, 0.82)',
+    title: 'Chisa-Bot',
+    description:
+      "Private Discord bot running an LLM agent that answers when mentioned, replied to, or DM'd, uses tools on its own, and keeps per-channel memory with rolling summaries.",
+    metrics: ['Discord Bot', 'Tool Use', 'Per-Channel Memory'],
+    tech: ['Python', 'Discord.py', 'OpenAI', 'Tavily'],
+    github: 'https://github.com/JustTuturu/Chisa-bot',
+    demo: '',
+    label: 'Personal Project',
+  },
   {
     featured: true,
     category: 'Multimodal ML',
@@ -36,6 +49,32 @@ export const PROJECTS = [
     github: 'https://github.com/JustTuturu/AI-English-Tutor-NLP-Project',
     demo: '',
     label: 'Hackathon Remake',
+  },
+  {
+    featured: false,
+    category: 'Agent Pipeline',
+    categoryColor: '#E8A0A8',
+    title: 'MoeMeido',
+    description:
+      'Local-first software-task pipeline: analyzes a repo, proposes the smallest useful change, reviews it, runs tests, and reports merge readiness through a bounded LangGraph agent loop.',
+    metrics: ['LangGraph', 'Local-First', 'Auto Tests'],
+    tech: ['Python', 'LangGraph', 'SQLite', 'LLM Agents'],
+    github: 'https://github.com/JustTuturu/MoeMeido',
+    demo: '',
+    label: 'Personal Project',
+  },
+  {
+    featured: false,
+    category: 'Rust CLI',
+    categoryColor: 'rgba(212, 149, 106, 0.78)',
+    title: 'Novel Extractor & Translator',
+    description:
+      'Single-binary Rust CLI that downloads Chinese web novels from Qidian and SFACG, decodes encrypted VIP text via in-browser OCR, and translates chapter by chapter into English.',
+    metrics: ['Single Binary', 'OCR Decode', 'zh→en'],
+    tech: ['Rust', 'SQLite', 'OCR', 'Translation'],
+    github: 'https://github.com/JustTuturu/Qidian',
+    demo: '',
+    label: 'Personal Project',
   },
   {
     featured: false,

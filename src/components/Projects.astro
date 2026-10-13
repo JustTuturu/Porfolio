@@ -50,4 +50,14 @@ import { PROJECTS } from '../data/index';
   .project-title-link:hover {
     color: var(--accent-pink);
   }
+
+  /* On phones, keep each blurb short so the list doesn't become a wall of text */
+  @media (max-width: 767px) {
+    .project-entry p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
 </style>

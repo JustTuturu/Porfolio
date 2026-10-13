@@ -1,12 +1,14 @@
 @import 'tailwindcss';
 
 /* Reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 /* CSS Variables */
@@ -34,17 +36,51 @@ html {
   scroll-behavior: smooth;
   overflow-y: scroll;
   height: 100%;
+  background: var(--bg-base);
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--bg-base);
+  background: transparent;
   color: var(--text-primary);
   font-family: 'Lato', sans-serif;
   overflow-x: hidden;
   line-height: 1.65;
+}
+
+/* Fixed background image — muted by default (reading pages) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('/images/hero.webp') center / cover no-repeat;
+  filter: blur(60px) brightness(0.24) saturate(0.85);
+  transform: scale(1.15);
+}
+
+/* Vivid — show more of the artwork (home / hero page) */
+body.page-bg-vivid::before {
+  filter: blur(26px) brightness(0.5) saturate(0.95);
+}
+
+/* Gentle scrim so the navbar and footer stay legible on the vivid page */
+body.page-bg-vivid::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 14, 24, 0.55) 0%,
+    rgba(13, 14, 24, 0.1) 32%,
+    rgba(13, 14, 24, 0.1) 68%,
+    rgba(13, 14, 24, 0.55) 100%
+  );
 }
 
 /* Sections */
@@ -96,6 +132,27 @@ main > section:only-child {
   .content-container {
     padding-left: 1.5rem; /* 24dp tablet+ */
     padding-right: 1.5rem;
+  }
+}
+
+/* ─── Mobile polish ─── */
+@media (max-width: 767px) {
+  /* a little more breathing room at the screen edges */
+  .content-container {
+    padding-left: 1.25rem; /* 20dp */
+    padding-right: 1.25rem;
+  }
+
+  /* looser body copy so paragraphs don't feel dense */
+  .type-body-large,
+  .type-body-medium {
+    line-height: 1.6;
+  }
+
+  /* calmer headings so they don't dominate a small screen */
+  .section-heading {
+    font-size: clamp(1.75rem, 7vw, 2rem);
+    margin-bottom: 1.25rem;
   }
 }
 

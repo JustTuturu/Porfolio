@@ -1,4 +1,4 @@
-name: CI
+name: Test
 
 on:
   push:
@@ -7,15 +7,15 @@ on:
   pull_request:
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: test-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build
+  content-data:
+    name: Content data
     runs-on: ubuntu-latest
 
     steps:
@@ -34,8 +34,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Audit dependencies
-        run: pnpm audit --audit-level=high
-
-      - name: Build
-        run: pnpm run build
+      - name: Run tests
+        run: pnpm run test

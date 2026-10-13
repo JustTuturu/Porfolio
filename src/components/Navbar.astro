@@ -1,190 +1,197 @@
 ---
-const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <nav
-    id="navbar"
-    class="site-nav flex items-center justify-between"
-    role="navigation"
-    aria-label="Main navigation"
+  id="navbar"
+  class="site-nav flex items-center justify-between"
+  role="navigation"
+  aria-label="Main navigation"
 >
-    <div class="site-nav-bar">
-        <!-- Logo -->
-        <a href="/" class="site-nav-name" aria-label="Tut">Tut</a>
+  <div class="site-nav-bar">
+    <!-- Logo -->
+    <a href="/" class="site-nav-name" aria-label="Tut">
+      Tut
+    </a>
 
-        <!-- Phones: collapsible sections toggle -->
-        <button
-            class="nav-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="site-nav-links"
-            aria-label="Toggle sections menu"
-        >
-            <span class="nav-toggle-bars" aria-hidden="true">
-                <span></span>
-                <span></span>
-            </span>
-        </button>
-    </div>
+    <!-- Phones: collapsible sections toggle -->
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav-links"
+      aria-label="Toggle sections menu"
+    >
+      <span class="nav-toggle-bars" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </div>
 
-    <!-- Section links -->
-    <div class="site-nav-links" id="site-nav-links">
-        <a
-            href="/projects"
-            class:list={["nav-link", { active: currentPath === "/projects" }]}
-            aria-current={currentPath === "/projects" ? "page" : undefined}
-            aria-label="Navigate to Projects section">projects</a
-        >
-        <a
-            href="/experience"
-            class:list={["nav-link", { active: currentPath === "/experience" }]}
-            aria-current={currentPath === "/experience" ? "page" : undefined}
-            aria-label="Navigate to Experience page">experience</a
-        >
-        <a
-            href="/contact"
-            class:list={["nav-link", { active: currentPath === "/contact" }]}
-            aria-current={currentPath === "/contact" ? "page" : undefined}
-            aria-label="Navigate to Contact section">contact</a
-        >
-
-    </div>
+  <!-- Section links -->
+  <div class="site-nav-links" id="site-nav-links">
+    <a
+      href="/projects"
+      class:list={['nav-link', { active: currentPath === '/projects' }]}
+      aria-current={currentPath === '/projects' ? 'page' : undefined}
+      aria-label="Navigate to Projects section"
+    >
+      projects
+    </a>
+    <a
+      href="/experience"
+      class:list={['nav-link', { active: currentPath === '/experience' }]}
+      aria-current={currentPath === '/experience' ? 'page' : undefined}
+      aria-label="Navigate to Experience page"
+    >
+      experience
+    </a>
+    <a
+      href="/contact"
+      class:list={['nav-link', { active: currentPath === '/contact' }]}
+      aria-current={currentPath === '/contact' ? 'page' : undefined}
+      aria-label="Navigate to Contact section"
+    >
+      contact
+    </a>
+  </div>
 </nav>
 
 <script>
-    const navToggle = document.querySelector(".nav-toggle");
-    const navLinks = document.getElementById("site-nav-links");
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.getElementById('site-nav-links');
 
-    if (navToggle && navLinks) {
-        navToggle.addEventListener("click", () => {
-            const isOpen = navToggle.getAttribute("aria-expanded") === "true";
-            navToggle.setAttribute("aria-expanded", String(!isOpen));
-            navLinks.classList.toggle("is-open", !isOpen);
-        });
-    }
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!isOpen));
+      navLinks.classList.toggle('is-open', !isOpen);
+    });
+  }
 </script>
 
 <style>
+  #navbar {
+    width: min(100% - 2rem, 36rem);
+    min-height: 4.5rem;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  /* Desktop: logo and links sit directly in the flex row */
+  .site-nav-bar {
+    display: contents;
+  }
+
+  .site-nav-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link.active {
+    color: var(--accent-pink);
+  }
+
+  /* Sections toggle: hidden on desktop, shown on phones */
+  .nav-toggle {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    /* match .content-container's mobile side padding */
     #navbar {
-        width: min(100% - 2rem, 36rem);
-        min-height: 4.5rem;
-        margin: 0 auto;
-        border-bottom: 1px solid var(--glass-border);
+      width: min(100% - 2.5rem, 36rem);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0.85rem;
+      padding-block: 1rem;
+      min-height: auto;
     }
 
-    /* Desktop: logo and links sit directly in the flex row */
     .site-nav-bar {
-        display: contents;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.4rem 0;
+      background: transparent;
+      border: none;
+      border-radius: 0.5rem;
     }
 
-    .site-nav-name {
-        font-family: "Raleway", sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: 0.02em;
-        color: var(--text-primary);
-        text-decoration: none;
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .nav-toggle:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-toggle-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-toggle-bars span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-toggle[aria-expanded='true'] .nav-toggle-bars span:first-child {
+      transform: translateY(3.25px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded='true'] .nav-toggle-bars span:last-child {
+      transform: translateY(-3.25px) rotate(-45deg);
     }
 
     .site-nav-links {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.9rem;
     }
 
-    .nav-link {
-        color: var(--text-muted);
-        font-family: "Lato", sans-serif;
-        font-size: 1rem;
-        text-decoration: none;
-        transition: color 0.2s ease;
+    .site-nav-links.is-open {
+      display: flex;
     }
-
-    .nav-link:hover {
-        color: var(--text-primary);
-    }
-
-    .nav-link.active {
-        color: var(--accent-pink);
-    }
-
-    /* Sections toggle: hidden on desktop, shown on phones */
-    .nav-toggle {
-        display: none;
-    }
-
-    @media (max-width: 767px) {
-        /* match .content-container's mobile side padding */
-        #navbar {
-            width: min(100% - 2.5rem, 36rem);
-            flex-direction: column;
-            align-items: stretch;
-            justify-content: flex-start;
-            gap: 0.85rem;
-            padding-block: 1rem;
-            min-height: auto;
-        }
-
-        .site-nav-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0.4rem 0;
-            background: transparent;
-            border: none;
-            border-radius: 0.5rem;
-        }
-
-        .nav-toggle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.25rem;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .nav-toggle:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-toggle-bars {
-            display: inline-flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .nav-toggle-bars span {
-            display: block;
-            width: 20px;
-            height: 1.5px;
-            background: currentColor;
-            border-radius: 2px;
-            transition: transform 0.2s ease;
-        }
-
-        .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:first-child {
-            transform: translateY(3.25px) rotate(45deg);
-        }
-
-        .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:last-child {
-            transform: translateY(-3.25px) rotate(-45deg);
-        }
-
-        .site-nav-links {
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.9rem;
-        }
-
-        .site-nav-links.is-open {
-            display: flex;
-        }
-    }
+  }
 </style>

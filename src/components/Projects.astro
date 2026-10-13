@@ -1,61 +1,63 @@
 ---
-import { PROJECTS } from "../data/index";
+import { PROJECTS } from '../data/index';
 ---
 
 <section id="projects" class="section-padding" aria-labelledby="projects-title">
-    <div class="content-container">
-        <span class="section-label">// projects</span>
-        <h1 id="projects-title" class="section-heading">Projects</h1>
+  <div class="content-container">
+    <span class="section-label">// projects</span>
+    <h1 id="projects-title" class="section-heading">
+      Projects
+    </h1>
 
-        <div class="project-list">
-            {PROJECTS.map((project) => (
-                <article class="project-entry">
-                    <h2 class="card-title">
-                        {project.github ? (
-                            <a
-                                class="project-title-link"
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {project.title}
-                            </a>
-                        ) : (
-                            project.title
-                        )}
-                    </h2>
-                    <p class="type-body-medium text-(--text-primary)/65">
-                        {project.description}
-                    </p>
-                </article>
-            ))}
-        </div>
+    <div class="project-list">
+      {PROJECTS.map((project) => (
+        <article class="project-entry">
+          <h2 class="card-title">
+            {project.github ? (
+              <a
+                class="project-title-link"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.title}
+              </a>
+            ) : (
+              project.title
+            )}
+          </h2>
+          <p class="type-body-medium text-(--text-primary)/65">
+            {project.description}
+          </p>
+        </article>
+      ))}
     </div>
+  </div>
 </section>
 
 <style>
-    .project-list {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-    .project-title-link {
-        color: inherit;
-        text-decoration: none;
-    }
+  .project-title-link {
+    color: inherit;
+    text-decoration: none;
+  }
 
-    .project-title-link:hover {
-        color: var(--accent-pink);
-    }
+  .project-title-link:hover {
+    color: var(--accent-pink);
+  }
 
-    /* On phones, keep each blurb short so the list doesn't become a wall of text */
-    @media (max-width: 767px) {
-        .project-entry p {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            overflow: hidden;
-        }
+  /* On phones, keep each blurb short so the list doesn't become a wall of text */
+  @media (max-width: 767px) {
+    .project-entry p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
+  }
 </style>

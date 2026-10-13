@@ -1,29 +1,29 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
+import BaseLayout from './BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
-    title: string;
-    /** Background intensity: "vivid" shows more of the artwork (hero/home), "muted" recedes for reading pages. */
-    background?: "vivid" | "muted";
+  title: string;
+  /** Background intensity: "vivid" shows more of the artwork (hero/home), "muted" recedes for reading pages. */
+  background?: 'vivid' | 'muted';
 }
 
-const { title, background = "muted" } = Astro.props;
+const { title, background = 'muted' } = Astro.props;
 const bodyClass = `page-bg-${background}`;
 ---
 
 <BaseLayout title={title} bodyClass={bodyClass}>
-    <Navbar />
-    <main>
-        <slot />
-    </main>
-    <Footer />
+  <Navbar />
+  <main>
+    <slot />
+  </main>
+  <Footer />
 </BaseLayout>
 
 <style>
-    main {
-        position: relative;
-        flex: 1;
-    }
+  main {
+    position: relative;
+    flex: 1;
+  }
 </style>

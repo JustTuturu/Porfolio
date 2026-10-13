@@ -12,7 +12,8 @@
   "minimumReleaseAge": "3 days",
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "schedule": ["before 6am on monday"]
   },
   "vulnerabilityAlerts": {
     "enabled": true,
@@ -23,7 +24,6 @@
   "packageRules": [
     {
       "description": "Group and auto-merge all non-major updates into one PR",
-      "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["pin", "digest", "patch", "minor"],
       "groupName": "non-major dependencies",
       "automerge": true

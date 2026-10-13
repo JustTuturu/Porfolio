@@ -1,96 +1,105 @@
 ---
-const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <nav
-    id="navbar"
-    class="site-nav flex items-center justify-between"
-    role="navigation"
-    aria-label="Main navigation"
+  id="navbar"
+  class="site-nav flex items-center justify-between"
+  role="navigation"
+  aria-label="Main navigation"
 >
-    <!-- Left: Logo -->
-    <a href="/" class="site-nav-name" aria-label="Tut">Tut</a>
+  <!-- Left: Logo -->
+  <a href="/" class="site-nav-name" aria-label="Tut">
+    Tut
+  </a>
 
-    <!-- Section links -->
-    <div class="site-nav-links">
-        <a
-            href="/about"
-            class:list={["nav-link", { active: currentPath === "/about" }]}
-            aria-current={currentPath === "/about" ? "page" : undefined}
-            aria-label="Navigate to About section">about</a
-        >
-        <a
-            href="/projects"
-            class:list={["nav-link", { active: currentPath === "/projects" }]}
-            aria-current={currentPath === "/projects" ? "page" : undefined}
-            aria-label="Navigate to Projects section">projects</a
-        >
-        <a
-            href="/experience"
-            class:list={["nav-link", { active: currentPath === "/experience" }]}
-            aria-current={currentPath === "/experience" ? "page" : undefined}
-            aria-label="Navigate to Experience page">experience</a
-        >
-        <a
-            href="/contact"
-            class:list={["nav-link", { active: currentPath === "/contact" }]}
-            aria-current={currentPath === "/contact" ? "page" : undefined}
-            aria-label="Navigate to Contact section">contact</a
-        >
-
-    </div>
+  <!-- Section links -->
+  <div class="site-nav-links">
+    <a
+      href="/about"
+      class:list={['nav-link', { active: currentPath === '/about' }]}
+      aria-current={currentPath === '/about' ? 'page' : undefined}
+      aria-label="Navigate to About section"
+    >
+      about
+    </a>
+    <a
+      href="/projects"
+      class:list={['nav-link', { active: currentPath === '/projects' }]}
+      aria-current={currentPath === '/projects' ? 'page' : undefined}
+      aria-label="Navigate to Projects section"
+    >
+      projects
+    </a>
+    <a
+      href="/experience"
+      class:list={['nav-link', { active: currentPath === '/experience' }]}
+      aria-current={currentPath === '/experience' ? 'page' : undefined}
+      aria-label="Navigate to Experience page"
+    >
+      experience
+    </a>
+    <a
+      href="/contact"
+      class:list={['nav-link', { active: currentPath === '/contact' }]}
+      aria-current={currentPath === '/contact' ? 'page' : undefined}
+      aria-label="Navigate to Contact section"
+    >
+      contact
+    </a>
+  </div>
 </nav>
 
 <style>
-    #navbar {
-        width: min(100% - 2rem, 36rem);
-        min-height: 4.5rem;
-        margin: 0 auto;
-        border-bottom: 1px solid var(--glass-border);
-    }
+  #navbar {
+    width: min(100% - 2rem, 36rem);
+    min-height: 4.5rem;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--glass-border);
+  }
 
-    .site-nav-name {
-        font-family: "Raleway", sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        color: var(--text-primary);
-        text-decoration: none;
+  .site-nav-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link.active {
+    color: var(--accent-pink);
+  }
+
+  @media (max-width: 520px) {
+    #navbar {
+      min-height: 4rem;
     }
 
     .site-nav-links {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
+      gap: 0.8rem;
     }
 
     .nav-link {
-        color: var(--text-muted);
-        font-family: "Lato", sans-serif;
-        font-size: 1rem;
-        text-decoration: none;
-        transition: color 0.2s ease;
+      font-size: 0.875rem;
     }
-
-    .nav-link:hover {
-        color: var(--text-primary);
-    }
-
-    .nav-link.active {
-        color: var(--accent-pink);
-    }
-
-    @media (max-width: 520px) {
-        #navbar {
-            min-height: 4rem;
-        }
-
-        .site-nav-links {
-            gap: 0.8rem;
-        }
-
-        .nav-link {
-            font-size: 0.875rem;
-        }
-    }
+  }
 </style>
